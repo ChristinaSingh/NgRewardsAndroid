@@ -35,6 +35,7 @@ android {
         resValue("string", "google_search", "AIzaSyABRtmxwu4OgB64OR2rq_8GecRDQf2TsLU")
     }
 
+
     buildTypes {
         debug{
             debuggable true
