@@ -1,0 +1,224 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+
+android {
+    signingConfigs {
+        debug {
+         //   storeFile file('/home/shubh23/StudioProjects/NgRewards_NEW/ngrewardjks.jks')
+              storeFile file('D:/NgRewards_NEW-ng_rewards_androidx/ngrewardjks.jks')
+            storePassword 'ngrewards123'
+            keyAlias 'Ngrewards'
+            keyPassword 'ngrewards123'
+        }
+        release {
+           // storeFile file('/home/shubh23/StudioProjects/NgRewards_NEW/ngrewardjks.jks')
+            storeFile file('D:/NgRewards_NEW-ng_rewards_androidx/ngrewardjks.jks')
+            storePassword 'ngrewards123'
+            keyAlias 'Ngrewards'
+            keyPassword 'ngrewards123'
+        }
+    }
+     packagingOptions {
+          exclude 'META-INF/services/javax.annotation.processing.Processor'
+      }
+    defaultConfig {
+        applicationId "main.com.ngrewards"
+        minSdkVersion 24
+        targetSdkVersion 34
+        versionCode 87 // 86
+        versionName "11.10.17" // 11.10.16
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        //multiDexEnabled true
+        resValue("string", "googlekey", "AIzaSyABRtmxwu4OgB64OR2rq_8GecRDQf2TsLU")
+        resValue("string", "googlekey2", "AIzaSyDQhXBxYiOPm-aGspwuKueT3CfBOIY3SJs")
+        resValue("string", "google_search", "AIzaSyABRtmxwu4OgB64OR2rq_8GecRDQf2TsLU")
+    }
+
+    buildTypes {
+        debug{
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+        }
+        release {
+            debuggable false
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        dataBinding = true
+    }
+    buildToolsVersion '33.0.1'
+    compileSdk 34
+    defaultConfig {
+        resConfigs "en", "es", "hi"
+    }
+    bundle {
+
+        language {
+            enableSplit = false
+        }
+    }
+}
+
+
+dependencies {
+
+    //androx
+    implementation 'androidx.navigation:navigation-fragment:2.3.0'
+    implementation 'com.intuit.sdp:sdp-android:1.1.0'
+    implementation 'androidx.navigation:navigation-ui:2.3.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    //images
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+
+
+    //alerts
+    implementation 'fr.avianey.com.viewpagerindicator:library:2.4.1.1@aar'
+    implementation 'com.github.shadowalker77:wp7progressbar:1.0.5'
+    implementation 'com.github.blikoon:QRCodeScanner:0.1.2'
+    implementation 'org.jsoup:jsoup:1.13.1'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.github.f0ris.sweetalert:library:1.5.6'
+    //apis
+    implementation 'com.loopj.android:android-async-http:1.4.9'
+    implementation 'com.github.developeramit3:ApiCall:d8a713a9c4'
+    implementation 'com.android.volley:volley:1.2.1'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.3'
+
+//payment
+    implementation 'com.stripe:stripe-android:18.1.0'
+    implementation 'br.com.moip:credit-card-validator:0.0.6'
+    implementation 'co.dift.ui.swipetoaction:library:1.1'
+//charts
+    implementation 'com.jjoe64:graphview:4.2.1'
+    // implementation 'com.numetriclabz.numandroidcharts:numandroidcharts:1.0.20'
+      // not find in project
+ //   implementation 'in.gauriinfotech:commons:1.0.8'
+ //   implementation 'com.amitshekhar.android:android-networking:1.0.2'
+  //  implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+
+    //implementation 'in.gauriinfotech:commons:1.1.2'
+
+
+    implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
+    // implementation files('libs/YouTubeAndroidPlayerApi.jar')
+
+    //google
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
+  //  implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+
+    implementation 'com.google.zxing:core:3.5.0'
+    //  implementation 'com.google.apis:google-api-services-youtube:v3-rev212-1.25.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+
+//firebase
+    //implementation 'com.google.firebase:firebase-dynamic-links:17.0.0'
+   // implementation 'com.google.firebase:firebase-messaging:17.6.0'
+   // implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation 'com.google.firebase:firebase-dynamic-links'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-core:21.1.1'
+
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+
+
+}
+apply plugin: 'com.google.gms.google-services'
+/*
+Key Alis =  Ngrewards
+password == ngrewards123
+keystorepassword == ngrewards123
+
+keystore put in project folded name is ngrewardjks.jks
+
+//google account//
+user nname : ngrewardsllc@gmail.com
+pw : Join.Promote.Earn
+//google account//
+bas.......
+
+second pan lasst dblll
+
+bas.......
+//google account//
+
+
+fb pw console : ng123456789@
+
+place_or
+1.Card details Client
+5524 3338 5841 4627
+Valí thru: 11/23
+ manualat 415 ???>>>psput"member_id", user_id
+577
+
+2.Card details Client
+4817 7401 7701 9292
+Valí thru: 09/22
+465
+MyListener >>> striplive
+*/
+
+
+/*Merchant:
+ed58126
+123456
+
+Member:
+ngrewardsllc
+gen.admin$12*/
