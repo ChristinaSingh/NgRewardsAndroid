@@ -298,4 +298,9 @@ public interface ApiInterface {
     Call<ResponseBody> ApiUpdateUser(@Query("id") String id,@Query("employee_name")String employee_name,@Query("employee_id")String employee_id,@Query("pageNumber") String pageNumber);
 
 
+    @GET("get-membership-plans.php?")
+    Call<ResponseBody> getMemberShipPlanApi(@Query("member_id") String memberId);
+
+
+
 }

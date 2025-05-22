@@ -716,4 +716,6 @@
     <string name="or_more">or more</string>
     <string name="sku_optional">SKU (optional)</string>
     <string name="enter_sku">Enter SKU</string>
+    <string name="subscribe_plan">Subscribe Plan</string>
+    <string name="skip">Skip</string>
 </resources>

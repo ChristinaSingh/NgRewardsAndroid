@@ -26,6 +26,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,10 +43,12 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,19 +58,26 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import main.com.ngrewards.Adapter.MembershipAdapter;
 import main.com.ngrewards.BuildConfig;
+import main.com.ngrewards.Models.MembershipModel;
 import main.com.ngrewards.QrCodeActivity;
 import main.com.ngrewards.R;
 import main.com.ngrewards.Utils.LocaleHelper;
@@ -84,13 +94,20 @@ import main.com.ngrewards.activity.TransferToaFriend;
 import main.com.ngrewards.activity.TutorialAct;
 import main.com.ngrewards.activity.WithdrawActivity;
 import main.com.ngrewards.activity.app.Config;
+import main.com.ngrewards.beanclasses.MerchantItem;
 import main.com.ngrewards.constant.BaseUrl;
 import main.com.ngrewards.constant.MySavedCardInfo;
 import main.com.ngrewards.constant.MySession;
 import main.com.ngrewards.constant.Myapisession;
 import main.com.ngrewards.draweractivity.ProfileActivity;
 import main.com.ngrewards.draweractivity.SettingActivity;
+import main.com.ngrewards.marchant.activity.ActiveProductsAct;
 import main.com.ngrewards.marchant.activity.MerchantNotificationActivity;
+import main.com.ngrewards.restapi.ApiClient;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainTabActivity extends AppCompatActivity {
     private static final float END_SCALE = 0.85f;
@@ -181,7 +198,7 @@ public class MainTabActivity extends AppCompatActivity {
             };
     TextView counter_wallet, counter_shedule, counter_order, counter_message;
     ScheduledExecutorService scheduleTaskExecutor;
-    String currentVersion = "";
+    String currentVersion = "",  id="";
     CircleImageView user_img;
     boolean mSlideState = false;
     CircleImageView drwr_user_img;
@@ -216,7 +233,8 @@ public class MainTabActivity extends AppCompatActivity {
     private ProgressBar progresbar;
     private String gender_str;
     private String age_str;
-
+    RecyclerView rvMembership;
+    ArrayList<MembershipModel.Result> arrayList =  new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1151,7 +1169,7 @@ public class MainTabActivity extends AppCompatActivity {
                         mySession.setValueOf(MySession.CurrencySign, currency_sign);
                         mySession.setValueOf(MySession.CountryName, country_name);
                      String   username = jsonObject1.getString("username");
-                        String  id = jsonObject1.getString("id");
+                          id = jsonObject1.getString("id");
                         String   affiliate_number = jsonObject1.getString("affiliate_number");
 
                         Log.e(TAG, "onCreate:  country_id   ----  " + mySession.getValueOf(MySession.CountryId));
@@ -1221,12 +1239,130 @@ public class MainTabActivity extends AppCompatActivity {
 
         btnStart.setOnClickListener(v -> {
             PreferenceConnector.writeString(MainTabActivity.this, PreferenceConnector.Greeting_Status, "true");
-
+            getAllPlan(id);
             dialog.dismiss();
         });
 
         dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         dialog.show();
+    }
+
+
+    public void MembershipDialog(){
+        Dialog dialog = new Dialog(MainTabActivity.this,android.R.style.Theme_Translucent_NoTitleBar);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_membership);
+
+
+
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+
+        wlp.gravity = Gravity.CENTER;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_BLUR_BEHIND;
+        window.setAttributes(wlp);
+
+
+         rvMembership = dialog.findViewById(R.id.rvMembership);
+
+        TextView tvSkip = dialog.findViewById(R.id.tvSkip);
+
+        RelativeLayout backlay = dialog.findViewById(R.id.backlay);
+
+
+        MembershipAdapter   adapter = new MembershipAdapter(MainTabActivity.this,arrayList);
+        rvMembership.setAdapter(adapter);
+
+        tvSkip.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        backlay.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+
+
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        dialog.show();
+    }
+
+
+
+
+    private void getAllPlan(String id) {
+       // progresbar.setVisibility(View.VISIBLE);
+
+        Call<ResponseBody> call = ApiClient.getApiInterface().getMemberShipPlanApi(id);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                progresbar.setVisibility(View.GONE);
+
+                if (response.isSuccessful()) {
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject object = new JSONObject(responseData);
+                        Log.e("get All membership plan", " >" + responseData);
+                        if (object.getString("status").equals("1")) {
+                            MembershipModel successData = new Gson().fromJson(responseData, MembershipModel.class);
+                            arrayList.addAll(successData.getResult());
+
+                            if (successData.getMembershipData() != null) {
+                                if (shouldDisplayItem(/*"2025-05-31"*/successData.getMembershipData().getEndDate())) {
+                                    System.out.println("Show item");
+                                    MembershipDialog();
+                                } else {
+                                    System.out.println("Hide item (end_date is in the future)");
+
+                                }
+                            }
+                        }
+                        else MembershipDialog();
+
+
+
+
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                progresbar.setVisibility(View.GONE);
+
+                Log.e("TAG", t.toString());
+            }
+        });
+    }
+
+
+    public static boolean shouldDisplayItem(String endDateStr) {
+        try {
+            // Format of your end date string
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+            // Parse end date
+            Date endDate = sdf.parse(endDateStr);
+
+            // Get today's date (with time stripped)
+            Date currentDate = sdf.parse(sdf.format(new Date()));
+
+            // Compare dates
+            return !endDate.after(currentDate); // only display if endDate is today or in the past
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return true; // fallback: show item if parsing fails
+        }
     }
 
 
