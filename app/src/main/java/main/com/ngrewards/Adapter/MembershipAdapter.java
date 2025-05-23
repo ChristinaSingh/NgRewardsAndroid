@@ -1,6 +1,7 @@
 package main.com.ngrewards.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -14,9 +15,9 @@ import java.util.ArrayList;
 
 import main.com.ngrewards.Models.MembershipModel;
 import main.com.ngrewards.R;
+import main.com.ngrewards.activity.SelectPayMethodAct;
 import main.com.ngrewards.databinding.ItemMembershipBinding;
-
-
+import main.com.ngrewards.placeorderclasses.SelectPaymentMethodAct;
 
 
 public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.MyViewHolder> {
@@ -51,9 +52,10 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.My
 
 
 
-     /*   holder.itemView.setOnClickListener(view -> {
-            listener.onChat(position,arrayList.get(position));
-        });*/
+        holder.itemView.setOnClickListener(view -> {
+            context.startActivity(new Intent(context, SelectPayMethodAct.class)
+                    .putExtra("planId",arrayList.get(position).getPlanId()));
+        });
 
     }
 

@@ -267,6 +267,9 @@ public class LoginActivity extends AppCompatActivity {
                 int additionint1 = addition1.nextInt(100) + 1;
                 String random_no = String.valueOf(additionint1);
                 Url = "https://myngrewards.com/signup.php?affiliate_name=OFFICIALNG&affiliate_no=" + random_no + "&how_invited_you=";
+              //  Url = "https://international.myngrewards.com/signup.php?affiliate_name=OFFICIALNG&affiliate_no=" + random_no + "&how_invited_you=";
+
+
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Url));
                 startActivity(intent);
 

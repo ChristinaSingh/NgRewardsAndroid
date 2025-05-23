@@ -718,4 +718,5 @@
     <string name="enter_sku">Enter SKU</string>
     <string name="subscribe_plan">Subscribe Plan</string>
     <string name="skip">Skip</string>
+    <string name="subscribe">Subscribe</string>
 </resources>

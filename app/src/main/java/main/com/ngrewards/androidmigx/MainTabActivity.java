@@ -1309,7 +1309,7 @@ public class MainTabActivity extends AppCompatActivity {
                             arrayList.addAll(successData.getResult());
 
                             if (successData.getMembershipData() != null) {
-                                if (shouldDisplayItem(/*"2025-05-31"*/successData.getMembershipData().getEndDate())) {
+                                if (shouldDisplayItem(/*"2025-05-22"*/successData.getMembershipData().getEndDate())) {
                                     System.out.println("Show item");
                                     MembershipDialog();
                                 } else {

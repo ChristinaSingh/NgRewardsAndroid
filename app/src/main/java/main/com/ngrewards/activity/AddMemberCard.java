@@ -346,6 +346,7 @@ public class AddMemberCard extends AppCompatActivity {
                 }
                 writer.close();
                 reader.close();
+                Log.e("Json Login Response", ">>>>>>>>>>>>" + response);
 
                 return response;
             } catch (UnsupportedEncodingException e1) {

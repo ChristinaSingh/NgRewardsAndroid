@@ -302,5 +302,10 @@ public interface ApiInterface {
     Call<ResponseBody> getMemberShipPlanApi(@Query("member_id") String memberId);
 
 
+    @GET("place_order_for_member_ship.php?")
+    Call<ResponseBody> purchaseMemberShipPlanApi(@Query("member_id") String memberId,
+                                                 @Query("card_id") String cardId,
+                                                 @Query("customer_id") String customerId,
+                                                 @Query("membership_duration_id") String membership_duration_id);
 
 }

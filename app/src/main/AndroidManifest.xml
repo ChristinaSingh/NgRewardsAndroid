@@ -548,6 +548,10 @@
         <activity
             android:name=".activity.TestingStripeActivity"
             android:exported="false" />
+        <activity
+            android:name=".activity.SelectPayMethodAct"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <!-- <activity
              android:exported="false"
