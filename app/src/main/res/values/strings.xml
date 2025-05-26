@@ -719,4 +719,8 @@
     <string name="subscribe_plan">Subscribe Plan</string>
     <string name="skip">Skip</string>
     <string name="subscribe">Subscribe</string>
+    <string name="recommended">Recommended</string>
+    <string name="my_subscription">My Subscription</string>
+    <string name="my_plan_history">My Plan History</string>
+    <string name="recipt">Recipt</string>
 </resources>

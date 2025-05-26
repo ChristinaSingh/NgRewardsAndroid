@@ -308,4 +308,10 @@ public interface ApiInterface {
                                                  @Query("customer_id") String customerId,
                                                  @Query("membership_duration_id") String membership_duration_id);
 
+
+
+    @GET("member_profile.php?")
+    Call<ResponseBody> getPlanHistoryApi(@Query("member_id") String memberId);
+
+
 }

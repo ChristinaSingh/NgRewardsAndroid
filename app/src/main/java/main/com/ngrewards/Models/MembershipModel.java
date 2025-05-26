@@ -414,6 +414,20 @@ public class MembershipModel {
         @SerializedName("duration_updated_at")
         @Expose
         private String durationUpdatedAt;
+
+        @SerializedName("recommended")
+        @Expose
+        private String recommended;
+
+
+        public String getRecommended() {
+            return recommended;
+        }
+
+        public void setRecommended(String recommended) {
+            this.recommended = recommended;
+        }
+
         @SerializedName("duration_deleted_at")
         @Expose
         private Object durationDeletedAt;

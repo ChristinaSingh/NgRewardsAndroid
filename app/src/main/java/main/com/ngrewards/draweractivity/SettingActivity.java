@@ -49,6 +49,7 @@ import main.com.ngrewards.Utils.LocaleHelper;
 import main.com.ngrewards.Utils.Tools;
 import main.com.ngrewards.activity.AccountTypeSelectionAct;
 import main.com.ngrewards.activity.AddMemberCard;
+import main.com.ngrewards.activity.MyPlanHistoryAct;
 import main.com.ngrewards.activity.UpdateMemberCard;
 import main.com.ngrewards.androidmigx.MainTabActivity;
 import main.com.ngrewards.beanclasses.CardBean;
@@ -74,7 +75,7 @@ public class SettingActivity extends AppCompatActivity {
     String selected_lang = "";
 
     CountryListAdapter languageListAdapter;
-    private RelativeLayout changelang, changepass, addcardlay, invitecontact, invitefacelay, backlay, career_lay, aboutng_rew, helpcenter, reportproblem, touchidlay, deleteAccount;
+    private RelativeLayout changelang, changepass, addcardlay, invitecontact, invitefacelay, backlay, career_lay, aboutng_rew, helpcenter, reportproblem, touchidlay, deleteAccount,rlSubscription;
     private ExpandableHeightListView addedcardlist;
     private CustomCardAdp customCardAdp;
     private ArrayList<CardBean> cardBeanArrayList;
@@ -245,6 +246,11 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
         changelang.setOnClickListener(v -> setSellPassDialog());
+
+        rlSubscription.setOnClickListener(v ->
+                startActivity(new Intent(SettingActivity.this, MyPlanHistoryAct.class))
+                );
+
     }
 
     private void idinti() {
@@ -263,6 +269,7 @@ public class SettingActivity extends AppCompatActivity {
         career_lay = findViewById(R.id.career_lay);
         helpcenter = findViewById(R.id.helpcenter);
         deleteAccount = findViewById(R.id.deleteAccount);
+        rlSubscription = findViewById(R.id.rlSubscription);
     }
 
     @Override

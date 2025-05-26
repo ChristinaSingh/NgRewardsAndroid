@@ -1208,9 +1208,14 @@ public class MainTabActivity extends AppCompatActivity {
 
                         String image_url = jsonObject1.getString("member_image");
 
-                        if (image_url != null && !image_url.equalsIgnoreCase("") && !image_url.equalsIgnoreCase(BaseUrl.image_baseurl)) {
-                            Glide.with(MainTabActivity.this).load(image_url).placeholder(R.drawable.user_propf).into(user_img);
-                        }
+                         try {
+                             if (image_url != null && !image_url.equalsIgnoreCase("") && !image_url.equalsIgnoreCase(BaseUrl.image_baseurl)) {
+                                 Glide.with(MainTabActivity.this).load(image_url).placeholder(R.drawable.user_propf).into(user_img);
+                             }
+                         }catch (Exception e){
+                             e.printStackTrace();
+                         }
+
                     }
 
                 } catch (Exception e) {
