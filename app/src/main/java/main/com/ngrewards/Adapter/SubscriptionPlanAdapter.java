@@ -1,6 +1,7 @@
 package main.com.ngrewards.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import main.com.ngrewards.Models.MembershipModel;
 import main.com.ngrewards.Models.PlanHistoryModel;
 import main.com.ngrewards.R;
+import main.com.ngrewards.activity.WebViewCalled;
 import main.com.ngrewards.databinding.ItemPlanBinding;
 
 public class SubscriptionPlanAdapter extends RecyclerView.Adapter<SubscriptionPlanAdapter.MyViewHolder> {
@@ -37,11 +39,22 @@ public class SubscriptionPlanAdapter extends RecyclerView.Adapter<SubscriptionPl
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.binding.tvTitle.setText(arrayList.get(position).getPlanName());
         holder.binding.tvPrice.setText("USD "+arrayList.get(position).getAmount() + " / " + arrayList.get(position).getDurationName());
-        holder.binding.tvEndDate.setText("End Date - "+arrayList.get(position).getEndDate());
+        holder.binding.tvEndDate.setText(  "Start Date - "+arrayList.get(position).getStartDate()   + "     "  +      "End Date - "+arrayList.get(position).getEndDate());
+        holder.binding.tvDateTime.setText(  "Transaction Date - "+arrayList.get(position).getCreatedAt());
 
+        holder.binding.tv1.setText(arrayList.get(position).getFeatures().get(0));
+        holder.binding.tv2.setText(arrayList.get(position).getFeatures().get(1));
+        holder.binding.tv3.setText(arrayList.get(position).getFeatures().get(2));
+        holder.binding.tv4.setText(arrayList.get(position).getFeatures().get(3));
+        holder.binding.tv5.setText(arrayList.get(position).getFeatures().get(4));
 
+        holder.binding.tvStatus.setText("Status - " +arrayList.get(position).getStatus());
 
-
+        holder.binding.btnReceipt.setOnClickListener(v -> {
+            context.startActivity(new Intent(context, WebViewCalled.class)
+                    .putExtra("reciept_url", arrayList.get(position).getReceiptUrl()));
+           ;
+        });
 
     }
 

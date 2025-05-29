@@ -50,6 +50,80 @@
 
 
 
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/skip"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/_10sdp"
+            android:textColor="@color/grey"
+            android:layout_marginTop="@dimen/_2sdp"
+
+            />
+
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/skip"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/_10sdp"
+            android:textColor="@color/grey"
+            />
+
+        <TextView
+            android:id="@+id/tv3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/skip"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/_10sdp"
+            android:textColor="@color/grey"
+            />
+
+        <TextView
+            android:id="@+id/tv4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/skip"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/_10sdp"
+            android:textColor="@color/grey"
+            />
+
+        <TextView
+            android:id="@+id/tv5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/skip"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/_10sdp"
+            android:textColor="@color/grey"
+            />
+
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/_10sdp"
+            android:textColor="@color/grey"
+            />
+
+        <TextView
+            android:id="@+id/tvDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/_10sdp"
+            android:textColor="@color/grey"
+            />
+
+
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,7 +132,7 @@
 
 
             <TextView
-                android:id="@+id/btnRecommended"
+                android:id="@+id/btnReceipt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/recipt"
