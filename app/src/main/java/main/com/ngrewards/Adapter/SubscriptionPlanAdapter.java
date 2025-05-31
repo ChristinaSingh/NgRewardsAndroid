@@ -38,9 +38,9 @@ public class SubscriptionPlanAdapter extends RecyclerView.Adapter<SubscriptionPl
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.binding.tvTitle.setText(arrayList.get(position).getPlanName());
-        holder.binding.tvPrice.setText("USD "+arrayList.get(position).getAmount() + " / " + arrayList.get(position).getDurationName());
-        holder.binding.tvEndDate.setText(  "Start Date - "+arrayList.get(position).getStartDate()   + "     "  +      "End Date - "+arrayList.get(position).getEndDate());
-        holder.binding.tvDateTime.setText(  "Transaction Date - "+arrayList.get(position).getCreatedAt());
+        holder.binding.tvPrice.setText("$ "+arrayList.get(position).getAmount() + " / " + arrayList.get(position).getDurationName());
+        holder.binding.tvEndDate.setText( "End Date - "+arrayList.get(position).getEndDate());
+        holder.binding.tvStartDate.setText( "Start Date - "+arrayList.get(position).getStartDate());
 
         holder.binding.tv1.setText(arrayList.get(position).getFeatures().get(0));
         holder.binding.tv2.setText(arrayList.get(position).getFeatures().get(1));
@@ -48,7 +48,7 @@ public class SubscriptionPlanAdapter extends RecyclerView.Adapter<SubscriptionPl
         holder.binding.tv4.setText(arrayList.get(position).getFeatures().get(3));
         holder.binding.tv5.setText(arrayList.get(position).getFeatures().get(4));
 
-        holder.binding.tvStatus.setText("Status - " +arrayList.get(position).getStatus());
+        holder.binding.tvStatus.setText(arrayList.get(position).getStatus());
 
         holder.binding.btnReceipt.setOnClickListener(v -> {
             context.startActivity(new Intent(context, WebViewCalled.class)

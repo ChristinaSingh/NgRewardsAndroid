@@ -269,6 +269,44 @@ public class OrderBean {
     @Expose
     private String reqAmount="";
 
+
+    @SerializedName("plan_name")
+    @Expose
+    private String planName="";
+
+
+    @SerializedName("duration_type")
+    @Expose
+    private String durationType="";
+
+    @SerializedName("created_at")
+    @Expose
+    private String createdAt="";
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getDurationType() {
+        return durationType;
+    }
+
+    public void setDurationType(String durationType) {
+        this.durationType = durationType;
+    }
+
+    public String getPlanName() {
+        return planName;
+    }
+
+    public void setPlanName(String planName) {
+        this.planName = planName;
+    }
+
     public String getReqAmount() {
         return reqAmount;
     }

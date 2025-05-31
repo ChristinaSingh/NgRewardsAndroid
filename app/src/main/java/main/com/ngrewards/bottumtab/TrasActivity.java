@@ -457,6 +457,26 @@ public class TrasActivity extends Fragment {
                 }
 
             }
+
+            else if (orderBeanArrayList.get(position).getType() != null &&
+                    orderBeanArrayList.get(position).getType().equalsIgnoreCase("membership_purchase")) {
+
+                holder.merchant_member_name.setText(orderBeanArrayList.get(position).getPlanName());
+                holder.total_order_price.setText(mySession.getValueOf(MySession.CurrencySign) + orderBeanArrayList.get(position).getAmount());
+                holder.order_id.setText("MN"+orderBeanArrayList.get(position).getId());
+                holder.paidamount_bycard.setText(mySession.getValueOf(MySession.CurrencySign) + orderBeanArrayList.get(position).getAmount());
+                holder.ngcash.setText(mySession.getValueOf(MySession.CurrencySign) + "0.00");
+                holder.order_category.setText(getString(R.string.subscription));
+
+                //holder.order_category.setText("" + orderBeanArrayList.get(position).getType());
+
+                holder.date_tv.setText("Date:- " + orderBeanArrayList.get(position).getCreatedAt());
+
+
+            }
+
+
+
             else {
 
                 holder.total_order_price.setText(mySession.getValueOf(MySession.CurrencySign) + orderBeanArrayList.get(position).getTotal_amount());
@@ -666,6 +686,45 @@ public class TrasActivity extends Fragment {
                         startActivity(i);
 
                     }
+
+                    else if (orderBeanArrayList.get(position).getType() != null &&
+                            orderBeanArrayList.get(position).getType().equalsIgnoreCase("membership_purchase")) {
+
+                       /* order_cart_id = orderBeanArrayList.get(position).getOrder_special_request();
+
+                        Log.e("orderarraylist123", "" + orderBeanArrayList);
+                        Toast.makeText(requireActivity(), "" + order_cart_id, Toast.LENGTH_SHORT).show();
+
+                        Intent i = new Intent(requireActivity(), ReceiptActivity.class);
+                        i.putExtra("merchant_name", orderBeanArrayList.get(position).getMerchantDetail().get(0).getBusinessName());
+                        i.putExtra("merchant_id", orderBeanArrayList.get(position).getMerchantDetail().get(0).getId());
+                        i.putExtra("member_name", orderBeanArrayList.get(position).getMerchantDetail().get(0).getBusinessNo());
+                        i.putExtra("merchant_number", orderBeanArrayList.get(position).getMerchant_no());
+                        i.putExtra("merchant_contact_name", orderBeanArrayList.get(position).getMerchantDetail().get(0).getContactName());
+                        i.putExtra("address", orderBeanArrayList.get(position).getMerchantDetail().get(0).getAddress());
+                        i.putExtra("address_2", orderBeanArrayList.get(position).getMerchantDetail().get(0).getAddressTwo());
+                        i.putExtra("merchant_img_str", orderBeanArrayList.get(position).getMerchantDetail().get(0).getMerchantImage());
+                        i.putExtra("date_tv", orderBeanArrayList.get(position).getCreated_date() + " " + orderBeanArrayList.get(position).getOrder_Time());
+                        i.putExtra("order_id", "" + orderBeanArrayList.get(position).getId());
+                        i.putExtra("cardnumber_tv", "" + orderBeanArrayList.get(position).getCardNumber());
+                        i.putExtra("cardbrand", "" + orderBeanArrayList.get(position).getCardBrand());
+                        i.putExtra("total_amt_tv_str", "" + orderBeanArrayList.get(position).getTotal_amount());
+                        i.putExtra("due_amt_tv_str", "" + orderBeanArrayList.get(position).getAmount());
+                        i.putExtra("ngcash_str", "" + orderBeanArrayList.get(position).getNgcash());
+                        i.putExtra("tip_str", "" + orderBeanArrayList.get(position).getTip_amount());
+                        i.putExtra("employee_name", "" + orderBeanArrayList.get(position).getEmployeeName());
+                        i.putExtra("mdate", "" + orderBeanArrayList.get(position).getOrderDate2());
+                        i.putExtra("time", "" + orderBeanArrayList.get(position).getOrder_Time());
+                        i.putExtra("Order_guset_No", "" + orderBeanArrayList.get(position).getOrder_guset_No());
+                        i.putExtra("Order_Table_No", "" + orderBeanArrayList.get(position).getOrder_Table_No());
+                        i.putExtra("reciept_url", "" + orderBeanArrayList.get(position).getReciept_url());
+                        i.putExtra("order_special", "" + orderBeanArrayList.get(position).getOrder_special_request());
+                        i.putExtra("order_cart_id", "" + orderBeanArrayList.get(position).getOrder_cart_id());
+                        i.putExtra("type123", orderBeanArrayList.get(position).getType());
+                        startActivity(i);*/
+
+                    }
+
                     else {
 
                         Intent i = new Intent(requireActivity(), PurchasedItemDetailAct.class);
