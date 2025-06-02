@@ -70,9 +70,8 @@
             android:text="@string/skip"
             android:layout_gravity="center_vertical"
             android:textSize="@dimen/_10sdp"
-            android:textColor="@color/grey"
+            android:textColor="@color/darkgrey"
             android:layout_marginTop="@dimen/_2sdp"
-
             />
 
         <TextView
@@ -82,7 +81,9 @@
             android:text="@string/skip"
             android:layout_gravity="center_vertical"
             android:textSize="@dimen/_10sdp"
-            android:textColor="@color/grey"
+            android:textColor="@color/darkgrey"
+            android:layout_marginTop="1dp"
+
             />
 
         <TextView
@@ -92,7 +93,9 @@
             android:text="@string/skip"
             android:layout_gravity="center_vertical"
             android:textSize="@dimen/_10sdp"
-            android:textColor="@color/grey"
+            android:textColor="@color/darkgrey"
+            android:layout_marginTop="1dp"
+
             />
 
         <TextView
@@ -102,7 +105,9 @@
             android:text="@string/skip"
             android:layout_gravity="center_vertical"
             android:textSize="@dimen/_10sdp"
-            android:textColor="@color/grey"
+            android:textColor="@color/darkgrey"
+            android:layout_marginTop="1dp"
+
             />
 
         <TextView
@@ -112,7 +117,9 @@
             android:text="@string/skip"
             android:layout_gravity="center_vertical"
             android:textSize="@dimen/_10sdp"
-            android:textColor="@color/grey"
+            android:textColor="@color/darkgrey"
+            android:layout_marginTop="1dp"
+
             />
 
 
@@ -133,14 +140,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:layout_gravity="end"
                 android:textSize="@dimen/_12sdp"
                 android:textColor="@color/white"
-                android:gravity="end"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:paddingTop="@dimen/_2sdp"
-                android:paddingBottom="@dimen/_2sdp"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_15sdp"
+                android:paddingTop="@dimen/_3sdp"
+                android:paddingBottom="@dimen/_3sdp"
                 android:background="@drawable/rounded_red_btn_bg"
                 android:layout_centerInParent="true"
                 android:layout_alignParentStart="true"
@@ -155,14 +160,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/recipt"
-                android:layout_gravity="end"
                 android:textSize="@dimen/_12sdp"
                 android:textColor="@color/white"
-                android:gravity="end"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:paddingTop="@dimen/_2sdp"
-                android:paddingBottom="@dimen/_2sdp"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_15sdp"
+                android:paddingTop="@dimen/_3sdp"
+                android:paddingBottom="@dimen/_3sdp"
                 android:background="@drawable/rounded_green_btn_bg"
                 android:layout_centerInParent="true"
                 android:layout_alignParentEnd="true"

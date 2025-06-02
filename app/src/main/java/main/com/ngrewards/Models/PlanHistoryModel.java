@@ -149,9 +149,9 @@ public class PlanHistoryModel {
         @SerializedName("share_link")
         @Expose
         private String shareLink;
-        @SerializedName("member_ngcash")
+       /* @SerializedName("member_ngcash")
         @Expose
-        private Integer memberNgcash;
+        private Integer memberNgcash;*/
 
         public String getId() {
             return id;
@@ -393,13 +393,13 @@ public class PlanHistoryModel {
             this.shareLink = shareLink;
         }
 
-        public Integer getMemberNgcash() {
+      /*  public Integer getMemberNgcash() {
             return memberNgcash;
         }
 
         public void setMemberNgcash(Integer memberNgcash) {
             this.memberNgcash = memberNgcash;
-        }
+        }*/
 
     }
 
