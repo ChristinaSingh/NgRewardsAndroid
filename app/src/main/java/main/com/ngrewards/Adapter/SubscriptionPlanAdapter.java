@@ -38,7 +38,7 @@ public class SubscriptionPlanAdapter extends RecyclerView.Adapter<SubscriptionPl
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.binding.tvTitle.setText(arrayList.get(position).getPlanName());
-        holder.binding.tvPrice.setText("$ "+arrayList.get(position).getAmount() + " / " + arrayList.get(position).getDurationName());
+        holder.binding.tvPrice.setText("$"+arrayList.get(position).getAmount() + "/" + arrayList.get(position).getDurationName());
         holder.binding.tvEndDate.setText( "End Date - "+arrayList.get(position).getEndDate());
         holder.binding.tvStartDate.setText( "Start Date - "+arrayList.get(position).getStartDate());
 
@@ -51,8 +51,10 @@ public class SubscriptionPlanAdapter extends RecyclerView.Adapter<SubscriptionPl
         holder.binding.tvStatus.setText(arrayList.get(position).getStatus());
 
         holder.binding.btnReceipt.setOnClickListener(v -> {
-            context.startActivity(new Intent(context, WebViewCalled.class)
-                    .putExtra("reciept_url", arrayList.get(position).getReceiptUrl()));
+           if(arrayList.get(position).getReceiptUrl()!=null){
+               context.startActivity(new Intent(context, WebViewCalled.class)
+                       .putExtra("reciept_url", arrayList.get(position).getReceiptUrl()));
+           }
            ;
         });
 

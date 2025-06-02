@@ -48,6 +48,7 @@ public class WebViewCalled extends AppCompatActivity {
         WebView webView = (WebView) findViewById(R.id.webview123);
         WebSettings webSettingDimrah = webView.getSettings();
         webSettingDimrah.setJavaScriptEnabled(true);
+        webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
 
         webView.setWebViewClient(new WebViewClient() {
 
@@ -66,6 +67,7 @@ public class WebViewCalled extends AppCompatActivity {
         });
 
         webView.getSettings().setJavaScriptEnabled(true);
+        WebView.setWebContentsDebuggingEnabled(true);
         webView.loadUrl(reciept_url);
         webView.setHorizontalScrollBarEnabled(false);
 

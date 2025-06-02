@@ -42,7 +42,7 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.My
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.binding.tvTitle.setText(arrayList.get(position).getPlanName());
-        holder.binding.tvPrice.setText("USD "+arrayList.get(position).getPrice() + " / " + arrayList.get(position).getDurationType());
+        holder.binding.tvPrice.setText("$"+arrayList.get(position).getPrice() + "/" + arrayList.get(position).getDurationType());
         holder.binding.tvTitle1.setText(arrayList.get(position).getDescription());
 
         holder.binding.tv1.setText(arrayList.get(position).getFeatures().get(0));
