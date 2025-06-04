@@ -283,6 +283,18 @@ public class OrderBean {
     @Expose
     private String createdAt="";
 
+    @SerializedName("receipt_url")
+    @Expose
+    private String receiptUrl="";
+
+    public String getReceiptUrl() {
+        return receiptUrl;
+    }
+
+    public void setReceiptUrl(String receiptUrl) {
+        this.receiptUrl = receiptUrl;
+    }
+
     public String getCreatedAt() {
         return createdAt;
     }

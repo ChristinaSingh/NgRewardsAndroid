@@ -42,6 +42,7 @@ import main.com.ngrewards.Utils.Tools;
 import main.com.ngrewards.activity.MyDividerItemDecoration;
 import main.com.ngrewards.activity.PreferenceConnector;
 import main.com.ngrewards.activity.PurchasedItemDetailAct;
+import main.com.ngrewards.activity.WebViewCalled;
 import main.com.ngrewards.activity.WithdrawReceiptAct;
 import main.com.ngrewards.beanclasses.OrderAct;
 import main.com.ngrewards.beanclasses.OrderBean;
@@ -689,6 +690,11 @@ public class TrasActivity extends Fragment {
 
                     else if (orderBeanArrayList.get(position).getType() != null &&
                             orderBeanArrayList.get(position).getType().equalsIgnoreCase("membership_purchase")) {
+
+                        if(orderBeanArrayList.get(position).getReceiptUrl()!=null){
+                            context.startActivity(new Intent(context, WebViewCalled.class)
+                                    .putExtra("reciept_url", orderBeanArrayList.get(position).getReceiptUrl()));
+                        }
 
                        /* order_cart_id = orderBeanArrayList.get(position).getOrder_special_request();
 
