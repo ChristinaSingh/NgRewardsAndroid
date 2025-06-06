@@ -50,6 +50,12 @@ public class SubscriptionPlanAdapter extends RecyclerView.Adapter<SubscriptionPl
 
         holder.binding.tvStatus.setText(arrayList.get(position).getStatus());
 
+
+        if(arrayList.get(position).getStatus().equals("active"))
+            holder.binding.tvStatus.setBackground(context.getDrawable(R.drawable.rounded_green_btn_bg));
+        else holder.binding.tvStatus.setBackground(context.getDrawable(R.drawable.rounded_red_btn_bg));
+
+
         holder.binding.btnReceipt.setOnClickListener(v -> {
            if(arrayList.get(position).getReceiptUrl()!=null){
                context.startActivity(new Intent(context, WebViewCalled.class)

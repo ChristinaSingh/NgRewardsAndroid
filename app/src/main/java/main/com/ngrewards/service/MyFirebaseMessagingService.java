@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.Random;
 
 import main.com.ngrewards.activity.MemberChatAct;
@@ -76,12 +77,24 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
             try {
-                JSONObject json = new JSONObject(remoteMessage.getData().toString());
+                Map<String, String> data = remoteMessage.getData();
+
+
+
+
+                //JSONObject json = new JSONObject(remoteMessage.getData().toString());
+                JSONObject json = new JSONObject(data.get("message"));
                 Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
                 pushNotification.putExtra("message", String.valueOf(json));
                 // sendBroadcast(pushNotification);
                 //   LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
                 handleDataMessage(json);
+
+                Log.d("FCMService", "type: " + json.getString("type"));
+                Log.d("FCMService", "title: " + json.getString("title") );
+                Log.d("FCMService", "body: " +json.getString("body") );
+                Log.d("FCMService", "key: " +json.getString("key"));
+
             } catch (Exception e) {
                 Log.e(TAG, "Exception: " + e.getMessage());
             }
@@ -111,7 +124,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             e.printStackTrace();
         }
         try {
-            JSONObject data = json.getJSONObject("message");
+            //String msg= json.getString("message");
+           // JSONObject data =   json.getJSONObject("message");
+
+            JSONObject data =   json;
+
             String keyMessage = data.getString("key");
             type = data.getString("type");
             Log.e("ssagar>> ", keyMessage);
@@ -186,6 +203,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     showNotificationMessage(getApplicationContext(), "NG Rewards", "" + message, format, resultIntent, null, type);
                 }
 
+
+                else if (type.equalsIgnoreCase("referral_sign_up_1st_level")) {
+
+                    Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                    showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                }
+
+                else if (type.equalsIgnoreCase("referral_sign_up_2st_level")) {
+
+                    Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                    showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                }
+
+
+
             } else {
                 if (keyMessage.equalsIgnoreCase("You have a new chat message")) {
                     Log.e("IN Service ELSE", "KEY: " + keyMessage);
@@ -227,7 +259,27 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     String type = data.getString("type");
                     Intent resultIntent = new Intent(getApplicationContext(), MerchantBottumAct.class);
                     showNotificationMessage(getApplicationContext(), "NG Rewards", "" + message, format, resultIntent, null, type);
-                } else {
+                }
+
+
+
+                else if (type.equalsIgnoreCase("referral_sign_up_1st_level")) {
+
+                    Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                    showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                }
+
+                else if (type.equalsIgnoreCase("referral_sign_up_2st_level")) {
+
+                    Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                    showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                }
+
+
+                else
+
+
+                {
                     Intent resultIntent = new Intent(getApplicationContext(), SplashActivity.class);
                     showNotificationMessage(getApplicationContext(), "NG Rewards", "" + keyMessage, format, resultIntent, null, type);
                 }

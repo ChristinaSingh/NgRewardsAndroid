@@ -152,6 +152,9 @@ public class InviteActMain extends Fragment {
             @Override
             public void onClick(View v) {
                 invite_str2 = "https://myngrewards.com/signup-merchant.php?affiliate_name=" + username + "&affiliate_no=" + id + "&how_invited_you=" + affiliate_number + "&country=" + mySession.getValueOf(MySession.CountryId) + "&source=app";
+              //  invite_str2 = "https://international.myngrewards.com/signup-merchant.php?affiliate_name=" + username + "&affiliate_no=" + id + "&how_invited_you=" + affiliate_number + "&country=" + mySession.getValueOf(MySession.CountryId) + "&source=app";
+
+
                 Log.e("TAG", "onClick:---- " + invite_str2);
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
@@ -406,7 +409,9 @@ public class InviteActMain extends Fragment {
                     JSONObject jsonObject = new JSONObject(result);
                     String message = jsonObject.getString("status");
                     if (message.equalsIgnoreCase("1")) {
-                        invite_str = "https://myngrewards.com/share/" + id;
+                       // invite_str = "https://myngrewards.com/share/" + id;
+
+                        invite_str = "https://international.myngrewards.com/share/"+id ;
                         Intent sendIntent = new Intent();
                         sendIntent.setAction(Intent.ACTION_SEND);
                         sendIntent.putExtra(Intent.EXTRA_TEXT, invite_str);
