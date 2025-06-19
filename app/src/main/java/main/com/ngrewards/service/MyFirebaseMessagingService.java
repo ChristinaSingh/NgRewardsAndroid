@@ -197,24 +197,59 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     Log.e("KEYKEYINSIDE ", " >>> " + keyMessage);
                     Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
                     showNotificationMessage(getApplicationContext(), "NG Rewards", "" + keyMessage, format, resultIntent, null, type);
-                } else if (keyMessage.equalsIgnoreCase("You have a new  message")) {
-                    String message = data.getString("message");
-                    Intent resultIntent = new Intent(getApplicationContext(), SplashActivity.class);
-                    showNotificationMessage(getApplicationContext(), "NG Rewards", "" + message, format, resultIntent, null, type);
+                } else if (keyMessage.equalsIgnoreCase("You have a New Message")) {
+                    Log.e("KEYKEYINSIDE ", " >>> " + "1st----");
+
+                    if (type.equalsIgnoreCase("referral_sign_up_1st_level")) {
+
+                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                    }
+
+                    else if (type.equalsIgnoreCase("referral_sign_up_2nd_level")) {
+
+                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                    }
+
+
+                    else if (type.equalsIgnoreCase("referral_sign_up_3rd_level")) {
+
+                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                    }
+
+
+                    else if (type.equalsIgnoreCase("referral_sign_up_4th_level")) {
+
+                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                    }
+
+                    else if (type.equalsIgnoreCase("referral_sign_up_5th_level")) {
+
+                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                    }
+
+
+                    else if (type.equalsIgnoreCase("referral_sign_up_6th_level")) {
+
+                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                    }
+
+                    else {
+                        String message = data.getString("message");
+                        String type = data.getString("type");
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantBottumAct.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + message, format, resultIntent, null, type);
+
+                    }
                 }
 
 
-                else if (type.equalsIgnoreCase("referral_sign_up_1st_level")) {
 
-                    Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
-                    showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
-                }
-
-                else if (type.equalsIgnoreCase("referral_sign_up_2st_level")) {
-
-                    Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
-                    showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
-                }
 
 
 
@@ -254,26 +289,60 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 } else if (keyMessage.equalsIgnoreCase("Your Item purchased by member")) {
                     Intent resultIntent = new Intent(getApplicationContext(), MerchantBottumAct.class);
                     showNotificationMessage(getApplicationContext(), "NG Rewards", "" + keyMessage, format, resultIntent, null, type);
-                } else if (keyMessage.equalsIgnoreCase("You have a new  message")) {
-                    String message = data.getString("message");
-                    String type = data.getString("type");
-                    Intent resultIntent = new Intent(getApplicationContext(), MerchantBottumAct.class);
-                    showNotificationMessage(getApplicationContext(), "NG Rewards", "" + message, format, resultIntent, null, type);
+                } else if (keyMessage.equalsIgnoreCase("You have a New Message")) {
+                    Log.e("KEYKEYINSIDE ", " >>> " + "1st----");
+                    if (type.equalsIgnoreCase("referral_sign_up_1st_level")) {
+
+                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                    }
+
+                    else if (type.equalsIgnoreCase("referral_sign_up_2nd_level")) {
+
+                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                    }
+
+
+                    else if (type.equalsIgnoreCase("referral_sign_up_3rd_level")) {
+
+                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                    }
+
+
+                    else if (type.equalsIgnoreCase("referral_sign_up_4th_level")) {
+
+                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                    }
+
+                    else if (type.equalsIgnoreCase("referral_sign_up_5th_level")) {
+
+                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                    }
+
+
+                    else if (type.equalsIgnoreCase("referral_sign_up_6th_level")) {
+
+                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                    }
+
+                    else {
+                        String message = data.getString("message");
+                        String type = data.getString("type");
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantBottumAct.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + message, format, resultIntent, null, type);
+
+                    }
                 }
 
 
 
-                else if (type.equalsIgnoreCase("referral_sign_up_1st_level")) {
 
-                    Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
-                    showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
-                }
 
-                else if (type.equalsIgnoreCase("referral_sign_up_2st_level")) {
-
-                    Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
-                    showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
-                }
 
 
                 else

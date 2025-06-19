@@ -231,13 +231,13 @@ public class NotificationUtils {
                 .setOnlyAlertOnce(true)
                 .setPriority(Notification.PRIORITY_MAX)
                 .setDefaults(Notification.DEFAULT_ALL)
-                .setStyle(inboxStyle)
+                //.setStyle(inboxStyle)
                 .setAutoCancel(true)
                 .setWhen(getTimeMilliSec(timeStamp))
                 .setContentIntent(resultPendingIntent)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
-
-                .setContentText(message);
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message));
+               // .setContentText(message);
 
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
