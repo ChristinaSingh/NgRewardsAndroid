@@ -239,6 +239,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
+                    else if (type.equalsIgnoreCase("referral_sign_up_2st_level")) {
+
+                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                    }
+
                     else {
                         String message = data.getString("message");
                         String type = data.getString("type");
@@ -329,6 +335,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
+
+                    else if (type.equalsIgnoreCase("referral_sign_up_2st_level")) {
+
+                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                    }
+
+
+
 
                     else {
                         String message = data.getString("message");
