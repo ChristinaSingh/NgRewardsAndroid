@@ -38,6 +38,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
@@ -95,6 +97,7 @@ import main.com.ngrewards.activity.TutorialAct;
 import main.com.ngrewards.activity.WithdrawActivity;
 import main.com.ngrewards.activity.app.Config;
 import main.com.ngrewards.beanclasses.MerchantItem;
+import main.com.ngrewards.bottumtab.TrasActivity;
 import main.com.ngrewards.constant.BaseUrl;
 import main.com.ngrewards.constant.MySavedCardInfo;
 import main.com.ngrewards.constant.MySession;
@@ -235,7 +238,7 @@ public class MainTabActivity extends AppCompatActivity {
     private String age_str;
     RecyclerView rvMembership;
     ArrayList<MembershipModel.Result> arrayList =  new ArrayList<>();
-
+    View v;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,9 +247,23 @@ public class MainTabActivity extends AppCompatActivity {
         initToolbar();
         initNavigation();
         if (getIntent().getExtras() != null) {
-            result = getIntent().getExtras().getString("result");
-            if (result == null) {
-                result = "";
+
+            if(getIntent().getStringExtra("NgCashRef").equals("NgCashRef")){
+               /* FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                TrasActivity frg = new TrasActivity();
+                fragmentTransaction.replace(R.id.fragment_container, frg);
+                fragmentTransaction.commit();*/
+
+                ;
+            }
+
+                result = getIntent().getExtras().getString("result");
+                if (result == null) {
+                    result = "";
+
+
             }
         }
         notification_unseen_count = "";

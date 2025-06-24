@@ -112,7 +112,8 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
                                 Intent i = new Intent(context, MerchantBottumAct.class);
                                 context.startActivity(i);
                             } else {
-                                Intent i = new Intent(context, MainTabActivity.class);
+                                Intent i = new Intent(context, MainTabActivity.class)
+                                        .putExtra("NgCashRef","NgCashRef");
                                 context.startActivity(i);
                             }
 

@@ -762,7 +762,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         PreferenceConnector.writeString(LoginActivity.this, PreferenceConnector.Logout_Status, "false");
                         PreferenceConnector.writeString(LoginActivity.this, PreferenceConnector.Greeting_Status, "false");
-                        Intent i = new Intent(LoginActivity.this, MainTabActivity.class);
+                        Intent i = new Intent(LoginActivity.this, MainTabActivity.class)
+                                .putExtra("NgCashRef","NgCashRef");
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -914,7 +915,8 @@ public class LoginActivity extends AppCompatActivity {
                         mySession.setlogindata(result);
                         mySession.signinusers(true);
 
-                        Intent i = new Intent(LoginActivity.this, MainTabActivity.class);
+                        Intent i = new Intent(LoginActivity.this, MainTabActivity.class)
+                                .putExtra("NgCashRef","NgCashRef");
                         i.putExtra("facebook_name", facebook_name);
                         i.putExtra("face_gender", face_gender);
                         i.putExtra("facebook_image", facebook_image);

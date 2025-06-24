@@ -30,8 +30,10 @@ import java.util.Random;
 import main.com.ngrewards.activity.MemberChatAct;
 import main.com.ngrewards.activity.NotificationActivity;
 import main.com.ngrewards.activity.SplashActivity;
+import main.com.ngrewards.activity.Trans2Act;
 import main.com.ngrewards.activity.app.Config;
 import main.com.ngrewards.activity.app.NotificationUtils;
+import main.com.ngrewards.androidmigx.MainTabActivity;
 import main.com.ngrewards.marchant.merchantbottum.MerchantBottumAct;
 
 @SuppressLint("MissingFirebaseInstanceTokenRefresh")
@@ -240,9 +242,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     }
 
                     else if (type.equalsIgnoreCase("referral_sign_up_2st_level")) {
-
-                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
-                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                       Log.e("challa====","challaa");
+                        Intent resultIntent = new Intent(getApplicationContext(), Trans2Act.class);
+                      // resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                //.putExtra("NgCashRef","NgCashRef");
+                        showNotificationMessageNew(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
                     else {
@@ -338,8 +342,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                     else if (type.equalsIgnoreCase("referral_sign_up_2st_level")) {
 
-                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
-                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                        Intent resultIntent = new Intent(getApplicationContext(),
+                                Trans2Act.class)
+                                .putExtra("NgCashRef","NgCashRef");
+                        showNotificationMessageNew(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
 
@@ -410,6 +416,42 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationManager.notify(not_nu, noBuilder.build());*/
 
     }
+
+
+    private void showNotificationMessageNew(Context context, String title, String message, String
+            timeStamp, Intent intent, String route_img, String type) {
+        notificationUtils = new NotificationUtils(context);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        notificationUtils.showNotificationMessageNew(title, message, timeStamp, intent, route_img, type);
+
+      /*  final int not_nu = generateRandom();
+        Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder noBuilder = new NotificationCompat.Builder(this, getString(R.string.channelId))
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo))
+                .setSmallIcon(R.drawable.logo)
+                .setAutoCancel(true)
+                .setSound(sound)
+                .setContentIntent(contentIntent)
+                .setVibrate(new long[]{1000, 1000});
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel notificationChannel = new NotificationChannel(getString(R.string.channelId), "NOTIFICATION_CHANNEL_NAME", importance);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.RED);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            assert notificationManager != null;
+            noBuilder.setChannelId(getString(R.string.channelId));
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+        notificationManager.notify(not_nu, noBuilder.build());*/
+
+    }
+
+
+
 
     public int generateRandom() {
         Random random = new Random();

@@ -380,7 +380,7 @@ public class SplashActivity extends AppCompatActivity implements
                                         finish();
                                     } else {
                                         Intent i = new Intent(SplashActivity.this,
-                                                MainTabActivity.class);
+                                                MainTabActivity.class).putExtra("NgCashRef","");
                                         startActivity(i);
                                         finish();
                                     }
@@ -422,7 +422,7 @@ public class SplashActivity extends AppCompatActivity implements
                                         finish();
                                     } else {
                                         Intent i = new Intent(SplashActivity.this,
-                                                MainTabActivity.class);
+                                                MainTabActivity.class).putExtra("NgCashRef","");
                                         startActivity(i);
                                         finish();
                                     }
@@ -448,7 +448,8 @@ public class SplashActivity extends AppCompatActivity implements
                                         startActivity(i);
                                         finish();
                                     } else {
-                                        Intent i = new Intent(SplashActivity.this, MainTabActivity.class);
+                                        Intent i = new Intent(SplashActivity.this, MainTabActivity.class)
+                                                .putExtra("NgCashRef","");;
                                         startActivity(i);
                                         finish();
                                     }
@@ -585,7 +586,8 @@ public class SplashActivity extends AppCompatActivity implements
                             } else {
                                 Intent i = new Intent(SplashActivity.this,
                                         MainTabActivity.class)
-                                        .putExtra("result", reult_intent_mem);
+                                        .putExtra("result", reult_intent_mem)
+                                        .putExtra("NgCashRef","");
 
                                 Log.e(TAG, "run:  " + reult_intent_mem);
                                 PreferenceConnector.writeString(SplashActivity.this, PreferenceConnector.reult_intent_mem, reult_intent_mem);
@@ -693,7 +695,8 @@ public class SplashActivity extends AppCompatActivity implements
                                 } else {
 
                                     Intent i = new Intent(SplashActivity.this,
-                                            MainTabActivity.class);
+                                            MainTabActivity.class)
+                                            .putExtra("NgCashRef","");
                                     startActivity(i);
                                     finish();
                                     PreferenceConnector.writeString(SplashActivity.this, PreferenceConnector.Status_Facebook, "");

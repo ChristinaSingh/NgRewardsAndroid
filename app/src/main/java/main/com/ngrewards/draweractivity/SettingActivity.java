@@ -512,7 +512,8 @@ public class SettingActivity extends AppCompatActivity {
                     Tools.updateResources(getApplicationContext(), selected_lang);
                     mySession.setValueOf(KEY_LANGUAGE, selected_lang);
                     dialogSts.dismiss();
-                    Intent i = new Intent(SettingActivity.this, MainTabActivity.class);
+                    Intent i = new Intent(SettingActivity.this, MainTabActivity.class)
+                            .putExtra("NgCashRef","NgCashRef");
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                     finish();

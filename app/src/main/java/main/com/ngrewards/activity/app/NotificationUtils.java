@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.List;
 
 import main.com.ngrewards.R;
+import main.com.ngrewards.activity.NotificationActivity;
 import main.com.ngrewards.marchant.activity.MerchantNotificationActivity;
 
 public class NotificationUtils {
@@ -149,6 +150,8 @@ public class NotificationUtils {
             notificati`on.setSmallIcon(R.drawable.icon);
         }*/
 
+
+
         Intent intent1 = new Intent(mContext, MerchantNotificationActivity.class);
         intent1.putExtra("type", type);
         intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -200,6 +203,79 @@ public class NotificationUtils {
             //playNotificationSound();
         }
     }
+
+
+
+    public void showNotificationMessageNew(final String title, final String message,
+                                         final String timeStamp, Intent intent, String imageUrl, String type) {
+        // Check for empty push message
+        if (TextUtils.isEmpty(message))
+            return;
+        // notification icon
+        final int icon = R.mipmap.ic_launcher;
+
+        /*if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            notification.setSmallIcon(R.drawable.icon_transperent);
+            notification.setColor(getResources().getColor(R.color.notification_color));
+        } else {
+            notificati`on.setSmallIcon(R.drawable.icon);
+        }*/
+
+
+
+        Intent intent1 = new Intent(mContext, NotificationActivity.class);
+       // intent1.putExtra("type", type);
+        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        final PendingIntent resultPendingIntent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            resultPendingIntent = PendingIntent.getActivity(
+                    mContext,
+                    0,
+                    intent,
+                    PendingIntent.FLAG_IMMUTABLE );
+
+        } else {
+            resultPendingIntent = PendingIntent.getActivity(
+                    mContext,
+                    0,
+                    intent,
+                    PendingIntent.FLAG_ONE_SHOT );
+        }
+
+        final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
+                mContext);
+
+        int defaults = 0;
+        defaults = defaults | Notification.DEFAULT_LIGHTS;
+        defaults = defaults | Notification.DEFAULT_VIBRATE;
+        //defaults = defaults | Notification.DEFAULT_SOUND;
+        mBuilder.setDefaults(defaults);
+
+        mBuilder.setAutoCancel(true);
+
+        final Uri alarmSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
+                + "://" + mContext.getPackageName() + "/raw/notification");
+
+        if (!TextUtils.isEmpty(imageUrl)) {
+
+            if (imageUrl != null && imageUrl.length() > 4 && Patterns.WEB_URL.matcher(imageUrl).matches()) {
+
+                Bitmap bitmap = getBitmapFromURL(imageUrl);
+
+                if (bitmap != null) {
+                    showBigNotification(bitmap, mBuilder, icon, title, message, timeStamp, resultPendingIntent, alarmSound);
+                } else {
+                    showSmallNotification(mBuilder, icon, title, message, timeStamp, resultPendingIntent, alarmSound);
+                }
+            }
+
+        } else {
+            showSmallNotification(mBuilder, icon, title, message, timeStamp, resultPendingIntent, alarmSound);
+            //playNotificationSound();
+        }
+    }
+
+
 
     private void showSmallNotification(NotificationCompat.Builder mBuilder, int icon, String title, String message, String timeStamp, PendingIntent resultPendingIntent, Uri alarmSound) {
         if (!message.equalsIgnoreCase("Tip amount is updated") && !message.equalsIgnoreCase("your booking request is Now")) {

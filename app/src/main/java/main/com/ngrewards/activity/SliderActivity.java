@@ -379,7 +379,8 @@ public class SliderActivity extends AppCompatActivity {
 
                         mySession.setlogindata(result);
                         mySession.signinusers(true);
-                        Intent i = new Intent(SliderActivity.this, MainTabActivity.class);
+                        Intent i = new Intent(SliderActivity.this, MainTabActivity.class)
+                                .putExtra("NgCashRef","NgCashRef");
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

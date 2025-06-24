@@ -466,7 +466,8 @@ public class WelcomeActivity extends AppCompatActivity {
                         mySession.setlogindata(result);
                         mySession.signinusers(true);
 
-                        Intent i = new Intent(WelcomeActivity.this, MainTabActivity.class);
+                        Intent i = new Intent(WelcomeActivity.this, MainTabActivity.class)
+                                .putExtra("NgCashRef","NgCashRef");
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

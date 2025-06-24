@@ -234,6 +234,12 @@ public class TransferToaFriend extends AppCompatActivity {
                     double amt = tot - apply_ng_cash;
                     card_amount_tv.setText(mySession.getValueOf(MySession.CurrencySign) + " " + String.format("%.2f", new BigDecimal(amt)));
                 }
+
+              /*  if (!due_amt.contains(".")) {
+                    double value = Double.parseDouble(due_amt);
+                    amount.setText(String.format("%.2f", value));
+                }*/
+
             }
         });
 
@@ -258,6 +264,12 @@ public class TransferToaFriend extends AppCompatActivity {
                     double amt = total_amt_calculate - apply_ng_cash;
                     card_amount_tv.setText(mySession.getValueOf(MySession.CurrencySign) + " " + String.format("%.2f", new BigDecimal(amt)));
                 }
+
+                /*String input = ngcashavb.getText().toString();
+                if (!input.isEmpty() && !input.contains(".")) {
+                    ngcashavb.setText(input + ".00");
+                }*/
+
             }
         });
 
@@ -492,7 +504,8 @@ public class TransferToaFriend extends AppCompatActivity {
                             if (type.equalsIgnoreCase("Transfer")) {
                                 Toast.makeText(TransferToaFriend.this, getResources().getString(R.string.amountistransfersuccess), Toast.LENGTH_LONG).show();
 
-                                Intent i = new Intent(TransferToaFriend.this, MainTabActivity.class);
+                                Intent i = new Intent(TransferToaFriend.this, MainTabActivity.class)
+                                        .putExtra("NgCashRef","NgCashRef");
                                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
