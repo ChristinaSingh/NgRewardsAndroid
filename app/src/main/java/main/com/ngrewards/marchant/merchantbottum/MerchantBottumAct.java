@@ -71,7 +71,7 @@ public class MerchantBottumAct extends TabActivity {
 
             if (intent != null) {
                 String str = intent.getStringExtra("key");
-                Log.e("message>>>>>>>", str);
+              //  Log.e("message>>>>>>>", str);
                 mySession = new MySession(getApplicationContext());
                 user_log_data = mySession.getKeyAlldata();
 

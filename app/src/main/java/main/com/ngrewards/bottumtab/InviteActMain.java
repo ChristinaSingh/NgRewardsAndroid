@@ -15,7 +15,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -30,13 +35,22 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import main.com.ngrewards.R;
+import main.com.ngrewards.activity.MyDividerItemDecoration;
 import main.com.ngrewards.activity.PreferenceConnector;
+import main.com.ngrewards.activity.Trans2Act;
+import main.com.ngrewards.beanclasses.OrderAct;
 import main.com.ngrewards.constant.BaseUrl;
 import main.com.ngrewards.constant.MySession;
+import main.com.ngrewards.restapi.ApiClient;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class InviteActMain extends Fragment {
 
@@ -141,7 +155,8 @@ public class InviteActMain extends Fragment {
                                 startActivity(sendIntent);*/
                 invite_str = "https://myngrewards.com/signup.php?affiliate_name=" + username + "&affiliate_no=" + id + "&how_invited_you=" + affiliate_number + "&country=" + mySession.getValueOf(MySession.CountryId) + "&source=app";
 
-                new uploadDataLink().execute();
+               // new uploadDataLink().execute();
+                uploadDataLink();
 
 
             }
@@ -310,8 +325,8 @@ public class InviteActMain extends Fragment {
                                 sendIntent.setType("text/plain");
                                 startActivity(sendIntent);*/
 
-
-                                new uploadDataLink().execute();
+                                uploadDataLink();
+                               // new uploadDataLink().execute();
 
 
                             }
@@ -338,8 +353,70 @@ public class InviteActMain extends Fragment {
         }
     }
 
+    private void uploadDataLink() {
+        try {
 
 
+            //   Log.e("user_idd", user_id);
+
+            progresbar.setVisibility(View.VISIBLE);
+            Map<String, String> params = new LinkedHashMap<>();
+            params.put("member_id", id);
+            params.put("link", invite_str);
+            Log.e("request data >> ", " >> " + params);
+
+            Call<ResponseBody> call = ApiClient.getApiInterface().shareLinkApi(params);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                    if (response.isSuccessful()) {
+
+                        progresbar.setVisibility(View.GONE);
+
+                        try {
+
+                            String responseData = response.body().string();
+                            JSONObject object = new JSONObject(responseData);
+                            Log.e("responseDataaaaa >> ", " >> " + responseData);
+
+                            if (object.getString("status").equals("1")) {
+                                invite_str = "https://international.myngrewards.com/share/"+id ;
+                                Intent sendIntent = new Intent();
+                                sendIntent.setAction(Intent.ACTION_SEND);
+                                sendIntent.putExtra(Intent.EXTRA_TEXT, invite_str);
+                                sendIntent.setType("text/plain");
+                                startActivity(sendIntent);
+                            }
+
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    } else {
+
+                        progresbar.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    t.printStackTrace();
+                    Log.e("TAG", t.toString());
+                }
+            });
+        } catch (Exception e) {
+        }
+    }
+
+
+
+
+
+
+/*
     private class uploadDataLink extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
@@ -429,6 +506,7 @@ public class InviteActMain extends Fragment {
 
         }
     }
+*/
 
 
 }

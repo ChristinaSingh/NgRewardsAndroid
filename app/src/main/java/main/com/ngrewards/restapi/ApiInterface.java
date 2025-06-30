@@ -314,4 +314,12 @@ public interface ApiInterface {
     Call<ResponseBody> getPlanHistoryApi(@Query("member_id") String memberId);
 
 
+
+
+
+    @FormUrlEncoded
+    @POST("share_link.php?")
+    Call<ResponseBody> shareLinkApi(@FieldMap Map<String, String> paramHashMap);
+
+
 }

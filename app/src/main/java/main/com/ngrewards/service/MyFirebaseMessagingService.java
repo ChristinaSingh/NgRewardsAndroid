@@ -34,6 +34,7 @@ import main.com.ngrewards.activity.Trans2Act;
 import main.com.ngrewards.activity.app.Config;
 import main.com.ngrewards.activity.app.NotificationUtils;
 import main.com.ngrewards.androidmigx.MainTabActivity;
+import main.com.ngrewards.marchant.activity.MerchantNotificationActivity;
 import main.com.ngrewards.marchant.merchantbottum.MerchantBottumAct;
 
 @SuppressLint("MissingFirebaseInstanceTokenRefresh")
@@ -249,6 +250,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         showNotificationMessageNew(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
+
+                    else if (type.equalsIgnoreCase("referral_merchant")) {
+
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                    }
+
                     else {
                         String message = data.getString("message");
                         String type = data.getString("type");
@@ -347,6 +355,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                                 .putExtra("NgCashRef","NgCashRef");
                         showNotificationMessageNew(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
+
+
+                    else if (type.equalsIgnoreCase("referral_merchant")) {
+
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
+                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                    }
+
 
 
 
