@@ -53,6 +53,9 @@ import main.com.ngrewards.androidmigx.MainTabActivity;
 import main.com.ngrewards.constant.BaseUrl;
 import main.com.ngrewards.constant.MySession;
 import main.com.ngrewards.fragments.FilterBottomSheet;
+import main.com.ngrewards.marchant.merchantbottum.MerHomeActivity;
+import main.com.ngrewards.placeorderclasses.MerchantReceiptActivity;
+import main.com.ngrewards.placeorderclasses.ReceiptActivity;
 import main.com.ngrewards.restapi.ApiClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -96,6 +99,12 @@ public class MerchantNotificationActivity extends AppCompatActivity implements F
         } else {
             type = (String) savedInstanceState.getSerializable("type");
         }
+
+        if(type.equalsIgnoreCase("pay_bill_merchant")){
+            type = "merchant";
+        }
+
+        Log.e("check type===",type);
 
 
         //   Log.e("sagar>>>>>", type);
@@ -199,7 +208,7 @@ public class MerchantNotificationActivity extends AppCompatActivity implements F
                         if (response.body().getStatus().equalsIgnoreCase("1")) {
                             Log.e("TAG",
                                     "onResponse: response.body().getStatus()----" + response.body().getStatus());
-                            notificationModels = response.body().getResult();
+                            notificationModels = (ArrayList<NotificationModel.Result>) response.body().getResult();
                             notificationAdpter = new NotificationAdpter(MerchantNotificationActivity.this, notificationModels);
                             notificationlist.setAdapter(notificationAdpter);
                             notificationAdpter.notifyDataSetChanged();
@@ -478,17 +487,49 @@ public class MerchantNotificationActivity extends AppCompatActivity implements F
 
                 }
 
-                holder.itemView.setOnClickListener(v -> {
-                    Log.e("TAG",
-                            "onBindViewHolder: paylode.toString()---" + paylode);
-                    Intent intentw = new Intent(getApplicationContext(), EMIManualActivity.class);
-                    intentw.putExtra("object", paylode.toString());
-                    context.startActivity(intentw);
-                });
             } else {
                 holder.message_tv.setText("" + result.getChatMessage());
             }
             holder.time_tv.setText("" + result.getDateTime());
+
+
+            holder.itemView.setOnClickListener(v -> {
+                Log.e("TAG",
+                        "onBindViewHolder: paylode.toString()---" + paylode);
+                if(result.getType().equalsIgnoreCase("merchant")){
+                    //dfghjbvdf = notificationBeanNewArrayList.get(position).getOrder_cart_id();
+                    Intent i = new Intent(MerchantNotificationActivity.this, MerchantReceiptActivity.class);
+                    i.putExtra("member_user_name", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getMemberDetail().get(0).getAffiliateName());
+                    i.putExtra("member_id", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getMemberDetail().get(0).getId());
+                    i.putExtra("member_fullname_number", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getMemberDetail().get(0).getFullname());
+                    i.putExtra("member_img_str", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getMemberDetail().get(0).getMemberImage());
+                    i.putExtra("order_id", "" + notificationBeanNewArrayList.get(position).getId());
+                    i.putExtra("cardnumber_tv", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getCardNumber());
+                    i.putExtra("cardbrand", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getCardBrand());
+                    i.putExtra("total_amt_tv_str", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getTotalAmount());
+                    i.putExtra("due_amt_tv_str", "" +notificationBeanNewArrayList.get(position).getPayBillData().get(0).getAmount());
+                    i.putExtra("ngcash_str", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getNgcash());
+                    i.putExtra("tip_str", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getTipAmount());
+                    i.putExtra("order_special", "" + "");
+                    i.putExtra("employee_name", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getEmployeeName());
+                    i.putExtra("reciept_url", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getRecieptUrl());
+                    i.putExtra("order_date", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getPayBillDate());
+                    i.putExtra("order_cart_id", "" + "");
+                    startActivity(i);
+                }
+                else {
+                    if (paylode.getDueDate() != null) {
+
+                        Intent intentw = new Intent(getApplicationContext(), EMIManualActivity.class);
+                        intentw.putExtra("object", paylode.toString());
+                        context.startActivity(intentw);
+                    }
+                }
+
+
+            });
+
+
 
         }
 

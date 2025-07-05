@@ -188,6 +188,9 @@ public class MerchantReceiptActivity extends AppCompatActivity {
         });
 
 
+        if(order_cart_id.equalsIgnoreCase("")) btn_order.setVisibility(View.GONE);
+        if(order_special_str.equalsIgnoreCase("")) special_request.setVisibility(View.GONE);
+
         special_request.setText(getString(R.string.special_request) + "" + order_special_str);
 
         order_id.setText("#" + order_id_str);

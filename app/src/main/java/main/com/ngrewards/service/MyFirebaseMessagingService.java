@@ -257,6 +257,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
+
+                    else if (type.equalsIgnoreCase("pay_bill_merchant")) {
+                        Log.e("chala pay bill merchant====","challaa");
+
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
+                        resultIntent.putExtra("type","merchant");
+                        showNotificationMessage2(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, "merchant");
+                    }
+
+
+
+
+
+
                     else {
                         String message = data.getString("message");
                         String type = data.getString("type");
@@ -363,7 +377,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
-
+                    else if (type.equalsIgnoreCase("pay_bill_merchant")) {
+                        Log.e("chala pay bill merchant====","challaa");
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
+                        resultIntent.putExtra("type","merchant");
+                        showNotificationMessage2(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, "merchant");
+                    }
 
 
 
@@ -466,6 +485,39 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
+
+
+    private void showNotificationMessage2(Context context, String title, String message, String
+            timeStamp, Intent intent, String route_img, String type) {
+        notificationUtils = new NotificationUtils(context);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        notificationUtils.showNotificationMessage2(title, message, timeStamp, intent, route_img, type);
+
+      /*  final int not_nu = generateRandom();
+        Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder noBuilder = new NotificationCompat.Builder(this, getString(R.string.channelId))
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo))
+                .setSmallIcon(R.drawable.logo)
+                .setAutoCancel(true)
+                .setSound(sound)
+                .setContentIntent(contentIntent)
+                .setVibrate(new long[]{1000, 1000});
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel notificationChannel = new NotificationChannel(getString(R.string.channelId), "NOTIFICATION_CHANNEL_NAME", importance);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.RED);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            assert notificationManager != null;
+            noBuilder.setChannelId(getString(R.string.channelId));
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+        notificationManager.notify(not_nu, noBuilder.build());*/
+
+    }
 
 
 
