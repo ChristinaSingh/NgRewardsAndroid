@@ -205,46 +205,46 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                     if (type.equalsIgnoreCase("referral_sign_up_1st_level")) {
 
-                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
                     else if (type.equalsIgnoreCase("referral_sign_up_2nd_level")) {
 
-                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
 
                     else if (type.equalsIgnoreCase("referral_sign_up_3rd_level")) {
 
-                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
 
                     else if (type.equalsIgnoreCase("referral_sign_up_4th_level")) {
 
-                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
                     else if (type.equalsIgnoreCase("referral_sign_up_5th_level")) {
 
-                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
 
                     else if (type.equalsIgnoreCase("referral_sign_up_6th_level")) {
 
-                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
                     else if (type.equalsIgnoreCase("referral_sign_up_2st_level")) {
                        Log.e("challa====","challaa");
-                        Intent resultIntent = new Intent(getApplicationContext(), Trans2Act.class);
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
                       // resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 //.putExtra("NgCashRef","NgCashRef");
                         showNotificationMessageNew(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
@@ -325,47 +325,47 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     Log.e("KEYKEYINSIDE ", " >>> " + "1st----");
                     if (type.equalsIgnoreCase("referral_sign_up_1st_level")) {
 
-                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
                     else if (type.equalsIgnoreCase("referral_sign_up_2nd_level")) {
 
-                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
 
                     else if (type.equalsIgnoreCase("referral_sign_up_3rd_level")) {
 
-                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
 
                     else if (type.equalsIgnoreCase("referral_sign_up_4th_level")) {
 
-                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
                     else if (type.equalsIgnoreCase("referral_sign_up_5th_level")) {
 
-                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
 
                     else if (type.equalsIgnoreCase("referral_sign_up_6th_level")) {
 
-                        Intent resultIntent = new Intent(getApplicationContext(), NotificationActivity.class);
+                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }
 
                     else if (type.equalsIgnoreCase("referral_sign_up_2st_level")) {
 
                         Intent resultIntent = new Intent(getApplicationContext(),
-                                Trans2Act.class)
+                                MerchantNotificationActivity.class)
                                 .putExtra("NgCashRef","NgCashRef");
                         showNotificationMessageNew(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }

@@ -32,8 +32,9 @@ public class ReceiptActivity extends AppCompatActivity {
 
     private final String shipping_name_str = "";
     private RelativeLayout backlay;
+    private LinearLayout llOrderInfo,llMerchantInfo;
     private ImageView sharebut;
-    private TextView ngcashredeem, username_tv, employee_tv, member_name, tipamount_tv, due_amount, order_id, merchant_name, merchant_number, date_tv, address_tv, total_amt_tv, cardnumber_tv, special_request;
+    private TextView ngcashredeem, username_tv,tvMemberUserName, employee_tv, member_name, tipamount_tv, due_amount, order_id, merchant_name, merchant_number, date_tv, address_tv, total_amt_tv, cardnumber_tv, special_request;
     private String user_id = "";
     private String due_amt_tv_str = "";
     private String ngcash_str = "";
@@ -186,6 +187,9 @@ public class ReceiptActivity extends AppCompatActivity {
         li_order_info = findViewById(R.id.li_order_info);
         btn_strip_receipt = findViewById(R.id.btn_strip_receipt);
         btn_order = findViewById(R.id.btn_order123);
+        llOrderInfo = findViewById(R.id.llOrderInfo);
+        llMerchantInfo = findViewById(R.id.llMerchantInfo);
+        tvMemberUserName =findViewById(R.id.tvMemberUserName);
 
         busseness_name = findViewById(R.id.busseness_name);
         busseness_name.setText(merchant_name_str);
@@ -194,6 +198,8 @@ public class ReceiptActivity extends AppCompatActivity {
         employee_tv.setText(getString(R.string.employee_name) + employee_name);
         special_request.setText(getString(R.string.special_request) + " " + order_special);
         order_id.setText("#" + order_id_str);
+
+
 
         if (type123.equals("Paybill")) {
 
@@ -258,6 +264,7 @@ public class ReceiptActivity extends AppCompatActivity {
             cardnumber_tv.setText("" + cardbrand_str + " " + stars + " " + cardnumber_tv_str);
         }
 
+
         if (mdate != null && !mdate.equals("null")) {
             tv_date.setText(getString(R.string.date) + mdate);
             tv_time.setText(getString(R.string.time) + time);
@@ -269,6 +276,30 @@ public class ReceiptActivity extends AppCompatActivity {
             li_order_info.setVisibility(View.GONE);
 
         }
+
+
+        if(type123.equalsIgnoreCase("Transfer")){
+            llOrderInfo.setVisibility(View.GONE);
+            llMerchantInfo.setVisibility(View.GONE);
+            btn_order.setVisibility(View.GONE);
+            li_memberinfo.setVisibility(View.VISIBLE);
+
+            tvMemberUserName.setVisibility(View.VISIBLE);
+
+            member_name.setText(getString(R.string.name_colan) + merchant_name_str);
+            tvMemberUserName.setText(getString(R.string.username_at_the_rad) + member_name_str);
+            employee_tv.setVisibility(View.GONE);
+
+        }
+        else {
+            llOrderInfo.setVisibility(View.VISIBLE);
+            llMerchantInfo.setVisibility(View.VISIBLE);
+            btn_order.setVisibility(View.VISIBLE);
+            li_memberinfo.setVisibility(View.GONE);
+
+        }
+
+
 
         btn_strip_receipt.setOnClickListener(v -> {
             new FragmentWebView().setData(getString(R.string.receipt), reciept_url).show(getSupportFragmentManager(), "");

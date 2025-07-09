@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -52,6 +53,7 @@ import main.com.ngrewards.beanclasses.NotificationBeanNew;
 import main.com.ngrewards.beanclasses.NotificationListBean;
 import main.com.ngrewards.constant.BaseUrl;
 import main.com.ngrewards.constant.MySession;
+import main.com.ngrewards.placeorderclasses.ReceiptActivity;
 import main.com.ngrewards.restapi.ApiClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -281,9 +283,11 @@ public class NotificationActivity extends AppCompatActivity {
                 }
             }
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+            holder.MainCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.e("check====","check=====");
+
                     if (notificationBeanNewArrayList.get(position).getNotification_type().equalsIgnoreCase("Chat")) {
 
                         Intent i = new Intent(NotificationActivity.this, MemberChatAct.class);
@@ -294,6 +298,44 @@ public class NotificationActivity extends AppCompatActivity {
                         i.putExtra("receiver_img", "" + notificationBeanNewArrayList.get(position).getSenderimg());
                         i.putExtra("receiver_name", notificationBeanNewArrayList.get(position).getSendername());
                         startActivity(i);
+                    }
+
+                    else {
+                       Log.e("check====","check=====");
+                        if(notificationBeanNewArrayList.get(position).getTransferRequestData()!=null){
+                            if(notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getType().equalsIgnoreCase("Transfer")){
+
+                                Intent i = new Intent(NotificationActivity.this, ReceiptActivity.class);
+
+                                Log.e("getBusinessName", notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getMemberDetail().get(0).getAffiliateName());
+                                i.putExtra("merchant_name", notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getMemberDetail().get(0).getUsername());
+                                i.putExtra("member_name", notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getMemberDetail().get(0).getAffiliateName());
+                                i.putExtra("merchant_id", notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getMemberDetail().get(0).getId());
+                                i.putExtra("merchant_number",notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getMemberDetail().get(0).getPhone());
+                                i.putExtra("merchant_contact_name", "");
+                                i.putExtra("address", "");
+                                i.putExtra("address_2", "");
+                                i.putExtra("merchant_img_str", notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getMemberDetail().get(0).getMemberImage());
+                                i.putExtra("date_tv", notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getCreatedDate());
+                                i.putExtra("order_id", "" + notificationBeanNewArrayList.get(position).getId());
+                                i.putExtra("cardnumber_tv", "" + notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getCardNumber());
+                                i.putExtra("cardbrand", "" + notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getCardBrand());
+                                i.putExtra("total_amt_tv_str", "" + notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getTotalAmount());
+                                i.putExtra("due_amt_tv_str", "" + notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getAmount());
+                                i.putExtra("ngcash_str", "" + notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getNgcash());
+                                i.putExtra("tip_str", "" + "0.00");
+                                i.putExtra("employee_name", "" );
+                                i.putExtra("mdate", "" + notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getCreatedDate());
+                                i.putExtra("time", "" + notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getCreatedDate());
+                                i.putExtra("Order_guset_No", "" + "");
+                                i.putExtra("Order_Table_No", "" + "");
+                                i.putExtra("reciept_url", "" + notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getRecieptUrl());
+                                i.putExtra("order_special", "" );
+                                i.putExtra("order_cart_id", "");
+                                i.putExtra("type123", notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getType());
+                                startActivity(i);
+                            }
+                        }
                     }
 
                 }
@@ -310,6 +352,7 @@ public class NotificationActivity extends AppCompatActivity {
             public RelativeLayout backlay;
             CircleImageView user_img;
             TextView user_name_tv, message_tv, time_tv, reqcount;
+            CardView MainCard;
 
             public MyViewHolder(View view) {
                 super(view);
@@ -318,6 +361,7 @@ public class NotificationActivity extends AppCompatActivity {
                 user_name_tv = itemView.findViewById(R.id.user_name_tv);
                 message_tv = itemView.findViewById(R.id.message_tv);
                 time_tv = itemView.findViewById(R.id.time_tv);
+                MainCard = itemView.findViewById(R.id.MainCard);
             }
         }
     }

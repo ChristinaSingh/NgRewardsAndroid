@@ -101,71 +101,84 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/large" />
 
-                <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                <LinearLayout
+                    android:id="@+id/llMerchantInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="3dp"
-                    android:text="@string/merchantinfo"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/large" />
+                    android:orientation="vertical">
 
-                <main.com.ngrewards.fonttypeclasses.BoldTextView
-                    android:id="@+id/busseness_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="3dp"
-                    android:textColor="#000"
-                    android:text=""
-                    android:textSize="@dimen/large" />
 
-                <main.com.ngrewards.fonttypeclasses.NoramlTextView
-                    android:id="@+id/merchant_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="3dp"
-                    android:textColor="#000"
-                    android:text=""
-                    android:textSize="@dimen/small" />
+                    <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                        android:id="@+id/tvNameM"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="3dp"
+                        android:text="@string/merchantinfo"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/large" />
 
-                <main.com.ngrewards.fonttypeclasses.NoramlTextView
-                    android:id="@+id/merchant_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:visibility="gone"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Merchant No. :- 2345555"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small" />
+                    <main.com.ngrewards.fonttypeclasses.BoldTextView
+                        android:id="@+id/busseness_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="3dp"
+                        android:textColor="#000"
+                        android:text=""
+                        android:textSize="@dimen/large" />
 
-                <main.com.ngrewards.fonttypeclasses.NoramlTextView
-                    android:id="@+id/date_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Date:- 4 jun 2018 ,03:45:12 pm"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small" />
+                    <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                        android:id="@+id/merchant_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="3dp"
+                        android:textColor="#000"
+                        android:text=""
+                        android:textSize="@dimen/small" />
 
-                <main.com.ngrewards.fonttypeclasses.NoramlTextView
-                    android:id="@+id/address_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/address"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small" />
+                    <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                        android:id="@+id/merchant_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="gone"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Merchant No. :- 2345555"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small" />
+
+                    <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                        android:id="@+id/date_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Date:- 4 jun 2018 ,03:45:12 pm"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small" />
+
+                    <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                        android:id="@+id/address_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/address"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small" />
+
+
+                </LinearLayout>
+
+
 
                 <View
                     android:layout_width="match_parent"
@@ -310,6 +323,7 @@
                     android:textSize="@dimen/small" />
 
                 <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                    android:id="@+id/tvMemberUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -343,59 +357,74 @@
                     android:layout_marginTop="5dp"
                     android:background="@color/greyborder"></View>
 
-                <main.com.ngrewards.fonttypeclasses.NoramlTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/order_info"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/large" />
 
-                <main.com.ngrewards.fonttypeclasses.NoramlTextView
-                    android:id="@+id/tv_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/date"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small" />
+                  <LinearLayout
+                      android:id="@+id/llOrderInfo"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
 
-                <main.com.ngrewards.fonttypeclasses.NoramlTextView
-                    android:id="@+id/tv_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/time"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small" />
+                      <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="10dp"
+                          android:layout_marginRight="10dp"
+                          android:layout_marginTop="5dp"
+                          android:text="@string/order_info"
+                          android:textColor="@color/black"
+                          android:textSize="@dimen/large" />
 
-                <main.com.ngrewards.fonttypeclasses.NoramlTextView
-                    android:id="@+id/tv_guest_user"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/guest_user"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small" />
+                      <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                          android:id="@+id/tv_date"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="10dp"
+                          android:layout_marginRight="10dp"
+                          android:layout_marginTop="5dp"
+                          android:text="@string/date"
+                          android:textColor="@color/black"
+                          android:textSize="@dimen/small" />
 
-                <main.com.ngrewards.fonttypeclasses.NoramlTextView
-                    android:id="@+id/tv_table_no"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/table_no"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small" />
+                      <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                          android:id="@+id/tv_time"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="10dp"
+                          android:layout_marginRight="10dp"
+                          android:layout_marginTop="5dp"
+                          android:text="@string/time"
+                          android:textColor="@color/black"
+                          android:textSize="@dimen/small" />
+
+                      <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                          android:id="@+id/tv_guest_user"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="10dp"
+                          android:layout_marginRight="10dp"
+                          android:layout_marginTop="5dp"
+                          android:text="@string/guest_user"
+                          android:textColor="@color/black"
+                          android:textSize="@dimen/small" />
+
+                      <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                          android:id="@+id/tv_table_no"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="10dp"
+                          android:layout_marginRight="10dp"
+                          android:layout_marginTop="5dp"
+                          android:text="@string/table_no"
+                          android:textColor="@color/black"
+                          android:textSize="@dimen/small" />
+
+
+                  </LinearLayout>
+
+
+
+
+
                 </LinearLayout>
 
 

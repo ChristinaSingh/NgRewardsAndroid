@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.com.ngrewards.beanclasses.NotificationBeanNew;
+
 /*public class NotificationModel {
 
     @SerializedName("result")
@@ -434,6 +436,15 @@ public class NotificationModel {
         @SerializedName("pay_bill_data")
         @Expose
         private List<PayBillDatum> payBillData;
+
+        @SerializedName("transfer_request_data")
+        @Expose
+        private List<NotificationBeanNew.TransferRequestDatum> transferRequestData;
+
+        public List<NotificationBeanNew.TransferRequestDatum> getTransferRequestData() {
+            return transferRequestData;
+        }
+
 
         public String getId() {
             return id;
@@ -1332,6 +1343,492 @@ public class NotificationModel {
 
 
         }
+
+        public class TransferRequestDatum {
+
+            @SerializedName("id")
+            @Expose
+            private String id;
+            @SerializedName("member_id")
+            @Expose
+            private String memberId;
+            @SerializedName("transfer_request_user_id")
+            @Expose
+            private String transferRequestUserId;
+            @SerializedName("amount")
+            @Expose
+            private String amount;
+            @SerializedName("amount_by_card")
+            @Expose
+            private String amountByCard;
+            @SerializedName("type")
+            @Expose
+            private String type;
+            @SerializedName("ngcash")
+            @Expose
+            private String ngcash;
+            @SerializedName("comment")
+            @Expose
+            private String comment;
+            @SerializedName("card_id")
+            @Expose
+            private String cardId;
+            @SerializedName("card_number")
+            @Expose
+            private String cardNumber;
+            @SerializedName("card_brand")
+            @Expose
+            private String cardBrand;
+            @SerializedName("customer_id")
+            @Expose
+            private String customerId;
+            @SerializedName("timezone")
+            @Expose
+            private String timezone;
+            @SerializedName("status")
+            @Expose
+            private String status;
+            @SerializedName("created_date")
+            @Expose
+            private String createdDate;
+            @SerializedName("reciept_url")
+            @Expose
+            private String recieptUrl;
+            @SerializedName("ngcash_earned")
+            @Expose
+            private String ngcashEarned;
+            @SerializedName("search_id")
+            @Expose
+            private String searchId;
+            @SerializedName("total_amount")
+            @Expose
+            private String totalAmount;
+            @SerializedName("paid_by_card")
+            @Expose
+            private String paidByCard;
+            @SerializedName("member_detail")
+            @Expose
+            private List<NotificationBeanNew.TransferRequestDatum.MemberDetail> memberDetail;
+            @SerializedName("b_name")
+            @Expose
+            private String bName;
+            @SerializedName("symbol_amount")
+            @Expose
+            private String symbolAmount;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getMemberId() {
+                return memberId;
+            }
+
+            public void setMemberId(String memberId) {
+                this.memberId = memberId;
+            }
+
+            public String getTransferRequestUserId() {
+                return transferRequestUserId;
+            }
+
+            public void setTransferRequestUserId(String transferRequestUserId) {
+                this.transferRequestUserId = transferRequestUserId;
+            }
+
+            public String getAmount() {
+                return amount;
+            }
+
+            public void setAmount(String amount) {
+                this.amount = amount;
+            }
+
+            public String getAmountByCard() {
+                return amountByCard;
+            }
+
+            public void setAmountByCard(String amountByCard) {
+                this.amountByCard = amountByCard;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public String getNgcash() {
+                return ngcash;
+            }
+
+            public void setNgcash(String ngcash) {
+                this.ngcash = ngcash;
+            }
+
+            public String getComment() {
+                return comment;
+            }
+
+            public void setComment(String comment) {
+                this.comment = comment;
+            }
+
+            public String getCardId() {
+                return cardId;
+            }
+
+            public void setCardId(String cardId) {
+                this.cardId = cardId;
+            }
+
+            public String getCardNumber() {
+                return cardNumber;
+            }
+
+            public void setCardNumber(String cardNumber) {
+                this.cardNumber = cardNumber;
+            }
+
+            public String getCardBrand() {
+                return cardBrand;
+            }
+
+            public void setCardBrand(String cardBrand) {
+                this.cardBrand = cardBrand;
+            }
+
+            public String getCustomerId() {
+                return customerId;
+            }
+
+            public void setCustomerId(String customerId) {
+                this.customerId = customerId;
+            }
+
+            public String getTimezone() {
+                return timezone;
+            }
+
+            public void setTimezone(String timezone) {
+                this.timezone = timezone;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public String getCreatedDate() {
+                return createdDate;
+            }
+
+            public void setCreatedDate(String createdDate) {
+                this.createdDate = createdDate;
+            }
+
+            public String getRecieptUrl() {
+                return recieptUrl;
+            }
+
+            public void setRecieptUrl(String recieptUrl) {
+                this.recieptUrl = recieptUrl;
+            }
+
+            public String getNgcashEarned() {
+                return ngcashEarned;
+            }
+
+            public void setNgcashEarned(String ngcashEarned) {
+                this.ngcashEarned = ngcashEarned;
+            }
+
+            public String getSearchId() {
+                return searchId;
+            }
+
+            public void setSearchId(String searchId) {
+                this.searchId = searchId;
+            }
+
+            public String getTotalAmount() {
+                return totalAmount;
+            }
+
+            public void setTotalAmount(String totalAmount) {
+                this.totalAmount = totalAmount;
+            }
+
+            public String getPaidByCard() {
+                return paidByCard;
+            }
+
+            public void setPaidByCard(String paidByCard) {
+                this.paidByCard = paidByCard;
+            }
+
+            public List<NotificationBeanNew.TransferRequestDatum.MemberDetail> getMemberDetail() {
+                return memberDetail;
+            }
+
+            public void setMemberDetail(List<NotificationBeanNew.TransferRequestDatum.MemberDetail> memberDetail) {
+                this.memberDetail = memberDetail;
+            }
+
+            public String getbName() {
+                return bName;
+            }
+
+            public void setbName(String bName) {
+                this.bName = bName;
+            }
+
+            public String getSymbolAmount() {
+                return symbolAmount;
+            }
+
+            public void setSymbolAmount(String symbolAmount) {
+                this.symbolAmount = symbolAmount;
+            }
+
+
+            public class MemberDetail {
+
+                @SerializedName("id")
+                @Expose
+                private String id;
+                @SerializedName("username")
+                @Expose
+                private String username;
+                @SerializedName("email")
+                @Expose
+                private String email;
+                @SerializedName("phone")
+                @Expose
+                private String phone;
+                @SerializedName("fullname")
+                @Expose
+                private String fullname;
+                @SerializedName("password")
+                @Expose
+                private String password;
+                @SerializedName("affiliate_name")
+                @Expose
+                private String affiliateName;
+                @SerializedName("how_invited_you")
+                @Expose
+                private String howInvitedYou;
+                @SerializedName("affiliate_number")
+                @Expose
+                private String affiliateNumber;
+                @SerializedName("user_type")
+                @Expose
+                private String userType;
+                @SerializedName("latitude")
+                @Expose
+                private String latitude;
+                @SerializedName("longitude")
+                @Expose
+                private String longitude;
+                @SerializedName("country_name")
+                @Expose
+                private String countryName;
+                @SerializedName("touch_status")
+                @Expose
+                private String touchStatus;
+                @SerializedName("member_image")
+                @Expose
+                private String memberImage;
+                @SerializedName("country_id")
+                @Expose
+                private String countryId;
+                @SerializedName("device_token")
+                @Expose
+                private String deviceToken;
+                @SerializedName("gender")
+                @Expose
+                private String gender;
+                @SerializedName("age")
+                @Expose
+                private String age;
+                @SerializedName("social_id")
+                @Expose
+                private String socialId;
+
+                public String getId() {
+                    return id;
+                }
+
+                public void setId(String id) {
+                    this.id = id;
+                }
+
+                public String getUsername() {
+                    return username;
+                }
+
+                public void setUsername(String username) {
+                    this.username = username;
+                }
+
+                public String getEmail() {
+                    return email;
+                }
+
+                public void setEmail(String email) {
+                    this.email = email;
+                }
+
+                public String getPhone() {
+                    return phone;
+                }
+
+                public void setPhone(String phone) {
+                    this.phone = phone;
+                }
+
+                public String getFullname() {
+                    return fullname;
+                }
+
+                public void setFullname(String fullname) {
+                    this.fullname = fullname;
+                }
+
+                public String getPassword() {
+                    return password;
+                }
+
+                public void setPassword(String password) {
+                    this.password = password;
+                }
+
+                public String getAffiliateName() {
+                    return affiliateName;
+                }
+
+                public void setAffiliateName(String affiliateName) {
+                    this.affiliateName = affiliateName;
+                }
+
+                public String getHowInvitedYou() {
+                    return howInvitedYou;
+                }
+
+                public void setHowInvitedYou(String howInvitedYou) {
+                    this.howInvitedYou = howInvitedYou;
+                }
+
+                public String getAffiliateNumber() {
+                    return affiliateNumber;
+                }
+
+                public void setAffiliateNumber(String affiliateNumber) {
+                    this.affiliateNumber = affiliateNumber;
+                }
+
+                public String getUserType() {
+                    return userType;
+                }
+
+                public void setUserType(String userType) {
+                    this.userType = userType;
+                }
+
+                public String getLatitude() {
+                    return latitude;
+                }
+
+                public void setLatitude(String latitude) {
+                    this.latitude = latitude;
+                }
+
+                public String getLongitude() {
+                    return longitude;
+                }
+
+                public void setLongitude(String longitude) {
+                    this.longitude = longitude;
+                }
+
+                public String getCountryName() {
+                    return countryName;
+                }
+
+                public void setCountryName(String countryName) {
+                    this.countryName = countryName;
+                }
+
+                public String getTouchStatus() {
+                    return touchStatus;
+                }
+
+                public void setTouchStatus(String touchStatus) {
+                    this.touchStatus = touchStatus;
+                }
+
+                public String getMemberImage() {
+                    return memberImage;
+                }
+
+                public void setMemberImage(String memberImage) {
+                    this.memberImage = memberImage;
+                }
+
+                public String getCountryId() {
+                    return countryId;
+                }
+
+                public void setCountryId(String countryId) {
+                    this.countryId = countryId;
+                }
+
+                public String getDeviceToken() {
+                    return deviceToken;
+                }
+
+                public void setDeviceToken(String deviceToken) {
+                    this.deviceToken = deviceToken;
+                }
+
+                public String getGender() {
+                    return gender;
+                }
+
+                public void setGender(String gender) {
+                    this.gender = gender;
+                }
+
+                public String getAge() {
+                    return age;
+                }
+
+                public void setAge(String age) {
+                    this.age = age;
+                }
+
+                public String getSocialId() {
+                    return socialId;
+                }
+
+                public void setSocialId(String socialId) {
+                    this.socialId = socialId;
+                }
+
+            }
+
+        }
+
+
 
     }
 
