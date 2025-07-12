@@ -43,7 +43,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
     public static String notification_data = "";
     private NotificationUtils notificationUtils;
-    private String type = "";
+    private String type = "",bodyMsg="";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -134,6 +134,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             String keyMessage = data.getString("key");
             type = data.getString("type");
+            bodyMsg = data.getString("body");
             Log.e("ssagar>> ", keyMessage);
             // Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
             // pushNotification.putExtra("message", data.toString());
@@ -252,9 +253,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
                     else if (type.equalsIgnoreCase("referral_merchant")) {
-
                         Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
-                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                             showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+
+
                     }
 
 
@@ -372,7 +374,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
                     else if (type.equalsIgnoreCase("referral_merchant")) {
-
                         Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
                         showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
                     }

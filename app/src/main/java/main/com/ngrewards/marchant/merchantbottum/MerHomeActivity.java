@@ -597,6 +597,8 @@ public class MerHomeActivity extends MerchantBaseActivity {
                         i.putExtra("split_payment", "" + orderBeanArrayList.get(position).getSplit_payment());
                         i.putExtra("split_amount", "" + orderBeanArrayList.get(position).getSplit_amount());
                         i.putExtra("cart_id", "" + orderBeanArrayList.get(position).getCart_id());
+                        i.putExtra("download_url", "");
+
 
 
                         startActivity(i);

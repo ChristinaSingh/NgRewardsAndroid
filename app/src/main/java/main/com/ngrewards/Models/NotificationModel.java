@@ -441,6 +441,19 @@ public class NotificationModel {
         @Expose
         private List<NotificationBeanNew.TransferRequestDatum> transferRequestData;
 
+
+        @SerializedName("place_order_invoice_item_data")
+        @Expose
+        private List<PlaceOrderInvoiceItemDatum> placeOrderInvoiceItemDatum;
+
+        public List<PlaceOrderInvoiceItemDatum> getPlaceOrderInvoiceItemDatum() {
+            return placeOrderInvoiceItemDatum;
+        }
+
+        public void setPlaceOrderInvoiceItemDatum(List<PlaceOrderInvoiceItemDatum> placeOrderInvoiceItemDatum) {
+            this.placeOrderInvoiceItemDatum = placeOrderInvoiceItemDatum;
+        }
+
         public List<NotificationBeanNew.TransferRequestDatum> getTransferRequestData() {
             return transferRequestData;
         }
@@ -1828,6 +1841,917 @@ public class NotificationModel {
 
         }
 
+
+
+
+
+
+
+        public class PlaceOrderInvoiceItemDatum {
+
+            @SerializedName("order_id")
+            @Expose
+            private Integer orderId;
+            @SerializedName("order_date")
+            @Expose
+            private String orderDate;
+            @SerializedName("pay_bill_date")
+            @Expose
+            private String payBillDate;
+            @SerializedName("delivery_date")
+            @Expose
+            private String deliveryDate;
+            @SerializedName("id")
+            @Expose
+            private Integer id;
+            @SerializedName("search_id")
+            @Expose
+            private String searchId;
+            @SerializedName("product_name")
+            @Expose
+            private String productName;
+            @SerializedName("product_description")
+            @Expose
+            private String productDescription;
+            @SerializedName("price")
+            @Expose
+            private String price;
+            @SerializedName("quantity")
+            @Expose
+            private Integer quantity;
+            @SerializedName("shipping_price")
+            @Expose
+            private String shippingPrice;
+            @SerializedName("total_product_price")
+            @Expose
+            private String totalProductPrice;
+            @SerializedName("total_price_with_shipping")
+            @Expose
+            private String totalPriceWithShipping;
+            @SerializedName("ngcash")
+            @Expose
+            private String ngcash;
+            @SerializedName("paid_by_card")
+            @Expose
+            private String paidByCard;
+            @SerializedName("total_amount")
+            @Expose
+            private String totalAmount;
+            @SerializedName("ngcash_earned_by_member")
+            @Expose
+            private String ngcashEarnedByMember;
+            @SerializedName("split_amount")
+            @Expose
+            private String splitAmount;
+            @SerializedName("split_payment")
+            @Expose
+            private String splitPayment;
+            @SerializedName("split_date")
+            @Expose
+            private String splitDate;
+            @SerializedName("split_invoice")
+            @Expose
+            private String splitInvoice;
+            @SerializedName("payment_made_by_emi")
+            @Expose
+            private String paymentMadeByEmi;
+            @SerializedName("cart_id")
+            @Expose
+            private String cartId;
+            @SerializedName("color")
+            @Expose
+            private String color;
+            @SerializedName("size")
+            @Expose
+            private String size;
+            @SerializedName("reciept_url")
+            @Expose
+            private String recieptUrl;
+            @SerializedName("invoice")
+            @Expose
+            private String invoice;
+            @SerializedName("symbol_amount")
+            @Expose
+            private String symbolAmount;
+            @SerializedName("type")
+            @Expose
+            private String type;
+            @SerializedName("total_cost")
+            @Expose
+            private String totalCost;
+            @SerializedName("thumbnail_image")
+            @Expose
+            private String thumbnailImage;
+            @SerializedName("member_detail")
+            @Expose
+            private List<MemberDetail> memberDetail;
+            @SerializedName("b_name")
+            @Expose
+            private String bName;
+            @SerializedName("billing_first_name")
+            @Expose
+            private String billingFirstName;
+            @SerializedName("billing_last_name")
+            @Expose
+            private String billingLastName;
+            @SerializedName("billing_company")
+            @Expose
+            private String billingCompany;
+            @SerializedName("billing_email")
+            @Expose
+            private String billingEmail;
+            @SerializedName("billing_phone")
+            @Expose
+            private String billingPhone;
+            @SerializedName("billing_address_1")
+            @Expose
+            private String billingAddress1;
+            @SerializedName("billing_address_2")
+            @Expose
+            private String billingAddress2;
+            @SerializedName("billing_city")
+            @Expose
+            private String billingCity;
+            @SerializedName("billing_state")
+            @Expose
+            private String billingState;
+            @SerializedName("billing_postcode")
+            @Expose
+            private String billingPostcode;
+            @SerializedName("billing_country")
+            @Expose
+            private String billingCountry;
+            @SerializedName("shipping_first_name")
+            @Expose
+            private String shippingFirstName;
+            @SerializedName("shipping_last_name")
+            @Expose
+            private String shippingLastName;
+            @SerializedName("shipping_company")
+            @Expose
+            private String shippingCompany;
+            @SerializedName("shipping_email")
+            @Expose
+            private String shippingEmail;
+            @SerializedName("shipping_phone")
+            @Expose
+            private String shippingPhone;
+            @SerializedName("shipping_address_1")
+            @Expose
+            private String shippingAddress1;
+            @SerializedName("shipping_address_2")
+            @Expose
+            private String shippingAddress2;
+            @SerializedName("shipping_city")
+            @Expose
+            private String shippingCity;
+            @SerializedName("shipping_state")
+            @Expose
+            private String shippingState;
+            @SerializedName("shipping_postcode")
+            @Expose
+            private String shippingPostcode;
+            @SerializedName("shipping_country")
+            @Expose
+            private String shippingCountry;
+            @SerializedName("card_id")
+            @Expose
+            private String cardId;
+            @SerializedName("card_number")
+            @Expose
+            private String cardNumber;
+            @SerializedName("card_brand")
+            @Expose
+            private String cardBrand;
+            @SerializedName("product_image")
+            @Expose
+            private List<ProductImage> productImage;
+
+            public Integer getOrderId() {
+                return orderId;
+            }
+
+            public void setOrderId(Integer orderId) {
+                this.orderId = orderId;
+            }
+
+            public String getOrderDate() {
+                return orderDate;
+            }
+
+            public void setOrderDate(String orderDate) {
+                this.orderDate = orderDate;
+            }
+
+            public String getPayBillDate() {
+                return payBillDate;
+            }
+
+            public void setPayBillDate(String payBillDate) {
+                this.payBillDate = payBillDate;
+            }
+
+            public String getDeliveryDate() {
+                return deliveryDate;
+            }
+
+            public void setDeliveryDate(String deliveryDate) {
+                this.deliveryDate = deliveryDate;
+            }
+
+            public Integer getId() {
+                return id;
+            }
+
+            public void setId(Integer id) {
+                this.id = id;
+            }
+
+            public String getSearchId() {
+                return searchId;
+            }
+
+            public void setSearchId(String searchId) {
+                this.searchId = searchId;
+            }
+
+            public String getProductName() {
+                return productName;
+            }
+
+            public void setProductName(String productName) {
+                this.productName = productName;
+            }
+
+            public String getProductDescription() {
+                return productDescription;
+            }
+
+            public void setProductDescription(String productDescription) {
+                this.productDescription = productDescription;
+            }
+
+            public String getPrice() {
+                return price;
+            }
+
+            public void setPrice(String price) {
+                this.price = price;
+            }
+
+            public Integer getQuantity() {
+                return quantity;
+            }
+
+            public void setQuantity(Integer quantity) {
+                this.quantity = quantity;
+            }
+
+            public String getShippingPrice() {
+                return shippingPrice;
+            }
+
+            public void setShippingPrice(String shippingPrice) {
+                this.shippingPrice = shippingPrice;
+            }
+
+            public String getTotalProductPrice() {
+                return totalProductPrice;
+            }
+
+            public void setTotalProductPrice(String totalProductPrice) {
+                this.totalProductPrice = totalProductPrice;
+            }
+
+            public String getTotalPriceWithShipping() {
+                return totalPriceWithShipping;
+            }
+
+            public void setTotalPriceWithShipping(String totalPriceWithShipping) {
+                this.totalPriceWithShipping = totalPriceWithShipping;
+            }
+
+            public String getNgcash() {
+                return ngcash;
+            }
+
+            public void setNgcash(String ngcash) {
+                this.ngcash = ngcash;
+            }
+
+            public String getPaidByCard() {
+                return paidByCard;
+            }
+
+            public void setPaidByCard(String paidByCard) {
+                this.paidByCard = paidByCard;
+            }
+
+            public String getTotalAmount() {
+                return totalAmount;
+            }
+
+            public void setTotalAmount(String totalAmount) {
+                this.totalAmount = totalAmount;
+            }
+
+            public String getNgcashEarnedByMember() {
+                return ngcashEarnedByMember;
+            }
+
+            public void setNgcashEarnedByMember(String ngcashEarnedByMember) {
+                this.ngcashEarnedByMember = ngcashEarnedByMember;
+            }
+
+            public String getSplitAmount() {
+                return splitAmount;
+            }
+
+            public void setSplitAmount(String splitAmount) {
+                this.splitAmount = splitAmount;
+            }
+
+            public String getSplitPayment() {
+                return splitPayment;
+            }
+
+            public void setSplitPayment(String splitPayment) {
+                this.splitPayment = splitPayment;
+            }
+
+            public String getSplitDate() {
+                return splitDate;
+            }
+
+            public void setSplitDate(String splitDate) {
+                this.splitDate = splitDate;
+            }
+
+            public String getSplitInvoice() {
+                return splitInvoice;
+            }
+
+            public void setSplitInvoice(String splitInvoice) {
+                this.splitInvoice = splitInvoice;
+            }
+
+            public String getPaymentMadeByEmi() {
+                return paymentMadeByEmi;
+            }
+
+            public void setPaymentMadeByEmi(String paymentMadeByEmi) {
+                this.paymentMadeByEmi = paymentMadeByEmi;
+            }
+
+            public String getCartId() {
+                return cartId;
+            }
+
+            public void setCartId(String cartId) {
+                this.cartId = cartId;
+            }
+
+            public String getColor() {
+                return color;
+            }
+
+            public void setColor(String color) {
+                this.color = color;
+            }
+
+            public String getSize() {
+                return size;
+            }
+
+            public void setSize(String size) {
+                this.size = size;
+            }
+
+            public String getRecieptUrl() {
+                return recieptUrl;
+            }
+
+            public void setRecieptUrl(String recieptUrl) {
+                this.recieptUrl = recieptUrl;
+            }
+
+            public String getInvoice() {
+                return invoice;
+            }
+
+            public void setInvoice(String invoice) {
+                this.invoice = invoice;
+            }
+
+            public String getSymbolAmount() {
+                return symbolAmount;
+            }
+
+            public void setSymbolAmount(String symbolAmount) {
+                this.symbolAmount = symbolAmount;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public String getTotalCost() {
+                return totalCost;
+            }
+
+            public void setTotalCost(String totalCost) {
+                this.totalCost = totalCost;
+            }
+
+            public String getThumbnailImage() {
+                return thumbnailImage;
+            }
+
+            public void setThumbnailImage(String thumbnailImage) {
+                this.thumbnailImage = thumbnailImage;
+            }
+
+            public List<MemberDetail> getMemberDetail() {
+                return memberDetail;
+            }
+
+            public void setMemberDetail(List<MemberDetail> memberDetail) {
+                this.memberDetail = memberDetail;
+            }
+
+            public String getbName() {
+                return bName;
+            }
+
+            public void setbName(String bName) {
+                this.bName = bName;
+            }
+
+            public String getBillingFirstName() {
+                return billingFirstName;
+            }
+
+            public void setBillingFirstName(String billingFirstName) {
+                this.billingFirstName = billingFirstName;
+            }
+
+            public String getBillingLastName() {
+                return billingLastName;
+            }
+
+            public void setBillingLastName(String billingLastName) {
+                this.billingLastName = billingLastName;
+            }
+
+            public String getBillingCompany() {
+                return billingCompany;
+            }
+
+            public void setBillingCompany(String billingCompany) {
+                this.billingCompany = billingCompany;
+            }
+
+            public String getBillingEmail() {
+                return billingEmail;
+            }
+
+            public void setBillingEmail(String billingEmail) {
+                this.billingEmail = billingEmail;
+            }
+
+            public String getBillingPhone() {
+                return billingPhone;
+            }
+
+            public void setBillingPhone(String billingPhone) {
+                this.billingPhone = billingPhone;
+            }
+
+            public String getBillingAddress1() {
+                return billingAddress1;
+            }
+
+            public void setBillingAddress1(String billingAddress1) {
+                this.billingAddress1 = billingAddress1;
+            }
+
+            public String getBillingAddress2() {
+                return billingAddress2;
+            }
+
+            public void setBillingAddress2(String billingAddress2) {
+                this.billingAddress2 = billingAddress2;
+            }
+
+            public String getBillingCity() {
+                return billingCity;
+            }
+
+            public void setBillingCity(String billingCity) {
+                this.billingCity = billingCity;
+            }
+
+            public String getBillingState() {
+                return billingState;
+            }
+
+            public void setBillingState(String billingState) {
+                this.billingState = billingState;
+            }
+
+            public String getBillingPostcode() {
+                return billingPostcode;
+            }
+
+            public void setBillingPostcode(String billingPostcode) {
+                this.billingPostcode = billingPostcode;
+            }
+
+            public String getBillingCountry() {
+                return billingCountry;
+            }
+
+            public void setBillingCountry(String billingCountry) {
+                this.billingCountry = billingCountry;
+            }
+
+            public String getShippingFirstName() {
+                return shippingFirstName;
+            }
+
+            public void setShippingFirstName(String shippingFirstName) {
+                this.shippingFirstName = shippingFirstName;
+            }
+
+            public String getShippingLastName() {
+                return shippingLastName;
+            }
+
+            public void setShippingLastName(String shippingLastName) {
+                this.shippingLastName = shippingLastName;
+            }
+
+            public String getShippingCompany() {
+                return shippingCompany;
+            }
+
+            public void setShippingCompany(String shippingCompany) {
+                this.shippingCompany = shippingCompany;
+            }
+
+            public String getShippingEmail() {
+                return shippingEmail;
+            }
+
+            public void setShippingEmail(String shippingEmail) {
+                this.shippingEmail = shippingEmail;
+            }
+
+            public String getShippingPhone() {
+                return shippingPhone;
+            }
+
+            public void setShippingPhone(String shippingPhone) {
+                this.shippingPhone = shippingPhone;
+            }
+
+            public String getShippingAddress1() {
+                return shippingAddress1;
+            }
+
+            public void setShippingAddress1(String shippingAddress1) {
+                this.shippingAddress1 = shippingAddress1;
+            }
+
+            public String getShippingAddress2() {
+                return shippingAddress2;
+            }
+
+            public void setShippingAddress2(String shippingAddress2) {
+                this.shippingAddress2 = shippingAddress2;
+            }
+
+            public String getShippingCity() {
+                return shippingCity;
+            }
+
+            public void setShippingCity(String shippingCity) {
+                this.shippingCity = shippingCity;
+            }
+
+            public String getShippingState() {
+                return shippingState;
+            }
+
+            public void setShippingState(String shippingState) {
+                this.shippingState = shippingState;
+            }
+
+            public String getShippingPostcode() {
+                return shippingPostcode;
+            }
+
+            public void setShippingPostcode(String shippingPostcode) {
+                this.shippingPostcode = shippingPostcode;
+            }
+
+            public String getShippingCountry() {
+                return shippingCountry;
+            }
+
+            public void setShippingCountry(String shippingCountry) {
+                this.shippingCountry = shippingCountry;
+            }
+
+            public String getCardId() {
+                return cardId;
+            }
+
+            public void setCardId(String cardId) {
+                this.cardId = cardId;
+            }
+
+            public String getCardNumber() {
+                return cardNumber;
+            }
+
+            public void setCardNumber(String cardNumber) {
+                this.cardNumber = cardNumber;
+            }
+
+            public String getCardBrand() {
+                return cardBrand;
+            }
+
+            public void setCardBrand(String cardBrand) {
+                this.cardBrand = cardBrand;
+            }
+
+            public List<ProductImage> getProductImage() {
+                return productImage;
+            }
+
+            public void setProductImage(List<ProductImage> productImage) {
+                this.productImage = productImage;
+            }
+
+            public class ProductImage {
+
+                @SerializedName("image_id")
+                @Expose
+                private String imageId;
+                @SerializedName("product_image")
+                @Expose
+                private String productImage;
+
+                public String getImageId() {
+                    return imageId;
+                }
+
+                public void setImageId(String imageId) {
+                    this.imageId = imageId;
+                }
+
+                public String getProductImage() {
+                    return productImage;
+                }
+
+                public void setProductImage(String productImage) {
+                    this.productImage = productImage;
+                }
+
+            }
+
+            public class MemberDetail {
+
+                @SerializedName("id")
+                @Expose
+                private String id;
+                @SerializedName("username")
+                @Expose
+                private String username;
+                @SerializedName("email")
+                @Expose
+                private String email;
+                @SerializedName("phone")
+                @Expose
+                private String phone;
+                @SerializedName("fullname")
+                @Expose
+                private String fullname;
+                @SerializedName("password")
+                @Expose
+                private String password;
+                @SerializedName("affiliate_name")
+                @Expose
+                private String affiliateName;
+                @SerializedName("how_invited_you")
+                @Expose
+                private String howInvitedYou;
+                @SerializedName("affiliate_number")
+                @Expose
+                private String affiliateNumber;
+                @SerializedName("user_type")
+                @Expose
+                private String userType;
+                @SerializedName("latitude")
+                @Expose
+                private String latitude;
+                @SerializedName("longitude")
+                @Expose
+                private String longitude;
+                @SerializedName("country_name")
+                @Expose
+                private String countryName;
+                @SerializedName("touch_status")
+                @Expose
+                private String touchStatus;
+                @SerializedName("member_image")
+                @Expose
+                private String memberImage;
+                @SerializedName("country_id")
+                @Expose
+                private String countryId;
+                @SerializedName("device_token")
+                @Expose
+                private String deviceToken;
+                @SerializedName("gender")
+                @Expose
+                private String gender;
+                @SerializedName("age")
+                @Expose
+                private String age;
+                @SerializedName("social_id")
+                @Expose
+                private String socialId;
+
+                public String getId() {
+                    return id;
+                }
+
+                public void setId(String id) {
+                    this.id = id;
+                }
+
+                public String getUsername() {
+                    return username;
+                }
+
+                public void setUsername(String username) {
+                    this.username = username;
+                }
+
+                public String getEmail() {
+                    return email;
+                }
+
+                public void setEmail(String email) {
+                    this.email = email;
+                }
+
+                public String getPhone() {
+                    return phone;
+                }
+
+                public void setPhone(String phone) {
+                    this.phone = phone;
+                }
+
+                public String getFullname() {
+                    return fullname;
+                }
+
+                public void setFullname(String fullname) {
+                    this.fullname = fullname;
+                }
+
+                public String getPassword() {
+                    return password;
+                }
+
+                public void setPassword(String password) {
+                    this.password = password;
+                }
+
+                public String getAffiliateName() {
+                    return affiliateName;
+                }
+
+                public void setAffiliateName(String affiliateName) {
+                    this.affiliateName = affiliateName;
+                }
+
+                public String getHowInvitedYou() {
+                    return howInvitedYou;
+                }
+
+                public void setHowInvitedYou(String howInvitedYou) {
+                    this.howInvitedYou = howInvitedYou;
+                }
+
+                public String getAffiliateNumber() {
+                    return affiliateNumber;
+                }
+
+                public void setAffiliateNumber(String affiliateNumber) {
+                    this.affiliateNumber = affiliateNumber;
+                }
+
+                public String getUserType() {
+                    return userType;
+                }
+
+                public void setUserType(String userType) {
+                    this.userType = userType;
+                }
+
+                public String getLatitude() {
+                    return latitude;
+                }
+
+                public void setLatitude(String latitude) {
+                    this.latitude = latitude;
+                }
+
+                public String getLongitude() {
+                    return longitude;
+                }
+
+                public void setLongitude(String longitude) {
+                    this.longitude = longitude;
+                }
+
+                public String getCountryName() {
+                    return countryName;
+                }
+
+                public void setCountryName(String countryName) {
+                    this.countryName = countryName;
+                }
+
+                public String getTouchStatus() {
+                    return touchStatus;
+                }
+
+                public void setTouchStatus(String touchStatus) {
+                    this.touchStatus = touchStatus;
+                }
+
+                public String getMemberImage() {
+                    return memberImage;
+                }
+
+                public void setMemberImage(String memberImage) {
+                    this.memberImage = memberImage;
+                }
+
+                public String getCountryId() {
+                    return countryId;
+                }
+
+                public void setCountryId(String countryId) {
+                    this.countryId = countryId;
+                }
+
+                public String getDeviceToken() {
+                    return deviceToken;
+                }
+
+                public void setDeviceToken(String deviceToken) {
+                    this.deviceToken = deviceToken;
+                }
+
+                public String getGender() {
+                    return gender;
+                }
+
+                public void setGender(String gender) {
+                    this.gender = gender;
+                }
+
+                public String getAge() {
+                    return age;
+                }
+
+                public void setAge(String age) {
+                    this.age = age;
+                }
+
+                public String getSocialId() {
+                    return socialId;
+                }
+
+                public void setSocialId(String socialId) {
+                    this.socialId = socialId;
+                }
+
+            }
+
+        }
 
 
     }

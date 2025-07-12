@@ -95,6 +95,7 @@ public class SaledItemDetailAct extends
 
     private String payment_made_by_emi = "";
     private String split_amount = "";
+    private String download_url="";
     private BottomSheetBehavior<View> behavior;
     private Dialog dialogSts;
 
@@ -158,6 +159,9 @@ public class SaledItemDetailAct extends
             order_date = bundle.getString("order_date");
             reciept_url = bundle.getString("reciept_url");
             post_code = bundle.getString("post_code");
+            download_url = bundle.getString("download_url");
+
+
         }
 
         idinit();
@@ -267,7 +271,7 @@ public class SaledItemDetailAct extends
         purchasedate.setText("" + order_date);
         download_invoice.setVisibility(View.VISIBLE);
         download_invoice.setOnClickListener(v -> {
-            new FragmentWebView().setData("Receipt", reciept_url).show(getSupportFragmentManager(), "");
+            new FragmentWebView().setData("Receipt", download_url).show(getSupportFragmentManager(), "");
 
         });
         Log.e("TAG", "idinit: +payment_made_by_emi" + payment_made_by_emi);
