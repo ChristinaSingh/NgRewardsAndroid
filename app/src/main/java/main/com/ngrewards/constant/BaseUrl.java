@@ -5,7 +5,7 @@ package main.com.ngrewards.constant;
  */
 
 public class BaseUrl {
-   // public static String baseurl = "https://myngrewards.com/wp-content/plugins/webservice/";
+  //  public static String baseurl = "https://myngrewards.com/wp-content/plugins/webservice/";
     public static String baseurl = "https://international.myngrewards.com/wp-content/plugins/webservice/";
     public static String image_baseurl = "https://myngrewards.com/uploads/images/";
     public static String video_baseurl = "https://myngrewards.com/uploads/videos/";

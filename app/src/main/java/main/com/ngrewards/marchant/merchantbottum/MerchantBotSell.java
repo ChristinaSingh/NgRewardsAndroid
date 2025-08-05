@@ -40,6 +40,7 @@ import main.com.ngrewards.marchant.activity.SoldProductsAct;
 import main.com.ngrewards.marchant.activity.StartYourListing;
 import main.com.ngrewards.marchant.activity.UnsoldProductsAct;
 import main.com.ngrewards.marchant.draweractivity.MerchantBaseActivity;
+import main.com.ngrewards.marchant.rent.AddPropertyAct;
 import main.com.ngrewards.restapi.ApiClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -52,7 +53,7 @@ public class MerchantBotSell extends MerchantBaseActivity {
     SwipeRefreshLayout swipeToRefresh;
     private RecyclerView activity_list;
     private LinearLayout lay_out, lay_removed;
-    private TextView listitem;
+    private TextView listitem,tvAuth;
     private MySession mySession;
     private String user_id = "";
     private TextView cont_find, active_count_tv, sold_count_tv, unsold_count_tv, total_earning;
@@ -82,7 +83,15 @@ public class MerchantBotSell extends MerchantBaseActivity {
                 } else {
                     lay_out.setVisibility(View.VISIBLE);
                     lay_removed.setVisibility(View.GONE);
+                    if(mySession.get_business_category().equalsIgnoreCase("999")){
+                        listitem.setText(getString(R.string.add_property));
+                        tvAuth.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        listitem.setText(getString(R.string.listanitem));
+                        tvAuth.setVisibility(View.GONE);
 
+                    }
                 }
                 try {
                     JSONObject jsonObject = new JSONObject(user_log_data);
@@ -152,7 +161,15 @@ public class MerchantBotSell extends MerchantBaseActivity {
                     dialogSts.dismiss();
                     lay_out.setVisibility(View.VISIBLE);
                     lay_removed.setVisibility(View.GONE);
+                    if(mySession.get_business_category().equalsIgnoreCase("999")){
+                        listitem.setText(getString(R.string.add_property));
+                        tvAuth.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        listitem.setText(getString(R.string.listanitem));
+                        tvAuth.setVisibility(View.GONE);
 
+                    }
                 }
 
 
@@ -175,8 +192,14 @@ public class MerchantBotSell extends MerchantBaseActivity {
         listitem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MerchantBotSell.this, StartYourListing.class);
-                startActivity(i);
+                if (mySession.get_business_category().equalsIgnoreCase("999")){
+                startActivity(new Intent(MerchantBotSell.this, AddPropertyAct.class));
+                }
+                else {
+                    Intent i = new Intent(MerchantBotSell.this, StartYourListing.class);
+                    startActivity(i);
+                }
+
             }
         });
         active_lay.setOnClickListener(new View.OnClickListener() {
@@ -221,6 +244,8 @@ public class MerchantBotSell extends MerchantBaseActivity {
         unsold_count_tv = findViewById(R.id.unsold_count_tv);
         swipeToRefresh = findViewById(R.id.swipeToRefresh);
         listitem = findViewById(R.id.listitem);
+        tvAuth = findViewById(R.id.tvAuth);
+
         swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -297,5 +322,9 @@ public class MerchantBotSell extends MerchantBaseActivity {
             }
         });
     }
+
+
+
+
 
 }

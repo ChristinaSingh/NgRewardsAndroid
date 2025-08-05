@@ -32,6 +32,9 @@ public class MySession {
     public static final String APP_UPDATE = "appupdates";
     public static final String admin_created_password = "admin_created_password";
     public static final String sell_items_reomve_access = "sell_items_reomve_access";
+    public static final String business_category = "business_category";
+
+
     public static final String PassSet = "pass_set";
     public static final String CountryId = "country_id";
     public static final String CurrencyCode = "currency_code";
@@ -99,9 +102,24 @@ public class MySession {
 
     }
 
+    public String get_business_category() {
+        return pref.getString(business_category, "");
+    }
+
+
+
+    public void set_business_category(String appupdate) {
+        editor.putString(business_category, appupdate);
+        //editor.putString(KEY_TYPE, type);
+        editor.commit();
+
+    }
+
     public String getadmin_created_password() {
         return pref.getString(admin_created_password, "");
     }
+
+
 
     public void setuserId(String uid) {
         editor.putString(KEY_ID, uid);

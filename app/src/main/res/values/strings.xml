@@ -724,4 +724,15 @@
     <string name="my_plan_history">My Plan History</string>
     <string name="recipt">Receipt</string>
     <string name="subscription">Subscription</string>
+    <string name="add_property">Add Property</string>
+    <string name="authenticate_employees">Authenticate Employees</string>
+    <string name="property_name_unit_title">Property Name / Unit Title</string>
+    <string name="amenities">Amenities</string>
+    <string name="unit_number">Unit Number</string>
+    <string name="price_usd">Price (USD)</string>
+    <string name="availability_date">Availability Date</string>
+    <string name="enter_area_in_sq">Enter Area in Sq. Ft. (12x12)</string>
+    <string name="square_footage">Square Footage</string>
+    <string name="select_amenities">Select Amenities</string>
+    <string name="please_select_amenities">Please select amenities</string>
 </resources>

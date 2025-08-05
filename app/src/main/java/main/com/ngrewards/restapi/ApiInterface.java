@@ -322,4 +322,10 @@ public interface ApiInterface {
     Call<ResponseBody> shareLinkApi(@FieldMap Map<String, String> paramHashMap);
 
 
+    @GET("get_property_categories.php?")
+    Call<ResponseBody> getPropertyCategoryApi();
+
+    @GET("get-amenities.php?")
+    Call<ResponseBody> getPropertyAmenitiesApi();
+
 }

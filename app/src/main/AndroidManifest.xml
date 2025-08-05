@@ -564,7 +564,10 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
-
+        <activity
+            android:name=".marchant.rent.AddPropertyAct"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <!-- <activity
              android:exported="false"

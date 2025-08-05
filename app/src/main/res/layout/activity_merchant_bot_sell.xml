@@ -62,6 +62,22 @@
                     android:textColor="@color/black"
                     android:textSize="25dp" />
 
+                <TextView
+                    android:id="@+id/tvAuth"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/rounded_pink_border"
+                    android:gravity="center"
+                    android:text="@string/authenticate_employees"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/large"
+                    android:visibility="gone"/>
+
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
