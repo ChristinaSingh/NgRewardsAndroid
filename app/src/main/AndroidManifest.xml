@@ -569,6 +569,23 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+
+        <activity
+            android:name=".activity.PropertyDetailAct"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".activity.DetailAct"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.PropertyEnquiryAct"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <!-- <activity
              android:exported="false"
              android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"

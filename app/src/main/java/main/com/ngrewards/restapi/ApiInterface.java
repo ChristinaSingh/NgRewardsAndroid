@@ -328,4 +328,18 @@ public interface ApiInterface {
     @GET("get-amenities.php?")
     Call<ResponseBody> getPropertyAmenitiesApi();
 
+
+    @GET("get_merchant_properties.php?")
+    Call<ResponseBody> getMerchantProperty(@Query("merchant_id") String merchant_id,
+                                         @Query("category") String category,
+                                         @Query("amenities[]") String amenities);
+
+
+
+
+    @FormUrlEncoded
+    @POST("property_inquiries.php?")
+    Call<ResponseBody> propertyEnquiryApi(@FieldMap Map<String, String> paramHashMap);
+
+
 }

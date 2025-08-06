@@ -77,6 +77,7 @@ import main.com.ngrewards.R;
 import main.com.ngrewards.activity.ManualActivity;
 import main.com.ngrewards.activity.MerchantDetailAct;
 import main.com.ngrewards.activity.OrderActivity;
+import main.com.ngrewards.activity.PropertyDetailAct;
 import main.com.ngrewards.activity.SplashActivity;
 import main.com.ngrewards.beanclasses.CategoryBean;
 import main.com.ngrewards.beanclasses.CategoryBeanList;
@@ -912,18 +913,35 @@ public class NearbyFrag extends Fragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(getActivity(), MerchantDetailAct.class);
-                    i.putExtra("user_id", user_id);
-                    i.putExtra("merchant_id", merchantListBeanArrayList.get(listPosition).getId());
-                    i.putExtra("opeaning_time", merchantListBeanArrayList.get(listPosition).getOpening_time());
-                    i.putExtra("closing_time", merchantListBeanArrayList.get(listPosition).getClosing_time());
-                    i.putExtra("merchant_name", merchantListBeanArrayList.get(listPosition).getBusinessName());
-                    i.putExtra("merchant_number", merchantListBeanArrayList.get(listPosition).getBusinessNo());
-                    i.putExtra("merchant_contact_name", merchantListBeanArrayList.get(listPosition).getContactName());
-                    i.putExtra("merchant_img", merchantListBeanArrayList.get(listPosition).getMerchantImage());
-                    i.putExtra("employee_sales_id", merchantListBeanArrayList.get(listPosition).getEmployee_sale_id());
-                    i.putExtra("employee_slaes_name", merchantListBeanArrayList.get(listPosition).getEmployee_sale_name());
-                    startActivity(i);
+
+                    if (fill_category_id.equalsIgnoreCase("999") || merchantListBeanArrayList.get(listPosition).getBusinessCategory().equalsIgnoreCase("999") ) {
+                        Intent i = new Intent(getActivity(), PropertyDetailAct.class);
+                        i.putExtra("user_id", user_id);
+                        i.putExtra("merchant_id", merchantListBeanArrayList.get(listPosition).getId());
+                        i.putExtra("opeaning_time", merchantListBeanArrayList.get(listPosition).getOpening_time());
+                        i.putExtra("closing_time", merchantListBeanArrayList.get(listPosition).getClosing_time());
+                        i.putExtra("merchant_name", merchantListBeanArrayList.get(listPosition).getBusinessName());
+                        i.putExtra("merchant_number", merchantListBeanArrayList.get(listPosition).getBusinessNo());
+                        i.putExtra("merchant_contact_name", merchantListBeanArrayList.get(listPosition).getContactName());
+                        i.putExtra("merchant_img", merchantListBeanArrayList.get(listPosition).getMerchantImage());
+                        i.putExtra("employee_sales_id", merchantListBeanArrayList.get(listPosition).getEmployee_sale_id());
+                        i.putExtra("employee_slaes_name", merchantListBeanArrayList.get(listPosition).getEmployee_sale_name());
+                        startActivity(i);
+                    } else {
+                        Intent i = new Intent(getActivity(), MerchantDetailAct.class);
+                        i.putExtra("user_id", user_id);
+                        i.putExtra("merchant_id", merchantListBeanArrayList.get(listPosition).getId());
+                        i.putExtra("opeaning_time", merchantListBeanArrayList.get(listPosition).getOpening_time());
+                        i.putExtra("closing_time", merchantListBeanArrayList.get(listPosition).getClosing_time());
+                        i.putExtra("merchant_name", merchantListBeanArrayList.get(listPosition).getBusinessName());
+                        i.putExtra("merchant_number", merchantListBeanArrayList.get(listPosition).getBusinessNo());
+                        i.putExtra("merchant_contact_name", merchantListBeanArrayList.get(listPosition).getContactName());
+                        i.putExtra("merchant_img", merchantListBeanArrayList.get(listPosition).getMerchantImage());
+                        i.putExtra("employee_sales_id", merchantListBeanArrayList.get(listPosition).getEmployee_sale_id());
+                        i.putExtra("employee_slaes_name", merchantListBeanArrayList.get(listPosition).getEmployee_sale_name());
+                        startActivity(i);
+                    }
+
                 }
             });
 
