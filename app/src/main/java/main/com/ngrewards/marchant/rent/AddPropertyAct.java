@@ -1,6 +1,10 @@
 package main.com.ngrewards.marchant.rent;
 
+import static android.content.ContentValues.TAG;
+import static main.com.ngrewards.marchant.draweractivity.MerchantBaseActivity.reqcounft;
+
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -10,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -36,18 +41,34 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import main.com.ngrewards.R;
 import main.com.ngrewards.Utils.Tools;
+import main.com.ngrewards.constant.BaseUrl;
+import main.com.ngrewards.constant.MultipartUtility;
+import main.com.ngrewards.constant.MySession;
+import main.com.ngrewards.constant.Myapisession;
 import main.com.ngrewards.databinding.ActivityAddPropertyBinding;
 import main.com.ngrewards.marchant.activity.StartYourListing;
+import main.com.ngrewards.marchant.merchantbottum.MerchantBottumAct;
 import main.com.ngrewards.marchant.merchantbottum.MultiPhotoSelectActivity;
 import main.com.ngrewards.marchant.merchantbottum.MultiPhotoSelectActivity2;
 import main.com.ngrewards.restapi.ApiClient;
@@ -64,8 +85,12 @@ public class AddPropertyAct extends AppCompatActivity implements onAmenitiesList
 
     HorizontalAdapter horizontalAdapter;
     AmenitiesAdapter amenitiesAdapter;
-    String categoryId="",amenitiesString="";
+    String categoryId="",amenitiesString="",userId="",date="",address="",latitude="",longitude="",email="",contactNumber="";
     RecyclerView rvAmenities;
+
+    File[] filearray;
+    MySession mySession;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +99,30 @@ public class AddPropertyAct extends AppCompatActivity implements onAmenitiesList
     }
 
     private void initViews() {
+
+        mySession = new MySession(this);
+        filearray = new File[0];
+        String user_log_data = mySession.getKeyAlldata();
+        if (user_log_data == null) {
+
+        } else {
+            try {
+                JSONObject jsonObject = new JSONObject(user_log_data);
+                String message = jsonObject.getString("status");
+                if (message.equalsIgnoreCase("1")) {
+                    JSONObject jsonObject1 = jsonObject.getJSONObject("result");
+                    userId = jsonObject1.getString("id");
+
+                    // stripe_account_id = jsonObject1.getString("stripe_account_id");
+
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
 
         categoryArrayList = new ArrayList<>();
         amenitiesArrayList = new ArrayList<>();
@@ -109,11 +158,176 @@ public class AddPropertyAct extends AppCompatActivity implements onAmenitiesList
             finish();
         });
 
+        binding.btnSubmit.setOnClickListener(v -> validation());
 
+
+        binding.edDate.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    AddPropertyAct.this,
+                    (view1, selectedYear, selectedMonth, selectedDay) -> {
+                        // Note: Month is 0-based in DatePicker
+                        calendar.set(selectedYear, selectedMonth, selectedDay);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        date = sdf.format(calendar.getTime());
+                        binding.edDate.setText(date);
+                    },
+                    year, month, day
+            );
+            datePickerDialog.show();
+        });
 
 
         getCategory();
         getPropertyAmenities();
+        new GetProfile().execute();
+    }
+
+
+    private class GetProfile extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            try {
+                super.onPreExecute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String postReceiverUrl = BaseUrl.baseurl + "merchant_profile.php?";
+                URL url = new URL(postReceiverUrl);
+                Map<String, Object> params = new LinkedHashMap<>();
+                params.put("merchant_id", userId);
+                StringBuilder postData = new StringBuilder();
+                for (Map.Entry<String, Object> param : params.entrySet()) {
+                    if (postData.length() != 0) postData.append('&');
+                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                    postData.append('=');
+                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                }
+
+                String urlParameters = postData.toString();
+                URLConnection conn = url.openConnection();
+                conn.setDoOutput(true);
+                OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
+                writer.write(urlParameters);
+                writer.flush();
+                String response = "";
+                String line;
+                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                while ((line = reader.readLine()) != null) {
+                    response += line;
+                }
+                writer.close();
+                reader.close();
+                Log.e(" MER BOTTEM GetProfile Response", ">>>>>>>>>>>>" + response);
+                return response;
+            } catch (IOException e1) {
+
+                e1.printStackTrace();
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            if (result == null) {
+            } else if (result.isEmpty()) {
+
+            } else {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    // Log.e("TAG", "JSONObjectJSONObjectJSONObjectJSONObject: "+jsonObject.toString() );
+                    String message = jsonObject.getString("status");
+                    if (message.equalsIgnoreCase("1")) {
+                        JSONObject jsonObject1 = jsonObject.getJSONObject("result");
+                        address = jsonObject1.getString("address");
+                         latitude = jsonObject1.getString("latitude");
+                         longitude = jsonObject1.getString("longitude");
+                         email = jsonObject1.getString("email");
+                        contactNumber = jsonObject1.getString("contact_number");
+
+
+
+
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+    }
+
+
+
+    private void validation() {
+
+        if (binding.propertyTitle.getText().toString().isEmpty()) {
+            Toast.makeText(AddPropertyAct.this, getResources().getString(R.string.entertite), Toast.LENGTH_LONG).show();
+        } else if ( categoryId.equalsIgnoreCase("")) {
+            Toast.makeText(AddPropertyAct.this, getResources().getString(R.string.selectcat), Toast.LENGTH_LONG).show();
+        } else if ( binding.descriptionEt.getText().toString().isEmpty()) {
+            Toast.makeText(AddPropertyAct.this, getResources().getString(R.string.enterdesc), Toast.LENGTH_LONG).show();
+
+        } else if ( amenitiesString.equalsIgnoreCase("")) {
+            Toast.makeText(AddPropertyAct.this, getResources().getString(R.string.select_amenities), Toast.LENGTH_LONG).show();
+
+        } else if (binding.edUnitNumber.getText().toString().isEmpty()) {
+            Toast.makeText(AddPropertyAct.this, getResources().getString(R.string.enter_unit_number), Toast.LENGTH_LONG).show();
+
+        }
+
+        else if (binding.edFloorLevel.getText().toString().isEmpty()) {
+            Toast.makeText(AddPropertyAct.this, getResources().getString(R.string.enter_floor_level), Toast.LENGTH_LONG).show();
+
+        }
+
+        else if (binding.edPrice.getText().toString().isEmpty()) {
+            Toast.makeText(AddPropertyAct.this, getResources().getString(R.string.enterprice), Toast.LENGTH_LONG).show();
+
+        }
+        else if (binding.edArea.getText().toString().isEmpty()) {
+            Toast.makeText(AddPropertyAct.this, getResources().getString(R.string.enter_property_area), Toast.LENGTH_LONG).show();
+
+        }
+
+        else if ( date.equalsIgnoreCase("")) {
+            Toast.makeText(AddPropertyAct.this, getString(R.string.enter_date), Toast.LENGTH_LONG).show();
+
+        }
+
+        else if (ImagePathArrayList == null || ImagePathArrayList.isEmpty() || ImagePathArrayList.size() == 0) {
+            Toast.makeText(AddPropertyAct.this, getResources().getString(R.string.selectphoto), Toast.LENGTH_LONG).show();
+
+        } else {
+            Log.e("ImagePathArrayList size", " > " + ImagePathArrayList.size());
+            filearray = new File[ImagePathArrayList.size()];
+            Log.e("filearray size", " > " + filearray.length);
+
+            for (int i = 0; i < ImagePathArrayList.size(); i++) {
+                Log.e("Image", " > " + ImagePathArrayList.get(i));
+
+                File ImageFile = new File(ImagePathArrayList.get(i));
+                filearray[i] = ImageFile;
+            }
+
+            new AddPropertyAsc().execute();
+        }
+
     }
 
 
@@ -552,5 +766,110 @@ public class AddPropertyAct extends AppCompatActivity implements onAmenitiesList
 
         return result.toString();
     }
+
+
+
+    public class AddPropertyAsc extends AsyncTask<String, String, String> {
+        String Jsondata;
+
+        protected void onPreExecute() {
+            try {
+                super.onPreExecute();
+                binding.progresbar.setVisibility(View.VISIBLE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String charset = "UTF-8";
+            String requestURL = BaseUrl.baseurl + "add_property.php?";
+            Log.e("requestURL >>", requestURL);
+            try {
+
+
+
+
+
+                MultipartUtility multipart = new MultipartUtility(requestURL, charset);
+                multipart.addFormField("title", binding.propertyTitle.getText().toString());
+                multipart.addFormField("merchant_id", userId);
+                multipart.addFormField("category", categoryId);
+                multipart.addFormField("description", binding.descriptionEt.getText().toString());
+                multipart.addFormField("unit_number", binding.edUnitNumber.getText().toString());
+                multipart.addFormField("floor_level", binding.edFloorLevel.getText().toString());
+                multipart.addFormField("price", binding.edPrice.getText().toString());
+                multipart.addFormField("square_footage", binding.edArea.getText().toString());
+                multipart.addFormField("availability_date", date);
+                multipart.addFormField("amenities[]", amenitiesString);
+                multipart.addFormField("address",address );
+                multipart.addFormField("latitude", latitude);
+                multipart.addFormField("longitude",longitude);
+                multipart.addFormField("contact_number", contactNumber);
+                multipart.addFormField("email", email);
+
+
+
+
+
+                if (ImagePathArrayList == null || ImagePathArrayList.isEmpty()) {
+//["+k+"]
+                } else {
+                    for (int k = 0; k < filearray.length; k++) {
+                        multipart.addFilePart("files[]", filearray[k]);
+                    }
+
+                    // multipart.addFilePart("member_image[]", filearray);
+                }
+                List<String> response = multipart.finish();
+
+                for (String line : response) {
+                    Jsondata = line;
+                }
+                JSONObject object = new JSONObject(Jsondata);
+                return Jsondata;
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            binding.progresbar.setVisibility(View.GONE);
+            Log.e("Add property response  ", " >> " + result);
+            if (result == null) {
+            } else if (result.isEmpty()) {
+
+            } else {
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    if (jsonObject.getBoolean("status")) {
+                        Toast.makeText(AddPropertyAct.this, getResources().getString(R.string.your_property_added_sucessfully), Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        }
+
+
+    }
+
+
+
+
+
+
 
 }

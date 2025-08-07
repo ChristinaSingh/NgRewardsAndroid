@@ -329,10 +329,10 @@ public interface ApiInterface {
     Call<ResponseBody> getPropertyAmenitiesApi();
 
 
-    @GET("get_merchant_properties.php?")
+  /*  @GET("get_merchant_properties.php?")
     Call<ResponseBody> getMerchantProperty(@Query("merchant_id") String merchant_id,
                                          @Query("category") String category,
-                                         @Query("amenities[]") String amenities);
+                                         @Query("amenities[]") String amenities);*/
 
 
 
@@ -340,6 +340,23 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("property_inquiries.php?")
     Call<ResponseBody> propertyEnquiryApi(@FieldMap Map<String, String> paramHashMap);
+
+
+    @GET("get_merchant_properties.php?")
+    Call<ResponseBody> getMerchantProperty(@Query("merchant_id") String merchant_id);
+
+    @FormUrlEncoded
+    @POST("delete-property.php?")
+    Call<ResponseBody> propertyDeleteApi(@FieldMap Map<String, String> paramHashMap);
+
+    @FormUrlEncoded
+    @POST("update_property_status.php?")
+    Call<ResponseBody> propertyUpdateStatusApi(@FieldMap Map<String, String> paramHashMap);
+
+    @GET("get-property-inquiries-by-merchant.php?")
+    Call<ResponseBody> getPropertyEnquiryApi(@Query("merchant_id") String memberId);
+
+
 
 
 }

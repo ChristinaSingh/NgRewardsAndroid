@@ -34,7 +34,7 @@ public class PropertyEnquiryAct extends AppCompatActivity {
     ActivityPropertyEnquiryBinding binding;
     PropertyListModel.Datum dataModel;
     MySession mySession;
-    private String userId="",userName="";
+    private String userId="",userName="",email="",fullName="",phone="";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +54,9 @@ public class PropertyEnquiryAct extends AppCompatActivity {
                     JSONObject jsonObject1 = jsonObject.getJSONObject("result");
                     userId = jsonObject1.getString("id");
                     userName = jsonObject1.getString("username");
+                    binding.edEmail.setText("" + jsonObject1.getString("email"));
+                    binding.edFullName.setText("" + jsonObject1.getString("fullname"));
+                    binding.edPhoneNumber.setText("" + jsonObject1.getString("phone"));
 
                 }
             } catch (JSONException ee) {

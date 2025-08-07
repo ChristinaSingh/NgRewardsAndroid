@@ -745,5 +745,18 @@
     <string name="enter_full_name">Enter Full Name</string>
     <string name="enter_phone_number">Enter phone Number</string>
     <string name="enter_email">Enter email address</string>
-    <string name="your_request_send">Your application request has been send to the property owner</string>
+    <string name="your_request_send">Your inquiry has been sent successfully</string>
+    <string name="your_property_added_sucessfully">Property added successfully.</string>
+    <string name="enter_unit_number">Enter unit number</string>
+    <string name="enter_floor_level">Enter Floor level</string>
+    <string name="enter_property_area">Enter property area</string>
+    <string name="enter_date">Enter date</string>
+    <string name="subtype">Subtype (Apartment etc)</string>
+    <string name="upload_floor_plan">\"Upload Floor Plan\" (images or PDF Up to 10)</string>
+    <string name="hide_property">Hide Property</string>
+    <string name="delete">Delete</string>
+    <string name="property">Property</string>
+    <string name="show_enquiry">Show Enquiry</string>
+    <string name="no_enquiry_available">No enquiry available</string>
+    <string name="enquiry_list">Enquiry List</string>
 </resources>

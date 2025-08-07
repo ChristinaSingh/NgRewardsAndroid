@@ -67,7 +67,7 @@ public class FloorPlanFragment  extends Fragment {
     public void getMerchantProperty() {
        binding. progresbar.setVisibility(View.VISIBLE);
         Log.e("Merc Photo >", " >" + merchantId + " >> " );
-        Call<ResponseBody> call = ApiClient.getApiInterface().getMerchantProperty(merchantId, categoryId, amenities);
+        Call<ResponseBody> call = ApiClient.getApiInterface().getMerchantProperty(merchantId/*, categoryId, amenities*/);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import main.com.ngrewards.Models.PropertyListModel;
 import main.com.ngrewards.R;
 import main.com.ngrewards.Utils.LocaleHelper;
 import main.com.ngrewards.Utils.Tools;
@@ -41,6 +42,9 @@ import main.com.ngrewards.marchant.activity.StartYourListing;
 import main.com.ngrewards.marchant.activity.UnsoldProductsAct;
 import main.com.ngrewards.marchant.draweractivity.MerchantBaseActivity;
 import main.com.ngrewards.marchant.rent.AddPropertyAct;
+import main.com.ngrewards.marchant.rent.MerchantPropertyAct;
+import main.com.ngrewards.marchant.rent.PropertyEnquiryListAct;
+import main.com.ngrewards.marchant.rent.PropertyEnquiryModel;
 import main.com.ngrewards.restapi.ApiClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -56,9 +60,9 @@ public class MerchantBotSell extends MerchantBaseActivity {
     private TextView listitem,tvAuth;
     private MySession mySession;
     private String user_id = "";
-    private TextView cont_find, active_count_tv, sold_count_tv, unsold_count_tv, total_earning;
-    private LinearLayout active_lay, unsold_lay, sold_lay;
-
+    private TextView cont_find, active_count_tv, sold_count_tv, unsold_count_tv, total_earning,tvActiveCount,tvEnquiryCount;
+    private LinearLayout active_lay, unsold_lay, sold_lay,llEnquiry,llActive,llRealState,llItem;
+    String user_log_data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,10 +73,22 @@ public class MerchantBotSell extends MerchantBaseActivity {
         Log.e("TAG", "onCreate: " + mySession.getadmin_created_password());
         idinits();
         clickevent();
-        String user_log_data = mySession.getKeyAlldata();
+        user_log_data = mySession.getKeyAlldata();
         if (user_log_data == null) {
 
-        } else {
+        }
+        else {
+            try {
+                JSONObject jsonObject = new JSONObject(user_log_data);
+                String message = jsonObject.getString("status");
+                if (message.equalsIgnoreCase("1")) {
+                    JSONObject jsonObject1 = jsonObject.getJSONObject("result");
+                    user_id = jsonObject1.getString("id");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
             if (mySession.getsell_items_reomve_access().equalsIgnoreCase("remove")) {
                 lay_out.setVisibility(View.GONE);
                 lay_removed.setVisibility(View.VISIBLE);
@@ -86,23 +102,20 @@ public class MerchantBotSell extends MerchantBaseActivity {
                     if(mySession.get_business_category().equalsIgnoreCase("999")){
                         listitem.setText(getString(R.string.add_property));
                         tvAuth.setVisibility(View.VISIBLE);
+                        llRealState.setVisibility(View.VISIBLE);
+                        llItem.setVisibility(View.GONE);
+                        getMerchantProperty();
+                        gePropertyEnquiry();
                     }
                     else {
                         listitem.setText(getString(R.string.listanitem));
                         tvAuth.setVisibility(View.GONE);
+                        llRealState.setVisibility(View.GONE);
+                        llItem.setVisibility(View.VISIBLE);
+                        getSoldItems();
+                    }
+                }
 
-                    }
-                }
-                try {
-                    JSONObject jsonObject = new JSONObject(user_log_data);
-                    String message = jsonObject.getString("status");
-                    if (message.equalsIgnoreCase("1")) {
-                        JSONObject jsonObject1 = jsonObject.getJSONObject("result");
-                        user_id = jsonObject1.getString("id");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
 
         }
@@ -164,11 +177,17 @@ public class MerchantBotSell extends MerchantBaseActivity {
                     if(mySession.get_business_category().equalsIgnoreCase("999")){
                         listitem.setText(getString(R.string.add_property));
                         tvAuth.setVisibility(View.VISIBLE);
+                        llRealState.setVisibility(View.VISIBLE);
+                        llItem.setVisibility(View.GONE);
+                        getMerchantProperty();
+                        gePropertyEnquiry();
                     }
                     else {
                         listitem.setText(getString(R.string.listanitem));
                         tvAuth.setVisibility(View.GONE);
-
+                        llRealState.setVisibility(View.GONE);
+                        llItem.setVisibility(View.VISIBLE);
+                        getSoldItems();
                     }
                 }
 
@@ -229,6 +248,13 @@ public class MerchantBotSell extends MerchantBaseActivity {
                 startActivity(i);
             }
         });
+
+        llActive.setOnClickListener(v -> startActivity(new Intent(MerchantBotSell.this, MerchantPropertyAct.class)));
+
+        llEnquiry.setOnClickListener(v ->
+                startActivity(new Intent(MerchantBotSell.this, PropertyEnquiryListAct.class)));
+
+
     }
 
     private void idinits() {
@@ -246,6 +272,14 @@ public class MerchantBotSell extends MerchantBaseActivity {
         listitem = findViewById(R.id.listitem);
         tvAuth = findViewById(R.id.tvAuth);
 
+        llEnquiry = findViewById(R.id.llEnquiry);
+        llActive = findViewById(R.id.llActive);
+        llRealState = findViewById(R.id.llRealState);
+        llItem = findViewById(R.id.llItem);
+        tvActiveCount = findViewById(R.id.tvActiveCount);
+        tvEnquiryCount = findViewById(R.id.tvEnquiryCount);
+
+
         swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -262,7 +296,25 @@ public class MerchantBotSell extends MerchantBaseActivity {
         super.onResume();
         Tools.reupdateResources(this);
 
-        getSoldItems();
+
+        if(mySession.get_business_category().equalsIgnoreCase("999")){
+            listitem.setText(getString(R.string.add_property));
+            tvAuth.setVisibility(View.VISIBLE);
+            llRealState.setVisibility(View.VISIBLE);
+            llItem.setVisibility(View.GONE);
+            getMerchantProperty();
+            gePropertyEnquiry();
+        }
+        else {
+            listitem.setText(getString(R.string.listanitem));
+            tvAuth.setVisibility(View.GONE);
+            llRealState.setVisibility(View.GONE);
+            llItem.setVisibility(View.VISIBLE);
+            getSoldItems();
+        }
+
+
+
     }
 
     protected void attachBaseContext(Context base) {
@@ -323,6 +375,90 @@ public class MerchantBotSell extends MerchantBaseActivity {
         });
     }
 
+
+    public void getMerchantProperty() {
+        swipeToRefresh.setRefreshing(true);
+        Call<ResponseBody> call = ApiClient.getApiInterface().getMerchantProperty(user_id);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                swipeToRefresh.setRefreshing(false);
+                if (response.isSuccessful()) {
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject object = new JSONObject(responseData);
+                        Log.e("get merchant property response >", " >" + responseData);
+                        if (object.getBoolean("status")) {
+                            PropertyListModel successData = new Gson().fromJson(responseData, PropertyListModel.class);
+                            tvActiveCount.setText(successData.getStatusPublishedCount()+"");
+
+                        }
+                        else {
+
+                        }
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                swipeToRefresh.setRefreshing(false);
+                Log.e("TAG", t.toString());
+            }
+        });
+    }
+
+
+    public void gePropertyEnquiry() {
+        swipeToRefresh.setRefreshing(true);
+        Call<ResponseBody> call = ApiClient.getApiInterface().getPropertyEnquiryApi(user_id);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                swipeToRefresh.setRefreshing(false);
+                if (response.isSuccessful()) {
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject object = new JSONObject(responseData);
+                        Log.e("get property enquiry response >", " >" + responseData);
+                        if (object.getBoolean("status")) {
+                            PropertyEnquiryModel successData = new Gson().fromJson(responseData, PropertyEnquiryModel.class);
+                            tvEnquiryCount.setText(successData.getData().size()+"");
+                        }
+                        else {
+
+                        }
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                swipeToRefresh.setRefreshing(false);
+                Log.e("TAG", t.toString());
+            }
+        });
+    }
 
 
 

@@ -71,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/mainlay"
-                android:background="@color/darkgrey"></View>
+                android:background="@color/darkgrey"/>
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                     <main.com.ngrewards.fonttypeclasses.BoldTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/images"
+                        android:text="@string/photos"
                         android:textColor="@color/black"
                         android:textSize="@dimen/large" />
 
@@ -108,8 +108,8 @@
                         <main.com.ngrewards.fonttypeclasses.NoramlTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="@string/youleave"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/upload_floor_plan"
                             android:textColor="@color/black"
                             android:textSize="@dimen/medium" />
 
@@ -184,7 +184,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="@string/selectcat"
+                            android:text="@string/subtype"
                             android:textColor="@color/black"
                             android:textSize="@dimen/medium"
                             android:visibility="visible" />
@@ -293,8 +293,29 @@
                         android:padding="5dp" />
 
 
+
                     <main.com.ngrewards.fonttypeclasses.NoramlTextView
-                        android:id="@+id/show_pricing_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/floor_level"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/large" />
+
+                    <main.com.ngrewards.fonttypeclasses.NormalEditText
+                        android:id="@+id/edFloorLevel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/greyborder"
+                        android:gravity="start"
+                        android:hint="@string/floor_level"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:padding="5dp" />
+
+
+                    <main.com.ngrewards.fonttypeclasses.NoramlTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -308,7 +329,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:background="@color/greyborder"
-                        android:hint="$0.00"
+                        android:hint=""
                         android:imeOptions="actionNext"
                         android:inputType="numberDecimal"
                         android:id="@+id/edPrice"
