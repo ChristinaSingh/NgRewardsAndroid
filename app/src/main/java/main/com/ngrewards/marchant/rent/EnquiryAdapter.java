@@ -1,6 +1,7 @@
 package main.com.ngrewards.marchant.rent;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,10 @@ public class EnquiryAdapter extends RecyclerView.Adapter<EnquiryAdapter.MyViewHo
                 .placeholder(R.drawable.placeholder)
                 .into(holder.binding.ivProperty);
 
-
+          holder.binding.btnShowDetails.setOnClickListener(v -> {
+              context.startActivity(new Intent(context,EnquiryDetailAct.class)
+                      .putExtra("id",arrayList.get(position).getInquiryId()));
+          });
 
 
     }

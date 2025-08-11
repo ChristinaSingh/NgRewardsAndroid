@@ -597,6 +597,12 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+
+        <activity
+            android:name=".marchant.rent.EnquiryDetailAct"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <!-- <activity
              android:exported="false"
              android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"

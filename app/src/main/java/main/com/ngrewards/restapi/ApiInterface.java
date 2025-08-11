@@ -357,6 +357,7 @@ public interface ApiInterface {
     Call<ResponseBody> getPropertyEnquiryApi(@Query("merchant_id") String memberId);
 
 
-
+    @GET("get-single-property-inquiry.php?")
+    Call<ResponseBody> singlePropertyEnquiry(@Query("property_inquiry_id") String propertyInquiryId);
 
 }

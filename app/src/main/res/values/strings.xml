@@ -705,7 +705,6 @@
     <string name="last_three_month">Last 3 month</string>
     <string name="show_previous_notification">Show Previous notification</string>
     <string name="please_add_item">Please add item</string>
-    <string name="free_shipping_allow_above_number_of_quantity">Free shipping allow above \nnumber of quantity</string>
     <string name="enter_quantity">Enter quantity</string>
     <string name="enter_percentage">Enter percentage</string>
     <string name="shipping_percentage_bellow_free_shipping">Shipping (%) Percentage bellow free shipping</string>
@@ -716,6 +715,7 @@
     <string name="or_more">or more</string>
     <string name="sku_optional">SKU (optional)</string>
     <string name="enter_sku">Enter SKU</string>
+    <string name="free_shipping_allow_above_number_of_quantity">Free shipping allow above \nnumber of quantity</string>
     <string name="subscribe_plan">Subscribe Plan</string>
     <string name="skip">Skip</string>
     <string name="subscribe">Subscribe</string>
@@ -759,4 +759,9 @@
     <string name="show_enquiry">Show Enquiry</string>
     <string name="no_enquiry_available">No enquiry available</string>
     <string name="enquiry_list">Enquiry List</string>
+    <string name="enquiry_detail">Enquiry Detail</string>
+    <string name="property_title">Property Title</string>
+    <string name="full_name">Full Name</string>
+    <string name="call">Call</string>
+    <string name="mail">Mail</string>
 </resources>
