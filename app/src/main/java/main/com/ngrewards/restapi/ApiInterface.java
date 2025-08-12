@@ -360,4 +360,14 @@ public interface ApiInterface {
     @GET("get-single-property-inquiry.php?")
     Call<ResponseBody> singlePropertyEnquiry(@Query("property_inquiry_id") String propertyInquiryId);
 
+
+
+    @GET("get-single-property.php?")
+    Call<ResponseBody> getPropertyDataApi(@Query("property_id") String property_id);
+
+    @FormUrlEncoded
+    @POST("delete-property-image.php?")
+    Call<ResponseBody> deletePropertyImageApi(@FieldMap Map<String, String> paramHashMap);
+
+
 }

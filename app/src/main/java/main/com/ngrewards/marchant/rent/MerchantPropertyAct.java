@@ -1,5 +1,6 @@
 package main.com.ngrewards.marchant.rent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -89,12 +90,13 @@ public class MerchantPropertyAct extends AppCompatActivity implements onProperty
     }
 
     public void getMerchantProperty() {
-        binding. progresbar.setVisibility(View.VISIBLE);
+        binding.progresbar.setVisibility(View.VISIBLE);
         Call<ResponseBody> call = ApiClient.getApiInterface().getMerchantProperty(userId);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 binding.progresbar.setVisibility(View.GONE);
+                binding.swipeToRefresh.setEnabled(false);
                 if (response.isSuccessful()) {
                     try {
                         String responseData = response.body().string();
@@ -129,6 +131,7 @@ public class MerchantPropertyAct extends AppCompatActivity implements onProperty
                 // Log error here since request failed
                 t.printStackTrace();
                 binding.progresbar.setVisibility(View.GONE);
+                binding.swipeToRefresh.setEnabled(false);
                 Log.e("TAG", t.toString());
             }
         });
@@ -138,7 +141,8 @@ public class MerchantPropertyAct extends AppCompatActivity implements onProperty
     @Override
     public void onProperty(int position, String Type, PropertyListModel.Datum data) {
         if(Type.equalsIgnoreCase("edit")){
-
+            startActivity(new Intent(MerchantPropertyAct.this,UpdatePropertyAct.class)
+                    .putExtra("id",data.getId()));
         }
            else if(Type.equalsIgnoreCase("publish")){
             updatePropertyStatus(data,"Published");
