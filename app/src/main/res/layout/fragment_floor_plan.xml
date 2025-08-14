@@ -6,17 +6,46 @@
         android:layout_height="wrap_content"
         android:background="@color/white">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeToRefresh"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RelativeLayout
+        <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
 
+                <LinearLayout
+                    android:id="@+id/llCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_10sdp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tvCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_red_strok_bg"
+                        android:text="@string/filterbycateory"
+                        android:textColor="@color/black"
+                        android:padding="@dimen/_5sdp"
+                        android:textSize="@dimen/small" />
+                    <TextView
+                        android:id="@+id/tvReset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_red_btn_bg"
+                        android:padding="@dimen/_5sdp"
+                        android:text="@string/reset"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/small" />
+
+
+
+                </LinearLayout>
+
+
                 <androidx.recyclerview.widget.RecyclerView
+                    android:layout_below="@+id/llCategory"
                     android:id="@+id/rvFloor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -32,6 +61,7 @@
                     android:visibility="gone" />
 
                 <TextView
+                    android:layout_below="@id/llCategory"
                     android:id="@+id/tvNotFound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -39,12 +69,12 @@
                     android:background="@color/darkgrey"
                     android:gravity="center"
                     android:padding="12dp"
+                    android:layout_marginTop="@dimen/_80sdp"
                     android:text="@string/no_property_available"
                     android:textColor="@color/white"
                     android:textSize="@dimen/medium"
                     android:visibility="gone" />
 
             </RelativeLayout>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

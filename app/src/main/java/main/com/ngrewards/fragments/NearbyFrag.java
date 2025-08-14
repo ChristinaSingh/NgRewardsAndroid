@@ -30,6 +30,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RatingBar;
@@ -71,6 +72,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import main.com.ngrewards.R;
@@ -87,6 +89,8 @@ import main.com.ngrewards.constant.BaseUrl;
 import main.com.ngrewards.constant.GPSTracker;
 import main.com.ngrewards.constant.MySession;
 import main.com.ngrewards.constant.Myapisession;
+import main.com.ngrewards.marchant.rent.AddPropertyAct;
+import main.com.ngrewards.marchant.rent.RentCategoryModel;
 import main.com.ngrewards.restapi.ApiClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -99,7 +103,8 @@ public class NearbyFrag extends Fragment {
     ArrayList<MerchantListBean> merchantListBeanArrayList = new ArrayList<>();
     GPSTracker gpsTracker;
     ArrayList<CategoryBeanList> categoryBeanListArrayList = new ArrayList<>();
-    ;
+    public  ArrayList<RentCategoryModel.Datum> categoryArrayList;
+
     private ListView near_marchant;
     private RecyclerView near_marchant_recxx;
     private CustomMarchantAdp customMarchantAdp;
@@ -108,7 +113,7 @@ public class NearbyFrag extends Fragment {
     private SwipeRefreshLayout swipeToRefresh;
     private TextView filter_tv, nomerchanttv;
     private MySession mySession;
-    private String user_id = "", like_filter_str = "", rating_filter_str = "", distance_filter_str = "", country_id = "", fill_category_id = "", fill_category_id_loc = "";
+    private String user_id = "", like_filter_str = "", rating_filter_str = "", distance_filter_str = "", country_id = "", fill_category_id = "",fill_sub_category_id="", fill_category_id_loc = "";
     private Myapisession myapisession;
     private int current_offer_pos;
     private EditText search_et_home;
@@ -195,7 +200,7 @@ public class NearbyFrag extends Fragment {
             @Override
             public void onClick(View v) {
                 if (progresbar.getVisibility() == View.VISIBLE) {
-                    Toast.makeText(getActivity(), "Please Wait..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), requireActivity().getString(R.string.please_wait), Toast.LENGTH_LONG).show();
                 } else {
                     filterlay();
                 }
@@ -204,6 +209,7 @@ public class NearbyFrag extends Fragment {
     }
 
     private void idinit() {
+        categoryArrayList = new ArrayList<>();
 
         getNearMarchant();
 
@@ -487,6 +493,7 @@ public class NearbyFrag extends Fragment {
     private void filterlay() {
 
         CategoryAdpters categoryAdpters;
+       // SubCategoryAdapters subCategoryAdapters;
         final Dialog dialogSts = new Dialog(getActivity(), R.style.DialogSlideAnim);
         dialogSts.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogSts.setCancelable(false);
@@ -500,11 +507,17 @@ public class NearbyFrag extends Fragment {
         final RatingBar rating = dialogSts.findViewById(R.id.rating);
         Spinner distance_spinner = dialogSts.findViewById(R.id.distance_spinner);
         Spinner category_spinner = dialogSts.findViewById(R.id.category_spinner);
+        Spinner subCategorySpinner = dialogSts.findViewById(R.id.subCategorySpinner);
+
+
         distanceAdapter = new DistanceAdapter(getActivity(), distance_filter_list);
         distance_spinner.setAdapter(distanceAdapter);
 
         categoryAdpters = new CategoryAdpters(getActivity(), categoryBeanListArrayList);
         category_spinner.setAdapter(categoryAdpters);
+
+      //  subCategoryAdapters = new SubCategoryAdapters(getActivity(), categoryArrayList);
+      //  subCategorySpinner.setAdapter(subCategoryAdapters);
 
 
         distance_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -535,6 +548,9 @@ public class NearbyFrag extends Fragment {
 
                     } else {
                         fill_category_id_loc = categoryBeanListArrayList.get(position).getCategoryId();
+                      //  if(fill_category_id_loc.equalsIgnoreCase("999")) subCategorySpinner.setVisibility(View.VISIBLE);
+                      //  else subCategorySpinner.setVisibility(View.GONE);
+
                     }
 
                 }
@@ -546,6 +562,31 @@ public class NearbyFrag extends Fragment {
 
             }
         });
+
+
+        subCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (categoryArrayList != null && !categoryArrayList.isEmpty()) {
+                    if (categoryArrayList.get(position).getId().equalsIgnoreCase("0")) {
+
+                    } else {
+                        fill_sub_category_id = categoryArrayList.get(position).getId();
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
 
         filter_tv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -755,7 +796,7 @@ public class NearbyFrag extends Fragment {
 
                             CategoryBean successData = new Gson().fromJson(responseData, CategoryBean.class);
                             categoryBeanListArrayList.addAll(successData.getResult());
-
+                            //getCategory();
                         }
 
                     } catch (IOException e) {
@@ -1086,6 +1127,48 @@ public class NearbyFrag extends Fragment {
         }
     }
 
+
+    public class SubCategoryAdapters extends BaseAdapter {
+        private final ArrayList<RentCategoryModel.Datum> subCategoryArrayList;
+        Context context;
+        LayoutInflater inflter;
+
+        public SubCategoryAdapters(Context applicationContext, ArrayList<RentCategoryModel.Datum> subCategoryArrayList) {
+            this.context = applicationContext;
+            this.subCategoryArrayList = subCategoryArrayList;
+            inflter = (LayoutInflater.from(applicationContext));
+        }
+
+        @Override
+        public int getCount() {
+
+            return subCategoryArrayList == null ? 0 : subCategoryArrayList.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            view = inflter.inflate(R.layout.spinner_layout, null);
+            TextView names = (TextView) view.findViewById(R.id.name_tv);
+            ImageView country_flag = (ImageView) view.findViewById(R.id.country_flag);
+            names.setText(subCategoryArrayList.get(i).getName());
+            return view;
+        }
+    }
+
+
+
+
+
     public class DistanceAdapter extends BaseAdapter {
 
         private final ArrayList<String> distancelist;
@@ -1128,4 +1211,56 @@ public class NearbyFrag extends Fragment {
             return view;
         }
     }
+
+
+
+
+    private void getCategory() {
+      //  progresbar.setVisibility(View.VISIBLE);
+        Call<ResponseBody> call = ApiClient.getApiInterface().getPropertyCategoryApi();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+              //  progresbar.setVisibility(View.GONE);
+
+                if (response.isSuccessful()) {
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject object = new JSONObject(responseData);
+                        Log.e("get category response >", " >" + responseData);
+                        if (object.getBoolean("status")) {
+                            RentCategoryModel successData = new Gson().fromJson(responseData, RentCategoryModel.class);
+                            categoryArrayList.clear();
+                            RentCategoryModel sb = new RentCategoryModel();
+                            sb.getData().get(0).setId("0");
+                            sb.getData().get(0).setName("Select sub-category");
+                            categoryArrayList.add((RentCategoryModel.Datum) sb.getData());
+                            categoryArrayList.addAll(successData.getData());
+
+                        }
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                //progresbar.setVisibility(View.GONE);
+
+                Log.e("TAG", t.toString());
+            }
+        });
+    }
+
+
+
+
+
 }

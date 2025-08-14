@@ -110,7 +110,7 @@
                         android:id="@+id/btnApply"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
-                        android:background="@color/pinkborder"
+                        android:background="@drawable/rounded_red_btn_bg"
                         android:text="@string/apply"
                         android:textAllCaps="false"
                         android:textColor="@color/white"

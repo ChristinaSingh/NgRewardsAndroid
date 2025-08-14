@@ -767,4 +767,6 @@
     <string name="your_property_updated_sucessfully">property updated sucessfully.</string>
     <string name="update_property">Update Property</string>
     <string name="cant_be_deleted">can\'t be deleted</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="reset">Reset</string>
 </resources>

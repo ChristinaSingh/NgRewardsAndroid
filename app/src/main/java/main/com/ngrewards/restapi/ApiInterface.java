@@ -370,4 +370,7 @@ public interface ApiInterface {
     Call<ResponseBody> deletePropertyImageApi(@FieldMap Map<String, String> paramHashMap);
 
 
+    @GET("get_merchant_properties.php?")
+    Call<ResponseBody> getMerchantPropertyFilter(@Query("merchant_id") String merchant_id,@Query("category") String category,@Query("amenities[]") String amenities);
+
 }

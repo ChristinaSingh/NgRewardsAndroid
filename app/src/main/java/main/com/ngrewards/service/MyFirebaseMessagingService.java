@@ -29,6 +29,7 @@ import java.util.Random;
 
 import main.com.ngrewards.activity.MemberChatAct;
 import main.com.ngrewards.activity.NotificationActivity;
+import main.com.ngrewards.activity.PropertyEnquiryAct;
 import main.com.ngrewards.activity.SplashActivity;
 import main.com.ngrewards.activity.Trans2Act;
 import main.com.ngrewards.activity.app.Config;
@@ -36,6 +37,7 @@ import main.com.ngrewards.activity.app.NotificationUtils;
 import main.com.ngrewards.androidmigx.MainTabActivity;
 import main.com.ngrewards.marchant.activity.MerchantNotificationActivity;
 import main.com.ngrewards.marchant.merchantbottum.MerchantBottumAct;
+import main.com.ngrewards.marchant.rent.EnquiryDetailAct;
 
 @SuppressLint("MissingFirebaseInstanceTokenRefresh")
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -253,8 +255,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
                     else if (type.equalsIgnoreCase("referral_merchant")) {
-                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
-                             showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                      //  Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
+                        //     showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                        if(data.getString("body").contains("You have a new property inquiry from")) {
+                            Intent resultIntent = new Intent(getApplicationContext(), EnquiryDetailAct.class)
+                                    .putExtra("id",data.getJSONObject("meta").getString("property_enquiry_inserted_id"));
+                            showNotificationMessage2(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+
+                        }
+                        else {
+                            Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
+                            showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                        }
 
 
                     }
@@ -374,8 +386,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
                     else if (type.equalsIgnoreCase("referral_merchant")) {
-                        Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
-                        showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                       if(data.getString("body").contains("You have a new property inquiry from")) {
+                           Intent resultIntent = new Intent(getApplicationContext(), EnquiryDetailAct.class)
+                                   .putExtra("id",data.getJSONObject("meta").getString("property_enquiry_inserted_id"));
+                           showNotificationMessage2(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+
+                       }
+                       else {
+                           Intent resultIntent = new Intent(getApplicationContext(), MerchantNotificationActivity.class);
+                           showNotificationMessage(getApplicationContext(), "NG Rewards", "" + data.getString("body"), format, resultIntent, null, type);
+                       }
                     }
 
                     else if (type.equalsIgnoreCase("pay_bill_merchant")) {
