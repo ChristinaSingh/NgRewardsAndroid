@@ -772,7 +772,7 @@
     <string name="floor_plan">Plano</string>
     <string name="available">Disponible</string>
     <string name="level">Nivel</string>
-    <string name="no_property_available">No hay propiedad disponible</string>
+    <string name="no_property_available">Ninguna propiedad disponible</string>
     <string name="floor_level">Planta</string>
     <string name="enquiry">Consulta</string>
     <string name="message_optional">Mensaje (opcional)</string>

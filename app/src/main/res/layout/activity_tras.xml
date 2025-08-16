@@ -23,6 +23,109 @@
                  android:layout_height="wrap_content"
                  android:orientation="vertical">
 
+
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="@dimen/_40sdp"
+                     android:orientation="horizontal"
+                     android:weightSum="1"
+                     android:padding="@dimen/_5sdp">
+
+                     <View
+                         android:layout_width="0dp"
+                         android:layout_height="match_parent"
+                         android:layout_weight=".02"/>
+
+                     <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                          android:id="@+id/tvPayBill"
+                         android:layout_width="0dp"
+                         android:layout_height="match_parent"
+                         android:layout_weight="0.18"
+                         android:padding="@dimen/_5sdp"
+                         android:text="@string/paybill"
+                         android:gravity="center"
+                         android:textColor="@color/white"
+                         android:background="@drawable/rounded_red_btn_bg"/>
+
+
+                     <View
+                         android:layout_width="0dp"
+                         android:layout_height="match_parent"
+                         android:layout_weight=".02"/>
+
+
+                     <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                         android:id="@+id/tvItems"
+                         android:layout_width="0dp"
+                         android:layout_height="match_parent"
+                         android:layout_weight="0.18"
+                         android:padding="@dimen/_5sdp"
+                         android:text="@string/items"
+                         android:gravity="center"
+                         android:textColor="@color/white"
+                         android:background="@drawable/rounded_red_btn_bg"/>
+
+
+                     <View
+                         android:layout_width="0dp"
+                         android:layout_height="match_parent"
+                         android:layout_weight=".02"/>
+
+                     <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                         android:id="@+id/tvTransfer"
+                         android:layout_width="0dp"
+                         android:layout_height="match_parent"
+                         android:layout_weight="0.18"
+                         android:padding="@dimen/_5sdp"
+                         android:text="@string/transfer"
+                         android:gravity="center"
+                         android:textColor="@color/white"
+                         android:background="@drawable/rounded_red_btn_bg"/>
+
+
+                     <View
+                         android:layout_width="0dp"
+                         android:layout_height="match_parent"
+                         android:layout_weight=".02"/>
+
+                     <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                         android:id="@+id/tvPayouts"
+                         android:layout_width="0dp"
+                         android:layout_height="match_parent"
+                         android:layout_weight="0.18"
+                         android:padding="@dimen/_5sdp"
+                         android:text="@string/payouts"
+                         android:gravity="center"
+                         android:textColor="@color/white"
+                         android:background="@drawable/rounded_red_btn_bg"/>
+
+
+                     <View
+                         android:layout_width="0dp"
+                         android:layout_height="match_parent"
+                         android:layout_weight=".02"/>
+
+
+                     <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                         android:id="@+id/tvPlans"
+                         android:layout_width="0dp"
+                         android:layout_height="match_parent"
+                         android:layout_weight="0.18"
+                         android:padding="@dimen/_5sdp"
+                         android:text="@string/plans"
+                         android:gravity="center"
+                         android:textColor="@color/white"
+                         android:background="@drawable/rounded_red_btn_bg"/>
+
+
+                     <View
+                         android:layout_width="0dp"
+                         android:layout_height="match_parent"
+                         android:layout_weight=".02"/>
+
+                 </LinearLayout>
+
+
                  <LinearLayout
                      android:layout_width="match_parent"
                      android:layout_height="45dp"
@@ -53,10 +156,11 @@
 
           <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeToRefresh"
-            android:layout_below="@+id/searchlay"
+              android:layout_marginTop="@dimen/_5sdp"
+            android:layout_below="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-             android:layout_marginTop="65dp">
+             >
 
             <androidx.recyclerview.widget.RecyclerView
              android:id="@+id/activity_list"

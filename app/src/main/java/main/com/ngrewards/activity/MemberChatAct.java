@@ -1559,7 +1559,9 @@ public class MemberChatAct extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             try {
-                String postReceiverUrl = "https://myngrewards.com/wp-content/plugins/webservice/get_chat_detail.php?sender_id=" + user_id + "&receiver_id=" + receiver_id + "&type=" + type;
+               // String postReceiverUrl = "https://myngrewards.com/wp-content/plugins/webservice/get_chat_detail.php?sender_id=" + user_id + "&receiver_id=" + receiver_id + "&type=" + type;
+
+                String postReceiverUrl = BaseUrl.baseurl + "get_chat_detail.php?sender_id=" + user_id + "&receiver_id=" + receiver_id + "&type=" + type;
                 URL url = new URL(postReceiverUrl);
                 Map<String, Object> params = new LinkedHashMap<>();
                 Log.e("postReceiverUrl >>", " .." + postReceiverUrl + "sender_id=" + user_id + "&receiver_id=" + receiver_id + "&type=" + type);
