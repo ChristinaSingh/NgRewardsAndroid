@@ -733,6 +733,7 @@ public class TrasActivity extends Fragment {
                     else if (orderBeanArrayList11.get(position).getType() != null &&
                             orderBeanArrayList11.get(position).getType().equalsIgnoreCase("Order")) {
 
+
                         order_cart_id = orderBeanArrayList11.get(position).getOrder_special_request();
 
                         Log.e("orderarraylist123", "" + orderBeanArrayList11);
