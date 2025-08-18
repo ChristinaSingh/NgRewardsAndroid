@@ -51,6 +51,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
+import com.intuit.sdp.BuildConfig;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,7 +79,6 @@ import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import main.com.ngrewards.Adapter.MembershipAdapter;
-import main.com.ngrewards.BuildConfig;
 import main.com.ngrewards.Models.MembershipModel;
 import main.com.ngrewards.QrCodeActivity;
 import main.com.ngrewards.R;
@@ -637,7 +637,7 @@ public class MainTabActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 canceldialog.dismiss();
-                final String appPackageName = BuildConfig.APPLICATION_ID; // package name of the app
+                final String appPackageName = "main.com.ngrewards"; // package name of the app
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
                 } catch (android.content.ActivityNotFoundException anfe) {

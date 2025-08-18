@@ -51,6 +51,8 @@ import main.com.ngrewards.activity.ManualActivity;
 import main.com.ngrewards.constant.MySession;
 import main.com.ngrewards.qrcodes.CaptureActivityHandler;
 
+
+
 public class QrCodeActivity extends AppCompatActivity implements Callback, OnClickListener {
     public static final int MSG_DECODE_SUCCEED = 1;
     public static final int MSG_DECODE_FAIL = 2;
@@ -230,7 +232,7 @@ public class QrCodeActivity extends AppCompatActivity implements Callback, OnCli
         try {
             CameraManager.get().openDriver(surfaceHolder);
         } catch (IOException e) {
-            Toast.makeText(this, getString(R.string.qr_code_camera_not_found), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(com.blikoon.qrcodescanner.R.string.qr_code_camera_not_found), Toast.LENGTH_SHORT).show();
             finish();
             return;
         } catch (RuntimeException re) {
@@ -289,7 +291,7 @@ public class QrCodeActivity extends AppCompatActivity implements Callback, OnCli
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setOnCompletionListener(mBeepListener);
 
-            AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.beep);
+            AssetFileDescriptor file = getResources().openRawResourceFd(com.blikoon.qrcodescanner.R.raw.beep);
             try {
                 mMediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
                 file.close();
@@ -340,15 +342,15 @@ public class QrCodeActivity extends AppCompatActivity implements Callback, OnCli
 
     private void turnFlashlightOn() {
         mNeedFlashLightOpen = false;
-        mTvFlashLightText.setText(getString(R.string.qr_code_close_flash_light));
-        mIvFlashLight.setBackgroundResource(R.drawable.flashlight_turn_off);
+        mTvFlashLightText.setText(getString(com.blikoon.qrcodescanner.R.string.qr_code_close_flash_light));
+        mIvFlashLight.setBackgroundResource(com.blikoon.qrcodescanner.R.drawable.flashlight_turn_off);
         CameraManager.get().setFlashLight(true);
     }
 
     private void turnFlashLightOff() {
         mNeedFlashLightOpen = true;
-        mTvFlashLightText.setText(getString(R.string.qr_code_open_flash_light));
-        mIvFlashLight.setBackgroundResource(R.drawable.flashlight_turn_on);
+        mTvFlashLightText.setText(getString(com.blikoon.qrcodescanner.R.string.qr_code_open_flash_light));
+        mIvFlashLight.setBackgroundResource(com.blikoon.qrcodescanner.R.drawable.flashlight_turn_on);
         CameraManager.get().setFlashLight(false);
     }
 

@@ -48,7 +48,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import main.com.ngrewards.BuildConfig;
+//import main.com.ngrewards.BuildConfig;
 import main.com.ngrewards.R;
 import main.com.ngrewards.Utils.LocaleHelper;
 import main.com.ngrewards.Utils.Tools;
@@ -318,7 +318,7 @@ public class MerchantBottumAct extends TabActivity {
             @Override
             public void onClick(View v) {
                 canceldialog.dismiss();
-                final String appPackageName = BuildConfig.APPLICATION_ID; // package name of the app
+                final String appPackageName =  "main.com.ngrewards"/*BuildConfig.APPLICATION_ID*/; // package name of the app
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW,
                             Uri.parse("market://details?id=" + appPackageName)));

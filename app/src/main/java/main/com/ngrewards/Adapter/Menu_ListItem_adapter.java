@@ -95,8 +95,24 @@ public class Menu_ListItem_adapter extends RecyclerView.Adapter<Menu_ListItem_ad
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
+                        if(id==R.id.nav_home){
+                            fghu = all_category_subcategory.get(i).getId();
 
-                        switch (id) {
+                            Intent intent = new Intent(activity, AddMenuPublish.class);
+                            intent.putExtra("id", id_item);
+                            intent.putExtra("update", "update");
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            activity.startActivity(intent);
+
+                            APIStatusEdit();
+                            Toast.makeText(activity, fghu, Toast.LENGTH_SHORT).show();
+                        } else if (id==R.id.nav_friends) {
+                            APIStatusHide();
+                            Toast.makeText(activity, "clicked Friend", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                      /*  switch (id) {
                             case R.id.nav_home:
                                 fghu = all_category_subcategory.get(i).getId();
 
@@ -116,7 +132,8 @@ public class Menu_ListItem_adapter extends RecyclerView.Adapter<Menu_ListItem_ad
                                 return true;
                             default:
                                 return false;
-                        }
+                        }*/
+                        return true;
                     }
                 });
                 // CustomimagePopup();

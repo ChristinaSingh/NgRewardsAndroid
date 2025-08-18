@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import main.com.ngrewards.BuildConfig;
+//import main.com.ngrewards.BuildConfig;
 import main.com.ngrewards.R;
 import main.com.ngrewards.constant.BaseUrl;
 import main.com.ngrewards.constant.MySession;
@@ -164,7 +164,7 @@ public class MyQrCodeActivity extends AppCompatActivity {
             finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
             out.flush();
             out.close();
-            bmpUri = FileProvider.getUriForFile(MyQrCodeActivity.this.getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", file);
+            bmpUri = FileProvider.getUriForFile(MyQrCodeActivity.this.getApplicationContext(), /*BuildConfig.APPLICATION_ID*/"main.com.ngrewards" + ".provider", file);
 
             Toast.makeText(this, "" + bmpUri, Toast.LENGTH_SHORT).show();
 
@@ -191,7 +191,7 @@ public class MyQrCodeActivity extends AppCompatActivity {
             FileOutputStream out = new FileOutputStream(file);
             bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
             out.close();
-            Uri U = FileProvider.getUriForFile(MyQrCodeActivity.this.getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", file);
+            Uri U = FileProvider.getUriForFile(MyQrCodeActivity.this.getApplicationContext(), /*BuildConfig.APPLICATION_ID*/ "main.com.ngrewards" + ".provider", file);
             bmpUri = U;
             //  bmpUri = Uri.fromFile(file);
         } catch (IOException e) {

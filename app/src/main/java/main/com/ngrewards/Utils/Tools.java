@@ -44,7 +44,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import main.com.ngrewards.BuildConfig;
+//import main.com.ngrewards.BuildConfig;
 import main.com.ngrewards.Interfaces.onDateSetListener;
 import main.com.ngrewards.R;
 import main.com.ngrewards.constant.MySession;
@@ -416,7 +416,7 @@ public class Tools {
             shareIntent.setType("text/plain");
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.app_name));
             String shareMessage = "\nLet me recommend you this application\n\n";
-            shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n";
+            shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" +/* BuildConfig.APPLICATION_ID*/ "main.com.ngrewards" + "\n\n";
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
             context.startActivity(Intent.createChooser(shareIntent, "choose one"));
         } catch (Exception e) {
@@ -425,7 +425,7 @@ public class Tools {
     }
 
     public void LaunchMarket(Context context) {
-        Uri uri = Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID);
+        Uri uri = Uri.parse("market://details?id=" + "main.com.ngrewards" /*BuildConfig.APPLICATION_ID*/);
         Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
         try {
             context.startActivity(myAppLinkToMarket);

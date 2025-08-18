@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="@drawable/splash_back"
+    android:fitsSystemWindows="true"
     tools:context=".marchant.activity.MerchantSignupSlider">
 
 

@@ -315,7 +315,31 @@ public class ActiveProductsAct extends AppCompatActivity {
 
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            switch (item.getItemId()) {
+                          if(item.getItemId() == R.id.editoffer){
+                              if (!swipeToRefresh.isRefreshing()) {
+                                  product_item_detail = myactivelist.get(listPosition);
+                                  Intent i = new Intent(ActiveProductsAct.this,
+                                          UpdateListingProduct.class);
+                                  startActivity(i);
+
+                              }
+                          } else if (item.getItemId() == R.id.hideoffer) {
+                              if (myactivelist.get(listPosition).getStatus().equalsIgnoreCase("publish")) {
+
+                                  hidepublishOffer("trash", myactivelist.get(listPosition).getId());
+                              } else {
+                                  hidepublishOffer("publish", myactivelist.get(listPosition).getId());
+
+                              }
+                          }
+
+                          else if (item.getItemId() == R.id.deleteoffer) {
+                              current_offer_pos = listPosition;
+                              deleteOffer(listPosition, myactivelist.get(listPosition).getId());
+                          }
+
+
+                          /*  switch (item.getItemId()) {
                                 case R.id.editoffer:
                                     if (!swipeToRefresh.isRefreshing()) {
                                         product_item_detail = myactivelist.get(listPosition);
@@ -341,7 +365,7 @@ public class ActiveProductsAct extends AppCompatActivity {
                                     current_offer_pos = listPosition;
                                     deleteOffer(listPosition, myactivelist.get(listPosition).getId());
                                     break;
-                            }
+                            }*/
                             return false;
 
                             //   Toast.makeText(getBaseContext(), "You selected the action : " + item.getTitle(), Toast.LENGTH_SHORT).show();

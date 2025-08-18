@@ -5,7 +5,8 @@
     android:layout_gravity="center"
     android:background="@android:color/transparent"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:layout_width="match_parent"

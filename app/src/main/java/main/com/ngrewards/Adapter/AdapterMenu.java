@@ -30,6 +30,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import main.com.ngrewards.Models.ModalMenuList;
+
+
 import main.com.ngrewards.R;
 import main.com.ngrewards.RecyclerViewClickListener1;
 import main.com.ngrewards.activity.IMethodCaller;
@@ -86,7 +88,7 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.MyViewHolder> 
     }
 
     @Override
-    public AdapterMenu.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_adapter, parent, false);
         return new MyViewHolder(itemView);
@@ -131,9 +133,58 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.MyViewHolder> 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        int id = item.getItemId();
+                        int s = item.getItemId();
+                        if (s == R.id.nav_home) {
+                            fghu = all_category_subcategory.get(i).getItem_id();
+                            discription_item = all_category_subcategory.get(i).getTitleDiscription();
+                            title_item = all_category_subcategory.get(i).getTitle();
+                            price_item = all_category_subcategory.get(i).getPrice();
+                            image_item = all_category_subcategory.get(i).getImage();
+                            menu_id = all_category_subcategory.get(i).getMenu_id();
 
-                        switch (id) {
+                            Intent intent = new Intent(activity, AddMenuPublish.class);
+                            intent.putExtra("id_item", fghu);
+                            intent.putExtra("name_item", name_item);
+                            intent.putExtra("publish", "edit");
+                            intent.putExtra("discription", discription_item);
+                            intent.putExtra("title_item", title_item);
+                            intent.putExtra("price_item", price_item);
+                            intent.putExtra("image_item", image_item);
+                            intent.putExtra("menu_id", menu_id);
+
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            activity.startActivity(intent);
+
+                            IMethode.yourDesiredMethod();
+                        } else if (s == R.id.nav_messages) {
+
+                            Toast.makeText(activity, status, Toast.LENGTH_SHORT).show();
+
+                            fghu = all_category_subcategory.get(i).getItem_id();
+                            status = all_category_subcategory.get(i).getStatus();
+
+                            if (status.equalsIgnoreCase("publish")) {
+
+                                APIStatusHide(fghu);
+
+                            } else {
+
+                                APIStatusPublish(fghu);
+                            }
+
+                        } else if (s == R.id.nav_friends) {
+                            Toast.makeText(activity, fghu, Toast.LENGTH_SHORT).show();
+
+                            fghu = all_category_subcategory.get(i).getItem_id();
+
+                            current_offer_pos = i;
+
+                            APIStatusHide1(i, fghu);
+
+                        }
+
+
+                        /*switch (s) {
 
                             case R.id.nav_home:
 
@@ -197,8 +248,9 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.MyViewHolder> 
 
                             default:
                                 return false;
-                        }
-                    }
+                        }*/
+                        return true;
+                }
                 });
                 // CustomimagePopup();
             }
@@ -551,7 +603,7 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.MyViewHolder> 
 
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView name_menu, dish_name;
         private final LinearLayout InearLinearLayoutCards;
@@ -580,6 +632,9 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.MyViewHolder> 
             add_menu_img_btn = itemView.findViewById(R.id.add_menu_img_btn);
             image_menu_item = itemView.findViewById(R.id.image_menu_item);
             menu_list_recycler = itemView.findViewById(R.id.menu_list_recycler);
+
+
+
 
         }
     }

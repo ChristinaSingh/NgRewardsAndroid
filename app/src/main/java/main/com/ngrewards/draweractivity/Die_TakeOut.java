@@ -692,7 +692,18 @@ public class Die_TakeOut extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()) {
+        if(v.getId() == R.id.dilevry_fee){
+            AlertDialoge_Dilevery();
+        } else if (v.getId() == R.id.linear_tax) {
+            AlertDialoge_Tax();
+        }
+        else if (v.getId() == R.id.update_linear) {
+            ApiUpdateUser();
+        }
+
+
+
+      /*  switch (v.getId()) {
             case R.id.dilevry_fee:
 
                 AlertDialoge_Dilevery();
@@ -712,7 +723,7 @@ public class Die_TakeOut extends AppCompatActivity implements View.OnClickListen
                 //   finish();
 
                 break;
-        }
+        }*/
     }
 
 /*

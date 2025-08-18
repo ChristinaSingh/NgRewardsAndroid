@@ -294,17 +294,36 @@ public class UnsoldProductsAct extends AppCompatActivity {
 
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            switch (item.getItemId()) {
+                           if(item.getItemId()== R.id.editoffer){
+                               Intent i = new Intent(UnsoldProductsAct.this, UpdateListingProduct.class);
+                               startActivity(i);
+                           } else if (item.getItemId()== R.id.hideoffer) {
+                               if (myactivelist.get(listPosition).getStatus().equalsIgnoreCase("publish")) {
+
+                                   hidepublishOffer("trash", myactivelist.get(listPosition).getId());
+                               } else {
+                                   hidepublishOffer("publish", myactivelist.get(listPosition).getId());
+
+                               }
+                           }
+
+                           else if (item.getItemId()== R.id.deleteoffer) {
+                               current_offer_pos = listPosition;
+                               deleteOffer(listPosition, myactivelist.get(listPosition).getId());
+                           }
+
+
+                           /* switch (item.getItemId()) {
                                 case R.id.editoffer:
                                     Intent i = new Intent(UnsoldProductsAct.this, UpdateListingProduct.class);
-                                   /* i.putExtra("id", myactivelist.get(listPosition).getId());
+                                   *//* i.putExtra("id", myactivelist.get(listPosition).getId());
                                     i.putExtra("offername", myactivelist.get(listPosition).getOfferName());
                                     //i.putExtra("category_id",offerBeanListArrayList.get(listPosition).getCategory_id());
                                     i.putExtra("offerdescription", myactivelist.get(listPosition).getOfferDescription());
                                     i.putExtra("offerdescount", myactivelist.get(listPosition).getOfferDiscount());
                                     i.putExtra("offerprice", myactivelist.get(listPosition).getOfferPrice());
                                     i.putExtra("offerimage", myactivelist.get(listPosition).getOfferImage());
-                                */
+                                *//*
                                     startActivity(i);
 
                                     break;
@@ -323,7 +342,7 @@ public class UnsoldProductsAct extends AppCompatActivity {
                                     current_offer_pos = listPosition;
                                     deleteOffer(listPosition, myactivelist.get(listPosition).getId());
                                     break;
-                            }
+                            }*/
                             return false;
 
                             //   Toast.makeText(getBaseContext(), "You selected the action : " + item.getTitle(), Toast.LENGTH_SHORT).show();

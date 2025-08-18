@@ -345,7 +345,32 @@ public class OffersActivity extends AppCompatActivity {
 
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            switch (item.getItemId()) {
+                            if(item.getItemId()== R.id.editoffer){
+                                Intent i = new Intent(OffersActivity.this, UpdateOfferProduct.class);
+                                i.putExtra("id", offerBeanListArrayList.get(listPosition).getId());
+                                i.putExtra("offername", offerBeanListArrayList.get(listPosition).getOfferName());
+                                i.putExtra("category_id", offerBeanListArrayList.get(listPosition).getCategory_id());
+                                i.putExtra("offerdescription", offerBeanListArrayList.get(listPosition).getOfferDescription());
+                                i.putExtra("offerdescount", offerBeanListArrayList.get(listPosition).getOfferDiscount());
+                                i.putExtra("offerprice", offerBeanListArrayList.get(listPosition).getOfferPrice());
+                                i.putExtra("offerimage", offerBeanListArrayList.get(listPosition).getOfferImage());
+                                i.putExtra("offer_discountprice_str", offerBeanListArrayList.get(listPosition).getOffer_discount_price().trim());
+                                startActivity(i);
+                            } else if (item.getItemId()== R.id.hideoffer) {
+                                if (offerBeanListArrayList.get(listPosition).getStatus().equalsIgnoreCase("publish")) {
+
+                                    hidepublishOffer("trash", offerBeanListArrayList.get(listPosition).getId());
+                                } else {
+                                    hidepublishOffer("publish", offerBeanListArrayList.get(listPosition).getId());
+
+                                }
+                            } else if (item.getItemId()== R.id.deleteoffer) {
+                                current_offer_pos = listPosition;
+                                deleteOffer(listPosition, offerBeanListArrayList.get(listPosition).getId());
+                            }
+
+
+                            /*switch (item.getItemId()) {
                                 case R.id.editoffer:
                                     Intent i = new Intent(OffersActivity.this, UpdateOfferProduct.class);
                                     i.putExtra("id", offerBeanListArrayList.get(listPosition).getId());
@@ -376,7 +401,7 @@ public class OffersActivity extends AppCompatActivity {
                                     current_offer_pos = listPosition;
                                     deleteOffer(listPosition, offerBeanListArrayList.get(listPosition).getId());
                                     break;
-                            }
+                            }*/
                             return false;
 
                             //   Toast.makeText(getBaseContext(), "You selected the action : " + item.getTitle(), Toast.LENGTH_SHORT).show();

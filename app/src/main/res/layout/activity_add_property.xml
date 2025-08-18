@@ -8,6 +8,7 @@
         android:background="@color/white"
         android:focusableInTouchMode="true"
         tools:context=".marchant.activity.StartYourListing"
+        android:fitsSystemWindows="true"
         >
 
         <RelativeLayout

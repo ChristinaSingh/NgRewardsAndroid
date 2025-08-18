@@ -6,7 +6,8 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:focusableInTouchMode="true"
-        tools:context=".activity.ManualActivity">
+        tools:context=".activity.ManualActivity"
+    android:fitsSystemWindows="true">
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -3,7 +3,8 @@
     android:id="@+id/activity_edit_photo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#191919">
+    android:background="#191919"
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:layout_width="match_parent"

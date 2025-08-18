@@ -230,8 +230,8 @@ public class MerMessageAct extends MerchantBaseActivity {
 
         View v = snack.getView();
         v.setBackgroundColor(getResources().getColor(R.color.darkgrey));
-        ((TextView) v.findViewById(R.id.snackbar_text)).setTextColor(Color.WHITE);
-        ((TextView) v.findViewById(R.id.snackbar_action)).setTextColor(Color.BLACK);
+        ((TextView) v.findViewById(com.google.android.material.R.id.snackbar_text)).setTextColor(Color.WHITE);
+        ((TextView) v.findViewById(com.google.android.material.R.id.snackbar_action)).setTextColor(Color.BLACK);
 
         snack.show();
     }

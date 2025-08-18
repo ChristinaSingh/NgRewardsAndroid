@@ -206,7 +206,29 @@ public class AddMenuPublish extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
 
+        if (v.getId() == R.id.uploadimg){
+            selectImage();
+        } else if (v.getId() == R.id.publish_product ) {
+            if (publish_string.equals("edit")) {
+
+                ApiCallEdit();
+
+            } else {
+
+                ApiCall();
+            }
+        }
+
+        else if(v.getId() == R.id.backlay ){
+            finish();
+
+        }
+
+/*
         switch (v.getId()) {
+
+
+
 
             case R.id.uploadimg:
 
@@ -235,6 +257,7 @@ public class AddMenuPublish extends AppCompatActivity implements View.OnClickLis
 
                 break;
         }
+*/
     }
 
     private void ApiCallEdit() {
