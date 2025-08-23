@@ -268,15 +268,15 @@
                             android:layout_marginLeft="12dp"
                             android:layout_marginTop="5dp"
                             android:layout_marginRight="12dp"
-                            android:background="@color/darkgrey"></View>
+                            android:background="@color/darkgrey" />
 
-                        <main.com.ngrewards.constant.CreditCardEditText
+                      <!--  <main.com.ngrewards.constant.CreditCardEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:digits="1234567890"
                             android:inputType="number"
                             android:maxLength="16"
-                            android:visibility="gone" />
+                            android:visibility="gone" />-->
 
                         <main.com.ngrewards.fonttypeclasses.NormalEditText
                             android:id="@+id/cardnumber"
