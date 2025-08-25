@@ -609,6 +609,20 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".settingclasses.BioMetricAuthenticationAct"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".settingclasses.MerchantBioMetricAuthenticationAct"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+
+
+
         <!-- <activity
              android:exported="false"
              android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"

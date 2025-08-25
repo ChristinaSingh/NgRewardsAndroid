@@ -60,6 +60,7 @@ import main.com.ngrewards.constant.MySession;
 import main.com.ngrewards.constant.Myapisession;
 import main.com.ngrewards.restapi.ApiClient;
 import main.com.ngrewards.settingclasses.AboutNgReward;
+import main.com.ngrewards.settingclasses.BioMetricAuthenticationAct;
 import main.com.ngrewards.settingclasses.CareeersAct;
 import main.com.ngrewards.settingclasses.ChangePasswordAct;
 import main.com.ngrewards.settingclasses.InviteFacebookFriend;
@@ -75,7 +76,7 @@ public class SettingActivity extends AppCompatActivity {
     String selected_lang = "";
 
     CountryListAdapter languageListAdapter;
-    private RelativeLayout changelang, changepass, addcardlay, invitecontact, invitefacelay, backlay, career_lay, aboutng_rew, helpcenter, reportproblem, touchidlay, deleteAccount,rlSubscription;
+    private RelativeLayout rlSecuritySetting,changelang, changepass, addcardlay, invitecontact, invitefacelay, backlay, career_lay, aboutng_rew, helpcenter, reportproblem, touchidlay, deleteAccount,rlSubscription;
     private ExpandableHeightListView addedcardlist;
     private CustomCardAdp customCardAdp;
     private ArrayList<CardBean> cardBeanArrayList;
@@ -251,6 +252,14 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(new Intent(SettingActivity.this, MyPlanHistoryAct.class))
                 );
 
+
+        rlSecuritySetting.setOnClickListener(v ->
+                startActivity(new Intent(SettingActivity.this, BioMetricAuthenticationAct.class))
+        );
+
+
+
+
     }
 
     private void idinti() {
@@ -270,6 +279,7 @@ public class SettingActivity extends AppCompatActivity {
         helpcenter = findViewById(R.id.helpcenter);
         deleteAccount = findViewById(R.id.deleteAccount);
         rlSubscription = findViewById(R.id.rlSubscription);
+        rlSecuritySetting = findViewById(R.id.rlSecuritySetting);
     }
 
     @Override

@@ -37,9 +37,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -68,6 +72,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.Executor;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -76,9 +81,12 @@ import javax.crypto.SecretKey;
 
 import main.com.ngrewards.R;
 import main.com.ngrewards.activity.FingerprintHandler;
+import main.com.ngrewards.activity.LoginActivity;
+import main.com.ngrewards.activity.PreferenceConnector;
 import main.com.ngrewards.activity.SplashActivity;
 import main.com.ngrewards.activity.TermsAndCondition;
 import main.com.ngrewards.activity.app.Config;
+import main.com.ngrewards.androidmigx.MainTabActivity;
 import main.com.ngrewards.constant.BaseUrl;
 import main.com.ngrewards.constant.CountryBean;
 import main.com.ngrewards.constant.GPSTracker;
@@ -87,6 +95,11 @@ import main.com.ngrewards.constant.Myapisession;
 import main.com.ngrewards.marchant.activity.ForgotPass;
 import main.com.ngrewards.marchant.activity.MerchantSignupSlider;
 import main.com.ngrewards.marchant.merchantbottum.MerchantBottumAct;
+import main.com.ngrewards.restapi.ApiClient;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MarchantLogin extends AppCompatActivity {
     //code for lat long
@@ -106,7 +119,7 @@ public class MarchantLogin extends AppCompatActivity {
     Cipher cipher;
     TextView textView;
     private RelativeLayout backlay;
-    private TextView bytaping, dontaccount, login_tv, marforgot, login_with_touch;
+    private TextView bytaping, dontaccount, login_tv, marforgot, login_with_touch,btnBioMetricLogin;
     private EditText mobilenum, password_et;
     private String mobilenum_str = "", password_str = "", firebase_regid = "";
     private ProgressBar progresbar;
@@ -283,6 +296,9 @@ public class MarchantLogin extends AppCompatActivity {
         login_tv = findViewById(R.id.login_tv);
         dontaccount = findViewById(R.id.dontaccount);
         privacy_policy = findViewById(R.id.privacy_policy);
+        btnBioMetricLogin = findViewById(R.id.btnBioMetricLogin);
+
+
 
         String first_hh = getResources().getString(R.string.donthavemarchant);
         String first = getResources().getString(R.string.bytap);
@@ -315,7 +331,82 @@ public class MarchantLogin extends AppCompatActivity {
                 finish();
             }
         });
+
+
+        SharedPreferences prefs = getSharedPreferences("merchant_login_prefs", MODE_PRIVATE);
+        boolean isBiometricEnabled = prefs.getBoolean("merchant_biometric_enabled", false);
+
+        if (isBiometricSupported()) {
+            if(isBiometricEnabled){
+                btnBioMetricLogin.setVisibility(View.VISIBLE);
+                btnBioMetricLogin.setOnClickListener(view -> showBiometricPrompt());
+            }
+            else btnBioMetricLogin.setVisibility(View.GONE);
+
+        } else {
+            btnBioMetricLogin.setVisibility(View.GONE);
+            Toast.makeText(this, "Biometric not supported on this device", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
+
+
+    private boolean isBiometricSupported() {
+        BiometricManager biometricManager = BiometricManager.from(this);
+        int canAuthenticate = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG);
+
+        return canAuthenticate == BiometricManager.BIOMETRIC_SUCCESS;
+    }
+
+
+    private void showBiometricPrompt() {
+        Executor executor = ContextCompat.getMainExecutor(this);
+
+        BiometricPrompt biometricPrompt = new BiometricPrompt(this, executor,
+                new BiometricPrompt.AuthenticationCallback() {
+                    @Override
+                    public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                        super.onAuthenticationSucceeded(result);
+                        runOnUiThread(() -> {
+                            // Toast.makeText(LoginActivity.this, "Biometric Login Success", Toast.LENGTH_SHORT).show();
+                            SharedPreferences prefs = getSharedPreferences("merchant_login_prefs", MODE_PRIVATE);
+                            String userId = prefs.getString("user_id", null);
+
+                            if (userId == null) {
+                                Toast.makeText(MarchantLogin.this, "No saved user. Please login manually first.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            getProfile(userId);
+
+                        });
+                    }
+
+                    @Override
+                    public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                        super.onAuthenticationError(errorCode, errString);
+                        Toast.makeText(MarchantLogin.this, "Authentication error: " + errString, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onAuthenticationFailed() {
+                        super.onAuthenticationFailed();
+                        Toast.makeText(MarchantLogin.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Unlock NG Rewards")
+                .setSubtitle("Use your fingerprint to login")  // Use your fingerprint or face to login
+                .setNegativeButtonText("Cancel")
+                .build();
+
+        biometricPrompt.authenticate(promptInfo);
+    }
+
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -696,6 +787,11 @@ public class MarchantLogin extends AppCompatActivity {
                         mySession.setlogindata(result);
                         mySession.signinusers(true);
 
+                        JSONObject resultObj = jsonObject.getJSONObject("result");
+                        SharedPreferences prefs = getSharedPreferences("merchant_login_prefs", MODE_PRIVATE);
+                        prefs.edit().putString("user_id", resultObj.getString("id")).apply();
+
+
                         Intent i = new Intent(MarchantLogin.this, MerchantBottumAct.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -943,4 +1039,50 @@ public class MarchantLogin extends AppCompatActivity {
         public void onProviderDisabled(String provider) {
         }
     }
+
+
+    private void getProfile(String user_id) {
+        progresbar.setVisibility(View.VISIBLE);
+        Call<ResponseBody> call = ApiClient.getApiInterface().GetProfileAPi(user_id,"0");
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    progresbar.setVisibility(View.GONE);
+                    Log.e("TAG", "onResponse:  responseresponseresponse " + response);
+                    try {
+                        String responseData = response.body().string(); //
+                        JSONObject jsonObject = new JSONObject(responseData);
+                        Log.e("jsonObjectresult", String.valueOf(jsonObject));
+                        String message = jsonObject.getString("status");
+                        if (message.equalsIgnoreCase("1")) {
+                            mySession.setlogindata(responseData);
+                            mySession.signinusers(true);
+
+                            Intent i = new Intent(MarchantLogin.this, MerchantBottumAct.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(i);
+
+                        }
+
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                Log.e("TAG", t.toString());
+                progresbar.setVisibility(View.GONE);
+
+            }
+        });
+    }
+
+
 }

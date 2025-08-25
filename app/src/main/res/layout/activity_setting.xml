@@ -298,6 +298,40 @@
 
 
                 <RelativeLayout
+                    android:id="@+id/rlSecuritySetting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+
+                    <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="12dp"
+                        android:layout_toLeftOf="@+id/ft"
+                        android:text="@string/security_setting"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/medium" />
+
+                    <ImageView
+                        android:id="@+id/ft11"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        app:srcCompat="@drawable/next" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black"/>
+
+
+
+                <RelativeLayout
                     android:id="@+id/aboutng_rew"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -771,4 +771,9 @@
     <string name="reset">Reset</string>
     <string name="plans">Plans</string>
     <string name="payouts">Payouts</string>
+    <string name="bio_metric_login">Biometric Login</string>
+    <string name="biometric_authentication">Biometric Authentication</string>
+    <string name="disable">Disable</string>
+    <string name="security_setting">Security Settings</string>
+    <string name="enable">Enable</string>
 </resources>

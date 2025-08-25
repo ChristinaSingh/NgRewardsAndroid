@@ -53,8 +53,10 @@ import main.com.ngrewards.marchant.merchantbottum.MerchantBottumAct;
 import main.com.ngrewards.marchant.stripemerchantclasses.AddStripeConnectAccount;
 import main.com.ngrewards.restapi.ApiClient;
 import main.com.ngrewards.settingclasses.AboutNgReward;
+import main.com.ngrewards.settingclasses.BioMetricAuthenticationAct;
 import main.com.ngrewards.settingclasses.CareeersAct;
 import main.com.ngrewards.settingclasses.ChangePasswordAct;
+import main.com.ngrewards.settingclasses.MerchantBioMetricAuthenticationAct;
 import main.com.ngrewards.settingclasses.NgHelpCenter;
 import main.com.ngrewards.settingclasses.ReportProblem;
 import okhttp3.ResponseBody;
@@ -66,7 +68,7 @@ public class MerSettingActivity extends AppCompatActivity {
 
     SettingActivity.CountryListAdapter languageListAdapter;
     String selected_lang = "";
-    private RelativeLayout changelang, changepass, seestripedashboard, genrateloginlinklay, addstripeact, addcardlay, backlay, career_lay, aboutng_rew, helpcenter, reportproblem, touchidlay, deleteAccount;
+    private RelativeLayout rlSecuritySetting,changelang, changepass, seestripedashboard, genrateloginlinklay, addstripeact, addcardlay, backlay, career_lay, aboutng_rew, helpcenter, reportproblem, touchidlay, deleteAccount;
     private ProgressBar progresbar;
     private MySession mySession;
     private String user_id = "", stripe_account_id = "", stripe_account_login_link = "", user_type = "";
@@ -209,6 +211,12 @@ public class MerSettingActivity extends AppCompatActivity {
 
             }
         });
+
+
+        rlSecuritySetting.setOnClickListener(v ->
+                startActivity(new Intent(MerSettingActivity.this, MerchantBioMetricAuthenticationAct.class))
+        );
+
     }
 
     private void senOTP() {
@@ -365,6 +373,8 @@ public class MerSettingActivity extends AppCompatActivity {
         career_lay = findViewById(R.id.career_lay);
         helpcenter = findViewById(R.id.helpcenter);
         deleteAccount = findViewById(R.id.deleteAccount);
+        rlSecuritySetting = findViewById(R.id.rlSecuritySettingMer);
+
 
     }
 

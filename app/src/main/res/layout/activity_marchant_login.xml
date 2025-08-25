@@ -140,6 +140,24 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/medium" />
 
+
+                <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                    android:id="@+id/btnBioMetricLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/pink_border"
+                    android:gravity="center"
+                    android:padding="7dp"
+                    android:text="@string/bio_metric_login"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/medium" />
+
+
+
+
                 <TextView
                     android:id="@+id/marforgot"
                     android:layout_width="match_parent"
