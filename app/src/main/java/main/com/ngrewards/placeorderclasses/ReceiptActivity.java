@@ -34,7 +34,7 @@ public class ReceiptActivity extends AppCompatActivity {
     private RelativeLayout backlay;
     private LinearLayout llOrderInfo,llMerchantInfo;
     private ImageView sharebut;
-    private TextView ngcashredeem, username_tv,tvMemberUserName, employee_tv, member_name, tipamount_tv, due_amount, order_id, merchant_name, merchant_number, date_tv, address_tv, total_amt_tv, cardnumber_tv, special_request;
+    private TextView ngcashredeem, tvInfo,tvNameM,tvMemberUserName, employee_tv, member_name, tipamount_tv, due_amount, order_id, merchant_name, merchant_number, date_tv, address_tv, total_amt_tv, cardnumber_tv, special_request;
     private String user_id = "";
     private String due_amt_tv_str = "";
     private String ngcash_str = "";
@@ -191,6 +191,9 @@ public class ReceiptActivity extends AppCompatActivity {
         llMerchantInfo = findViewById(R.id.llMerchantInfo);
         tvMemberUserName =findViewById(R.id.tvMemberUserName);
 
+        tvNameM = findViewById(R.id.tvNameM);
+        tvInfo = findViewById(R.id.tvInfo);
+
         busseness_name = findViewById(R.id.busseness_name);
         busseness_name.setText(merchant_name_str);
         merchant_name.setText(getString(R.string.merchant_no) + member_name_str);
@@ -286,11 +289,46 @@ public class ReceiptActivity extends AppCompatActivity {
 
             tvMemberUserName.setVisibility(View.VISIBLE);
 
-            member_name.setText(getString(R.string.name_colan) + merchant_name_str);
+            member_name.setText(getString(R.string.name_colan) + member_name_str);
             tvMemberUserName.setText(getString(R.string.username_at_the_rad) + member_name_str);
             employee_tv.setVisibility(View.GONE);
 
         }
+
+       else if(type123.equalsIgnoreCase("Paybill")){
+            llOrderInfo.setVisibility(View.GONE);
+            btn_order.setVisibility(View.GONE);
+
+            // show member info
+            llMerchantInfo.setVisibility(View.VISIBLE);
+            address_tv.setVisibility(View.GONE);
+            tvNameM.setText(getString(R.string.memberinfo));
+            busseness_name.setText(getString(R.string.name_colan) + member_name_str);
+            merchant_name.setText(getString(R.string.username_at_the_rad) + merchant_name_str);
+
+          //  member_name.setText(getString(R.string.name_colan) + member_name_str);
+          //  tvMemberUserName.setText(getString(R.string.username_at_the_rad) + merchant_name_str);
+
+
+          // show merchant info
+            li_memberinfo.setVisibility(View.VISIBLE);
+            tvMemberUserName.setVisibility(View.VISIBLE);
+            tvInfo.setText(getString(R.string.merchantinfo));
+            member_name.setText(getString(R.string.merchant_no) + merchant_number_str);
+            tvMemberUserName.setVisibility(View.GONE);
+            employee_tv.setVisibility(View.GONE);
+
+
+
+
+
+          //  merchant_name.setText(getString(R.string.name_colan) + member_name_str);
+          //  member_name.setText(getString(R.string.name_colan) + username);
+
+        }
+
+
+
         else {
             llOrderInfo.setVisibility(View.VISIBLE);
             llMerchantInfo.setVisibility(View.VISIBLE);

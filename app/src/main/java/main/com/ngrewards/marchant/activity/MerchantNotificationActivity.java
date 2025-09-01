@@ -595,7 +595,7 @@ public class MerchantNotificationActivity extends AppCompatActivity implements F
                 } else if (result.getType().equalsIgnoreCase("member")) {
 
 
-                    if(notificationBeanNewArrayList.get(position).getTransferRequestData()!=null) {
+                    if(notificationBeanNewArrayList.get(position).getTransferRequestData()!=null && !notificationBeanNewArrayList.get(position).getTransferRequestData().isEmpty() ) {
                         if (notificationBeanNewArrayList.get(position).getTransferRequestData().get(0).getType().equalsIgnoreCase("Transfer")) {
 
                             Intent i = new Intent(MerchantNotificationActivity.this, ReceiptActivity.class);
@@ -652,6 +652,67 @@ public class MerchantNotificationActivity extends AppCompatActivity implements F
                         }
 
                     }
+
+
+                    if(notificationBeanNewArrayList.get(position).getPayBillData()!=null && !notificationBeanNewArrayList.get(position).getPayBillData().isEmpty() ) {
+                        if (notificationBeanNewArrayList.get(position).getPayBillData().get(0).getType().equalsIgnoreCase("Paybill")) {
+
+                            Intent i = new Intent(MerchantNotificationActivity.this, ReceiptActivity.class);
+
+                            Log.e("getBusinessName", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getMemberDetail().get(0).getAffiliateName());
+                            i.putExtra("merchant_name", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getMemberDetail().get(0).getUsername());
+                            i.putExtra("member_name", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getMemberDetail().get(0).getFullname());
+                            i.putExtra("merchant_id", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getMemberDetail().get(0).getId());
+                            i.putExtra("merchant_number", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getMerchantNo());
+                            i.putExtra("merchant_contact_name", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getMemberDetail().get(0).getPhone());
+                            i.putExtra("address", "");
+                            i.putExtra("address_2", "");
+                            i.putExtra("merchant_img_str", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getMemberDetail().get(0).getMemberImage());
+                            i.putExtra("date_tv", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getCreatedDate());
+                            i.putExtra("order_id", "" + notificationBeanNewArrayList.get(position).getId());
+                            i.putExtra("cardnumber_tv", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getCardNumber());
+                            i.putExtra("cardbrand", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getCardBrand());
+                            i.putExtra("total_amt_tv_str", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getTotalAmount());
+                            i.putExtra("due_amt_tv_str", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getAmount());
+                            i.putExtra("ngcash_str", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getNgcash());
+                            i.putExtra("tip_str", "" + "0.00");
+                            i.putExtra("employee_name", "");
+                            i.putExtra("mdate", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getCreatedDate());
+                            i.putExtra("time", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getCreatedDate());
+                            i.putExtra("Order_guset_No", "" + "");
+                            i.putExtra("Order_Table_No", "" + "");
+                            i.putExtra("reciept_url", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getRecieptUrl());
+                            i.putExtra("order_special", "");
+                            i.putExtra("order_cart_id", "");
+                            i.putExtra("type123", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getType());
+                            startActivity(i);
+
+
+                           /* Intent i = new Intent(MerchantNotificationActivity.this, MerchantReceiptActivity.class);
+                            i.putExtra("member_user_name", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getMemberDetail().get(0).getAffiliateName());
+                            i.putExtra("member_id", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getMemberDetail().get(0).getId());
+                            i.putExtra("member_fullname_number", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getMemberDetail().get(0).getFullname());
+                            i.putExtra("member_img_str", notificationBeanNewArrayList.get(position).getPayBillData().get(0).getMemberDetail().get(0).getMemberImage());
+                            i.putExtra("order_id", "" + notificationBeanNewArrayList.get(position).getId());
+                            i.putExtra("cardnumber_tv", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getCardNumber());
+                            i.putExtra("cardbrand", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getCardBrand());
+                            i.putExtra("total_amt_tv_str", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getTotalAmount());
+                            i.putExtra("due_amt_tv_str", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getAmount());
+                            i.putExtra("ngcash_str", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getNgcash());
+                            i.putExtra("tip_str", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getTipAmount());
+                            i.putExtra("order_special", "" + "");
+                            i.putExtra("employee_name", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getEmployeeName());
+                            i.putExtra("reciept_url", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getRecieptUrl());
+                            i.putExtra("order_date", "" + notificationBeanNewArrayList.get(position).getPayBillData().get(0).getPayBillDate());
+                            i.putExtra("order_cart_id", "" + "");
+                            startActivity(i);*/
+
+
+                        }
+
+                    }
+
+
 
 
                 } else {

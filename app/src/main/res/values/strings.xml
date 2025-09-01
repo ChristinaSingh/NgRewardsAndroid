@@ -772,8 +772,9 @@
     <string name="plans">Plans</string>
     <string name="payouts">Payouts</string>
     <string name="bio_metric_login">Biometric Login</string>
-    <string name="biometric_authentication">Biometric Authentication</string>
-    <string name="disable">Disable</string>
+    <string name="biometric_authentication">Biometric Login</string>
+    <string name="disable">Biometric Login Disable</string>
+    <string name="security">Security</string>
+    <string name="enable">Biometric Login Enable</string>
     <string name="security_setting">Security Settings</string>
-    <string name="enable">Enable</string>
 </resources>
