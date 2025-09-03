@@ -332,9 +332,9 @@ public class TransferToaFriend extends AppCompatActivity {
                     Toast.makeText(TransferToaFriend.this, getResources().getString(R.string.enterusername), Toast.LENGTH_LONG).show();
                 } else if (amount_str == null || amount_str.equalsIgnoreCase("")) {
                     Toast.makeText(TransferToaFriend.this, getResources().getString(R.string.enteramount), Toast.LENGTH_LONG).show();
-                } else if (comment_str == null || comment_str.equalsIgnoreCase("")) {
+                } /*else if (comment_str == null || comment_str.equalsIgnoreCase("")) {
                     Toast.makeText(TransferToaFriend.this, getResources().getString(R.string.entermessage), Toast.LENGTH_LONG).show();
-                } else {
+                }*/ else {
                     Intent intent = new Intent(TransferToaFriend.this, TransferSuccesfully.class);
                     intent.putExtra("user_id", user_id);
                     intent.putExtra("member_id", member_id);
@@ -360,9 +360,9 @@ public class TransferToaFriend extends AppCompatActivity {
                     Toast.makeText(TransferToaFriend.this, getResources().getString(R.string.enterusername), Toast.LENGTH_LONG).show();
                 } else if (amount_str == null || amount_str.equalsIgnoreCase("")) {
                     Toast.makeText(TransferToaFriend.this, getResources().getString(R.string.enteramount), Toast.LENGTH_LONG).show();
-                } else if (comment_str == null || comment_str.equalsIgnoreCase("")) {
+                } /*else if (comment_str == null || comment_str.equalsIgnoreCase("")) {
                     Toast.makeText(TransferToaFriend.this, getResources().getString(R.string.entermessage), Toast.LENGTH_LONG).show();
-                } /*else if (card_id == null || card_id.equalsIgnoreCase("")) {
+                }*/ /*else if (card_id == null || card_id.equalsIgnoreCase("")) {
                     Toast.makeText(TransferToaFriend.this, getResources().getString(R.string.selectcard), Toast.LENGTH_LONG).show();
                 }*/ else {
 
