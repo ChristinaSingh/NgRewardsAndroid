@@ -83,20 +83,44 @@
 
                 </LinearLayout>
 
-                <main.com.ngrewards.fonttypeclasses.NormalEditText
-                    android:id="@+id/mobilenum"
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/border_rounded"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="30dp"
-                    android:background="@drawable/border_rounded"
-                    android:gravity="center"
-                    android:hint="@string/membernumber1"
-                    android:textAlignment="center"
-                    android:imeOptions="actionNext"
-                    android:padding="7dp"
-                    android:textColor="@color/black" />
+                    >
+
+
+                    <main.com.ngrewards.fonttypeclasses.NormalEditText
+                        android:id="@+id/mobilenum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:background="@null"
+                        android:gravity="center"
+                        android:hint="@string/membernumber1"
+                        android:textAlignment="center"
+                        android:imeOptions="actionNext"
+                        android:padding="8dp"
+                        android:textColor="@color/black" />
+
+
+                      <ImageView
+                          android:id="@+id/ivFinger"
+                          android:layout_width="@dimen/_15sdp"
+                          android:layout_height="@dimen/_15sdp"
+                          android:layout_alignParentEnd="true"
+                          android:layout_centerInParent="true"
+                          android:layout_marginEnd="@dimen/_10sdp"
+                          android:src="@drawable/ic_fingerprint"
+                          android:visibility="gone"/>
+
+
+                </RelativeLayout>
+
 
 
                  <com.google.android.material.textfield.TextInputLayout
@@ -156,19 +180,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/medium" />
 
-                <main.com.ngrewards.fonttypeclasses.NoramlTextView
-                    android:id="@+id/btnBioMetricLogin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="30dp"
-                    android:background="@drawable/pink_border"
-                    android:gravity="center"
-                    android:padding="7dp"
-                    android:text="@string/bio_metric_login"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/medium" />
+
 
 
 

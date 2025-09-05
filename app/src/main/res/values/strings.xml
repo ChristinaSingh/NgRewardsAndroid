@@ -777,4 +777,21 @@
     <string name="security">Security</string>
     <string name="enable">Biometric Login Enable</string>
     <string name="security_setting">Security Settings</string>
+    <string name="finger_print">Fingerprint</string>
+    <string name="disabled_2fa_method">Disabled 2FA Method</string>
+    <string name="add_alternate_email">Add Alternate Email</string>
+    <string name="fingerprint_enabled_for_this_device">Fingerprint enabled for this device.</string>
+    <string name="enabled_2fa_by_email">Enabled 2FA by Email</string>
+    <string name="email_verification">Email Verification</string>
+    <string name="enable_two_factor_authentication">Enable Two-Factor Authentication</string>
+    <string name="choose_your_preferred_verification_method">Choose your preferred verification method</string>
+    <string name="enter_verification_code">Enter the verification code sent to your registered email. It may take a few minutes to arrive.</string>
+    <string name="enter_code_here">Enter code here</string>
+    <string name="enter_otp">Enter otp</string>
+    <string name="please_enter_your_alternate">Please enter your alternate recovery email address</string>
+
+    <string name="enter_verification_code2">Enter the verification code sent to your alternate email. It may take a few minutes to arrive.</string>
+    <string name="alternate_email_verified">Alternate Email Verified</string>
+
+
 </resources>

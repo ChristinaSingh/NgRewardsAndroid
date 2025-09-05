@@ -220,6 +220,126 @@
 
                 </RelativeLayout>
 
+
+                <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/greyborder"
+                    android:padding="8dp"
+                    android:text="@string/security"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:textSize="@dimen/medium" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:padding="10dp"
+                    android:layout_marginTop="@dimen/_7sdp">
+
+
+                    <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                        android:id="@+id/tvFingerprint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="12dp"
+                        android:text="@string/finger_print"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/medium" />
+
+                    <Switch
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/switchFingerprint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textOn=""
+                        android:textOff=""
+                        android:thumb="@drawable/switch_thumb_new"
+                        android:track="@drawable/switch_unchecked" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:padding="10dp">
+
+
+                    <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                        android:id="@+id/tv2FA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="12dp"
+                        android:text="@string/disabled_2fa_method"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/medium" />
+
+                    <Switch
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/switch2FA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textOn=""
+                        android:textOff=""
+                        android:clickable="false"
+                        android:thumb="@drawable/switch_thumb_new"
+                        android:track="@drawable/switch_unchecked" />
+                </RelativeLayout>
+
+
+
+
+
+                <RelativeLayout
+                    android:id="@+id/rlAlternateEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:layout_marginBottom="@dimen/_7sdp">
+
+
+                    <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                       android:id="@+id/tvAlternateEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="12dp"
+                        android:layout_toStartOf="@+id/ft12"
+                        android:text="@string/add_alternate_email"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/medium" />
+
+                    <ImageView
+                        android:id="@+id/ft12"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        app:srcCompat="@drawable/next" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black"/>
+
+
+
+
+
+
+
+
+
+
                 <main.com.ngrewards.fonttypeclasses.NoramlTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -261,7 +381,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/black"></View>
+                    android:background="@color/black"/>
 
 
                 <RelativeLayout
@@ -297,37 +417,7 @@
                     android:background="@color/black"></View>
 
 
-                <RelativeLayout
-                    android:id="@+id/rlSecuritySetting"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp">
 
-
-                    <main.com.ngrewards.fonttypeclasses.NoramlTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="12dp"
-                        android:layout_toStartOf="@+id/ft11"
-                        android:text="@string/security_setting"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/medium" />
-
-                    <ImageView
-                        android:id="@+id/ft11"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="5dp"
-                        app:srcCompat="@drawable/next" />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/black"/>
 
 
 

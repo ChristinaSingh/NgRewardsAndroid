@@ -373,4 +373,20 @@ public interface ApiInterface {
     @GET("get_merchant_properties.php?")
     Call<ResponseBody> getMerchantPropertyFilter(@Query("merchant_id") String merchant_id,@Query("category") String category,@Query("amenities[]") String amenities);
 
+
+    @GET("verify-mail.php?")
+    Call<ResponseBody> sendOtpOnEmailApi(@Query("user_id") String userId,@Query("type") String type);
+
+    @GET("verified_email_otp.php?")
+    Call<ResponseBody> verifiedEmailOtpApi(@Query("user_id") String userId,@Query("type") String type,@Query("otp") String otp);
+
+
+    @GET("update_alternate_email.php?")
+    Call<ResponseBody> addAlternateEmailApi(@Query("user_id") String userId,@Query("type") String type,@Query("alternate_email") String alternateEmail);
+
+
+    @GET("verified_alternate_email_otp.php?")
+    Call<ResponseBody> verifiedAlternateEmailApi(@Query("user_id") String userId,@Query("type") String type,@Query("otp") String otp);
+
+
 }

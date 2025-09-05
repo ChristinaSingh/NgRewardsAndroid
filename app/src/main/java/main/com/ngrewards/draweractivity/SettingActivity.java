@@ -5,11 +5,14 @@ import static main.com.ngrewards.constant.MySession.KEY_LANGUAGE;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +25,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +49,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import main.com.ngrewards.Interfaces.FilterSheetListener;
 import main.com.ngrewards.R;
 import main.com.ngrewards.Utils.LocaleHelper;
 import main.com.ngrewards.Utils.Tools;
@@ -58,7 +64,9 @@ import main.com.ngrewards.constant.ExpandableHeightListView;
 import main.com.ngrewards.constant.MySavedCardInfo;
 import main.com.ngrewards.constant.MySession;
 import main.com.ngrewards.constant.Myapisession;
+import main.com.ngrewards.fragments.FilterBottomSheet;
 import main.com.ngrewards.restapi.ApiClient;
+import main.com.ngrewards.security.EmailAuthBottomSheet;
 import main.com.ngrewards.settingclasses.AboutNgReward;
 import main.com.ngrewards.settingclasses.BioMetricAuthenticationAct;
 import main.com.ngrewards.settingclasses.CareeersAct;
@@ -72,19 +80,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SettingActivity extends AppCompatActivity {
+public class SettingActivity extends AppCompatActivity implements FilterSheetListener {
     String selected_lang = "";
 
     CountryListAdapter languageListAdapter;
-    private RelativeLayout rlSecuritySetting,changelang, changepass, addcardlay, invitecontact, invitefacelay, backlay, career_lay, aboutng_rew, helpcenter, reportproblem, touchidlay, deleteAccount,rlSubscription;
+    private RelativeLayout changelang, changepass, addcardlay, invitecontact, invitefacelay, backlay, career_lay, aboutng_rew, helpcenter, reportproblem, touchidlay, deleteAccount, rlSubscription;
     private ExpandableHeightListView addedcardlist;
     private CustomCardAdp customCardAdp;
     private ArrayList<CardBean> cardBeanArrayList;
     private MySavedCardInfo mySavedCardInfo;
     private ProgressBar progresbar;
     private MySession mySession;
-    private String user_id = "", user_type = "";
+    private String user_id = "", user_type = "",verified_email_status="",alternate_email="",verified_alternate_email_status="",fa_status="";
     private Myapisession myapisession;
+    Switch switchFingerprint, switch2FA;
+    TextView tv2FA, tvAlternateEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -250,17 +260,85 @@ public class SettingActivity extends AppCompatActivity {
 
         rlSubscription.setOnClickListener(v ->
                 startActivity(new Intent(SettingActivity.this, MyPlanHistoryAct.class))
-                );
-
-
-        rlSecuritySetting.setOnClickListener(v ->
-                startActivity(new Intent(SettingActivity.this, BioMetricAuthenticationAct.class))
         );
 
+
+        SharedPreferences prefs = getSharedPreferences("login_prefs", MODE_PRIVATE);
+        boolean isBiometricEnabled = prefs.getBoolean("biometric_enabled", false);
+        switchFingerprint.setChecked(isBiometricEnabled);
+
+
+        switchFingerprint.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            prefs.edit().putBoolean("biometric_enabled", isChecked).apply();
+            if (isChecked)
+                showTemporaryDialog(SettingActivity.this, getString(R.string.fingerprint_enabled_for_this_device));
+
+        });
+
+        tv2FA.setOnClickListener(view -> {
+            if(fa_status.equalsIgnoreCase("No")){
+                new EmailAuthBottomSheet("").callBack(this::onFilter).show(getSupportFragmentManager(),"");
+            }
+        });
+
+
+        tvAlternateEmail.setOnClickListener(view -> {
+            if(verified_alternate_email_status.equalsIgnoreCase("pending")){
+                addAlternateEmailDialog();
+            }
+        });
+
+
+
+
+
+
+
+
+        /*switch2FA.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(fa_status.equalsIgnoreCase("No")){
+                new EmailAuthBottomSheet("").callBack(this::onFilter).show(getSupportFragmentManager(),"");
+            }
+
+        });*/
 
 
 
     }
+
+
+    private void showTemporaryDialog(Context context, String message) {
+
+        Dialog dialog  = new Dialog(context, R.style.DialogSlideAnim);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog_fingerprint);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        TextView textView = dialog.findViewById(R.id.dialog_message);
+        textView.setText(message);
+
+        dialog.show();
+
+        // Set window gravity and size after showing
+        Window window = dialog.getWindow();
+        if (window != null) {
+            // Center the dialog
+            window.setGravity(Gravity.CENTER);
+
+            // Set layout to wrap content or match_parent based on need
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // if needed
+        }
+
+
+
+        // Dismiss after 3 seconds
+        new Handler().postDelayed(dialog::dismiss, 3000);
+    }
+
+
+
 
     private void idinti() {
         changelang = findViewById(R.id.changelang);
@@ -279,13 +357,20 @@ public class SettingActivity extends AppCompatActivity {
         helpcenter = findViewById(R.id.helpcenter);
         deleteAccount = findViewById(R.id.deleteAccount);
         rlSubscription = findViewById(R.id.rlSubscription);
-        rlSecuritySetting = findViewById(R.id.rlSecuritySetting);
+        tvAlternateEmail = findViewById(R.id.tvAlternateEmail);
+        tv2FA = findViewById(R.id.tv2FA);
+        switchFingerprint = findViewById(R.id.switchFingerprint);
+        switch2FA = findViewById(R.id.switch2FA);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Tools.reupdateResources(this);
+
+
+
 
         if (mySavedCardInfo.getKeyCarddata() != null && !mySavedCardInfo.getKeyCarddata().isEmpty()) {
             try {
@@ -335,6 +420,9 @@ public class SettingActivity extends AppCompatActivity {
         } else {
             new GetAddedCard().execute();
         }
+
+
+        getProfile();
 
     }
 
@@ -544,6 +632,8 @@ public class SettingActivity extends AppCompatActivity {
         if (myString.length() > 4) return myString.substring(myString.length() - 4);
         else return myString;
     }
+
+
 
     public static class LanguageBean {
         String id;
@@ -945,5 +1035,372 @@ public class SettingActivity extends AppCompatActivity {
 
         }
     }
+
+
+    private void getProfile() {
+        Call<ResponseBody> call = ApiClient.getApiInterface().member_profile(user_id);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Log.e("TAG", "onResponse:  responseresponseresponse " + response);
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseData);
+                        Log.e("jsonObjectresult", String.valueOf(jsonObject));
+
+                        String message = jsonObject.getString("status");
+
+                        if (message.equalsIgnoreCase("1")) {
+
+                            JSONObject jsonObject1 = jsonObject.getJSONObject("result");
+
+                            verified_email_status = jsonObject1.getString("verified_email_status");
+                            fa_status = jsonObject1.getString("2fa_status");
+
+                            verified_alternate_email_status = jsonObject1.getString("verified_alternate_email_status");
+                            alternate_email = jsonObject1.getString("alternate_email");
+
+
+
+                            if(fa_status.equalsIgnoreCase("No") && verified_email_status.equalsIgnoreCase("pending")){
+                                tv2FA.setText(getString(R.string.disabled_2fa_method));
+                                tv2FA.setTextColor(getColor(R.color.red));
+                                switch2FA.setChecked(false);
+                            }
+                            else {
+                                tv2FA.setText(getString(R.string.enabled_2fa_by_email));
+                                tv2FA.setTextColor(getColor(R.color.green));
+                                switch2FA.setChecked(true);
+                            }
+
+
+
+                            if(verified_alternate_email_status.equalsIgnoreCase("pending")){
+                                tvAlternateEmail.setText(getString(R.string.add_alternate_email));
+                                tvAlternateEmail.setTextColor(getColor(R.color.red));
+                            }
+                            else {
+                                tvAlternateEmail.setText(getString(R.string.alternate_email_verified));
+                                tvAlternateEmail.setTextColor(getColor(R.color.green));
+                            }
+
+
+                        }
+
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                Log.e("TAG", t.toString());
+            }
+        });
+    }
+
+
+
+
+    @Override
+    public void onFilter(String type, String filter) {
+        sendOtpOnEmail();
+    }
+
+
+    private void sendOtpOnEmail() {
+        progresbar.setVisibility(View.VISIBLE);
+        Call<ResponseBody> call = ApiClient.getApiInterface().sendOtpOnEmailApi(user_id,"member");
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    progresbar.setVisibility(View.GONE);
+
+                    Log.e("TAG", "onResponse:  responseresponseresponse " + response);
+                    try {
+
+                        String responseData = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseData);
+
+                     //  {"status":1,"message":"OTP sent successfully","user_id":"311"}
+                        Log.e("jsonObjectresult", String.valueOf(jsonObject));
+                        if (jsonObject.getInt("status")==1) {
+                             verifiedOtpDialog();
+                        }
+                        else {
+                            Toast.makeText(SettingActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                Log.e("TAG", t.toString());
+                progresbar.setVisibility(View.GONE);
+
+            }
+        });
+    }
+
+    private void verifiedOtpDialog() {
+        Dialog dialogSts = new Dialog(SettingActivity.this, R.style.DialogSlideAnim);
+        dialogSts.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogSts.setCancelable(false);
+
+        dialogSts.setContentView(R.layout.custom_popup_verified_otp);
+
+        dialogSts.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        EditText edOtp = dialogSts.findViewById(R.id.edOtp);
+        TextView btnCancel = dialogSts.findViewById(R.id.btnCancel);
+        TextView btnSubmit = dialogSts.findViewById(R.id.btnSubmit);
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+              if(edOtp.getText().toString().equalsIgnoreCase("")){
+                  Toast.makeText(SettingActivity.this, getString(R.string.enter_otp), Toast.LENGTH_SHORT).show();
+              }
+               else {
+                  dialogSts.dismiss();
+                  verifiedEmailOtp(edOtp.getText().toString());
+              }
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogSts.dismiss();
+
+
+            }
+        });
+
+
+        dialogSts.show();
+
+
+    }
+
+    private void verifiedEmailOtp(String otp) {
+        progresbar.setVisibility(View.VISIBLE);
+        Call<ResponseBody> call = ApiClient.getApiInterface().verifiedEmailOtpApi(user_id,"member",otp);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    progresbar.setVisibility(View.GONE);
+
+                    Log.e("TAG", "onResponse:  responseresponseresponse " + response);
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseData);
+                        Log.e("jsonObjectresult", String.valueOf(jsonObject));
+
+                        if (jsonObject.getInt("status")==1) {
+                            getProfile();
+                        }
+                        else {
+                            Toast.makeText(SettingActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                Log.e("TAG", t.toString());
+                progresbar.setVisibility(View.GONE);
+
+            }
+        });
+    }
+
+
+    private void addAlternateEmailDialog() {
+        Dialog dialogSts = new Dialog(SettingActivity.this, R.style.DialogSlideAnim);
+        dialogSts.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogSts.setCancelable(false);
+
+        dialogSts.setContentView(R.layout.custom_popup_add_alternate_email);
+
+        dialogSts.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        EditText edEmail = dialogSts.findViewById(R.id.edEmail);
+        TextView btnCancel = dialogSts.findViewById(R.id.btnCancel);
+        TextView btnSave = dialogSts.findViewById(R.id.btnSave);
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(edEmail.getText().toString().equalsIgnoreCase("")){
+                    Toast.makeText(SettingActivity.this, getString(R.string.enter_email), Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    dialogSts.dismiss();
+                    addAlternateEmail(edEmail.getText().toString());
+                }
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogSts.dismiss();
+
+
+            }
+        });
+
+
+        dialogSts.show();
+
+
+    }
+
+
+    private void addAlternateEmail(String email) {
+        progresbar.setVisibility(View.VISIBLE);
+        Call<ResponseBody> call = ApiClient.getApiInterface().addAlternateEmailApi(user_id,"member",email);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    progresbar.setVisibility(View.GONE);
+
+                    Log.e("TAG", "onResponse:  responseresponseresponse " + response);
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseData);
+                        Log.e("jsonObjectresult", String.valueOf(jsonObject));
+
+                        if (jsonObject.getInt("status")==1) {
+                            verifiedAddAlternateEmailDialog();
+                        }
+                        else {
+                            Toast.makeText(SettingActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                Log.e("TAG", t.toString());
+                progresbar.setVisibility(View.GONE);
+
+            }
+        });
+    }
+
+
+    private void   verifiedAddAlternateEmailDialog() {
+        Dialog dialogSts = new Dialog(SettingActivity.this, R.style.DialogSlideAnim);
+        dialogSts.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogSts.setCancelable(false);
+
+        dialogSts.setContentView(R.layout.custom_popup_verified_otp2);
+
+        dialogSts.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        EditText edOtp = dialogSts.findViewById(R.id.edOtp);
+        TextView btnCancel = dialogSts.findViewById(R.id.btnCancel);
+        TextView btnSubmit = dialogSts.findViewById(R.id.btnSubmit);
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(edOtp.getText().toString().equalsIgnoreCase("")){
+                    Toast.makeText(SettingActivity.this, getString(R.string.enter_otp), Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    dialogSts.dismiss();
+                    verifiedAlternateEmailOtp(edOtp.getText().toString());
+                }
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogSts.dismiss();
+
+
+            }
+        });
+
+
+        dialogSts.show();
+
+
+
+
+    }
+
+
+
+    private void verifiedAlternateEmailOtp(String otp) {
+        progresbar.setVisibility(View.VISIBLE);
+        Call<ResponseBody> call = ApiClient.getApiInterface().verifiedAlternateEmailApi(user_id,"member",otp);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    progresbar.setVisibility(View.GONE);
+
+                    Log.e("TAG", "onResponse:  responseresponseresponse " + response);
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseData);
+                        Log.e("jsonObjectresult", String.valueOf(jsonObject));
+
+                        if (jsonObject.getInt("status")==1) {
+                            getProfile();
+                        }
+                        else {
+                            Toast.makeText(SettingActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                Log.e("TAG", t.toString());
+                progresbar.setVisibility(View.GONE);
+
+            }
+        });
+    }
+
+
+
 
 }

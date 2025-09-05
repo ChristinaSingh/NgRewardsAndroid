@@ -97,6 +97,7 @@ import main.com.ngrewards.constant.CountryBean;
 import main.com.ngrewards.constant.GPSTracker;
 import main.com.ngrewards.constant.MySession;
 import main.com.ngrewards.constant.Myapisession;
+import main.com.ngrewards.draweractivity.SettingActivity;
 import main.com.ngrewards.marchant.MarchantLogin;
 import main.com.ngrewards.restapi.ApiClient;
 import okhttp3.ResponseBody;
@@ -125,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView bytaping, dontaccount, login_tv, businesslogin;
     private EditText mobilenum, password_et;
     private String mobilenum_str = "", password_str = "", firebase_regid = "";
-    private TextView next_tv, forgot_tv, login_with_touch,btnBioMetricLogin;
+    private TextView next_tv, forgot_tv, login_with_touch;
     private ProgressBar progresbar;
     //   private LoginButton loginButton;
     private LinearLayout facebook_button;
@@ -143,6 +144,7 @@ public class LoginActivity extends AppCompatActivity {
     private String fullname;
     private String newLogoutStatus;
     private TextView privacy_policy;
+    private ImageView ivFinger;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -415,7 +417,7 @@ public class LoginActivity extends AppCompatActivity {
         login_tv = findViewById(R.id.login_tv);
         dontaccount = findViewById(R.id.dontaccount);
         privacy_policy = (TextView) findViewById(R.id.privacy_policy);
-        btnBioMetricLogin = findViewById(R.id.btnBioMetricLogin);
+        ivFinger = findViewById(R.id.ivFinger);
 
 
 
@@ -471,14 +473,14 @@ public class LoginActivity extends AppCompatActivity {
 
         if (isBiometricSupported()) {
             if(isBiometricEnabled){
-                btnBioMetricLogin.setVisibility(View.VISIBLE);
-                btnBioMetricLogin.setOnClickListener(view -> showBiometricPrompt());
+                ivFinger.setVisibility(View.VISIBLE);
+                ivFinger.setOnClickListener(view -> showBiometricPrompt());
             }
-            else btnBioMetricLogin.setVisibility(View.GONE);
+            else ivFinger.setVisibility(View.GONE);
 
         } else {
-            btnBioMetricLogin.setVisibility(View.GONE);
-            Toast.makeText(this, "Biometric not supported on this device", Toast.LENGTH_SHORT).show();
+            ivFinger.setVisibility(View.GONE);
+           // Toast.makeText(this, "Biometric not supported on this device", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -1230,18 +1232,8 @@ public class LoginActivity extends AppCompatActivity {
                         Log.e("jsonObjectresult", String.valueOf(jsonObject));
                         String message = jsonObject.getString("status");
                         if (message.equalsIgnoreCase("1")) {
-                            mySession.setlogindata(responseData);
-                            mySession.signinusers(true);
 
-                            PreferenceConnector.writeString(LoginActivity.this, PreferenceConnector.Logout_Status, "false");
-                            PreferenceConnector.writeString(LoginActivity.this, PreferenceConnector.Greeting_Status, "false");
-                            Intent i = new Intent(LoginActivity.this, MainTabActivity.class)
-                                    .putExtra("NgCashRef","NgCashRef");
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            i.putExtra("logout_status", newLogoutStatus);
-                            startActivity(i);
+                            sendOtpOnEmail(responseData,jsonObject);
 
                         }
 
@@ -1262,6 +1254,151 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
+    private void sendOtpOnEmail(String responseData11,JSONObject jsonObject11) {
+        progresbar.setVisibility(View.VISIBLE);
+        Call<ResponseBody> call = null;
+        try {
+            call = ApiClient.getApiInterface().sendOtpOnEmailApi(jsonObject11.getJSONObject("result").getString("id"),"member");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    progresbar.setVisibility(View.GONE);
+
+                    Log.e("TAG", "onResponse:  responseresponseresponse " + response);
+                    try {
+
+                        String responseData = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseData);
+
+                        //  {"status":1,"message":"OTP sent successfully","user_id":"311"}
+                        Log.e("jsonObjectresult", String.valueOf(jsonObject));
+                        if (jsonObject.getInt("status")==1) {
+                            verifiedOtpDialog(responseData11,jsonObject11);
+                        }
+                        else {
+                            Toast.makeText(LoginActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                Log.e("TAG", t.toString());
+                progresbar.setVisibility(View.GONE);
+
+            }
+        });
+    }
+
+
+
+    private void verifiedOtpDialog(String responseData,JSONObject jsonObject) {
+        Dialog dialogSts = new Dialog(LoginActivity.this, R.style.DialogSlideAnim);
+        dialogSts.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogSts.setCancelable(false);
+
+        dialogSts.setContentView(R.layout.custom_popup_verified_otp);
+
+        dialogSts.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        EditText edOtp = dialogSts.findViewById(R.id.edOtp);
+        TextView btnCancel = dialogSts.findViewById(R.id.btnCancel);
+        TextView btnSubmit = dialogSts.findViewById(R.id.btnSubmit);
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(edOtp.getText().toString().equalsIgnoreCase("")){
+                    Toast.makeText(LoginActivity.this, getString(R.string.enter_otp), Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    dialogSts.dismiss();
+                    verifiedEmailOtp(edOtp.getText().toString(),responseData, jsonObject);
+                }
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogSts.dismiss();
+
+
+            }
+        });
+
+
+        dialogSts.show();
+
+
+    }
+
+    private void verifiedEmailOtp(String otp,String loginData,JSONObject jsonObject) {
+        progresbar.setVisibility(View.VISIBLE);
+        Call<ResponseBody> call = null;
+        try {
+            call = ApiClient.getApiInterface().verifiedEmailOtpApi(jsonObject.getJSONObject("result").getString("id"),"member",otp);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    progresbar.setVisibility(View.GONE);
+
+                    Log.e("TAG", "onResponse:  responseresponseresponse " + response);
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseData);
+                        Log.e("jsonObjectresult", String.valueOf(jsonObject));
+
+                        if (jsonObject.getInt("status")==1) {
+
+                            mySession.setlogindata(loginData);
+                            mySession.signinusers(true);
+
+                            PreferenceConnector.writeString(LoginActivity.this, PreferenceConnector.Logout_Status, "false");
+                            PreferenceConnector.writeString(LoginActivity.this, PreferenceConnector.Greeting_Status, "false");
+                            Intent i = new Intent(LoginActivity.this, MainTabActivity.class)
+                                    .putExtra("NgCashRef","NgCashRef");
+                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            i.putExtra("logout_status", newLogoutStatus);
+                            startActivity(i);
+                        }
+                        else {
+                            Toast.makeText(LoginActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                Log.e("TAG", t.toString());
+                progresbar.setVisibility(View.GONE);
+
+            }
+        });
+    }
 
 
 
