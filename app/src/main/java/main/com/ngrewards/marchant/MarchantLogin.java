@@ -130,6 +130,8 @@ public class MarchantLogin extends AppCompatActivity {
     private ArrayList<CountryBean> countryBeanArrayList;
     private double latitude = 0, longitude = 0;
     private TextView privacy_policy;
+    private ImageView ivFinger;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -296,7 +298,7 @@ public class MarchantLogin extends AppCompatActivity {
         login_tv = findViewById(R.id.login_tv);
         dontaccount = findViewById(R.id.dontaccount);
         privacy_policy = findViewById(R.id.privacy_policy);
-        btnBioMetricLogin = findViewById(R.id.btnBioMetricLogin);
+        ivFinger = findViewById(R.id.ivFinger);
 
 
 
@@ -338,13 +340,13 @@ public class MarchantLogin extends AppCompatActivity {
 
         if (isBiometricSupported()) {
             if(isBiometricEnabled){
-                btnBioMetricLogin.setVisibility(View.VISIBLE);
-                btnBioMetricLogin.setOnClickListener(view -> showBiometricPrompt());
+                ivFinger.setVisibility(View.VISIBLE);
+                ivFinger.setOnClickListener(view -> showBiometricPrompt());
             }
-            else btnBioMetricLogin.setVisibility(View.GONE);
+            else ivFinger.setVisibility(View.GONE);
 
         } else {
-            btnBioMetricLogin.setVisibility(View.GONE);
+            ivFinger.setVisibility(View.GONE);
             Toast.makeText(this, "Biometric not supported on this device", Toast.LENGTH_SHORT).show();
         }
 
@@ -1056,14 +1058,10 @@ public class MarchantLogin extends AppCompatActivity {
                         Log.e("jsonObjectresult", String.valueOf(jsonObject));
                         String message = jsonObject.getString("status");
                         if (message.equalsIgnoreCase("1")) {
-                            mySession.setlogindata(responseData);
-                            mySession.signinusers(true);
+                            sendOtpOnEmail(responseData,jsonObject);
 
-                            Intent i = new Intent(MarchantLogin.this, MerchantBottumAct.class);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            startActivity(i);
+
+
 
                         }
 
@@ -1084,5 +1082,184 @@ public class MarchantLogin extends AppCompatActivity {
         });
     }
 
+
+    private void getProfile11(String user_id) {
+        progresbar.setVisibility(View.VISIBLE);
+        Call<ResponseBody> call = ApiClient.getApiInterface().member_profile(user_id);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    progresbar.setVisibility(View.GONE);
+                    Log.e("TAG", "onResponse:  responseresponseresponse " + response);
+                    try {
+                        String responseData = response.body().string(); //
+                        JSONObject jsonObject = new JSONObject(responseData);
+                        Log.e("jsonObjectresult", String.valueOf(jsonObject));
+                        String message = jsonObject.getString("status");
+                        if (message.equalsIgnoreCase("1")) {
+
+                            sendOtpOnEmail(responseData,jsonObject);
+
+                        }
+
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                Log.e("TAG", t.toString());
+                progresbar.setVisibility(View.GONE);
+
+            }
+        });
+    }
+
+
+    private void sendOtpOnEmail(String responseData11,JSONObject jsonObject11) {
+        progresbar.setVisibility(View.VISIBLE);
+        Call<ResponseBody> call = null;
+        try {
+            call = ApiClient.getApiInterface().sendOtpOnEmailApi(jsonObject11.getJSONObject("result").getString("id"),"merchant");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    progresbar.setVisibility(View.GONE);
+
+                    Log.e("TAG", "onResponse:  responseresponseresponse " + response);
+                    try {
+
+                        String responseData = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseData);
+
+                        //  {"status":1,"message":"OTP sent successfully","user_id":"311"}
+                        Log.e("jsonObjectresult", String.valueOf(jsonObject));
+                        if (jsonObject.getInt("status")==1) {
+                            verifiedOtpDialog(responseData11,jsonObject11);
+                        }
+                        else {
+                            Toast.makeText(MarchantLogin.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                Log.e("TAG", t.toString());
+                progresbar.setVisibility(View.GONE);
+
+            }
+        });
+    }
+
+
+
+    private void verifiedOtpDialog(String responseData,JSONObject jsonObject) {
+        Dialog dialogSts = new Dialog(MarchantLogin.this, R.style.DialogSlideAnim);
+        dialogSts.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogSts.setCancelable(false);
+
+        dialogSts.setContentView(R.layout.custom_popup_verified_otp);
+
+        dialogSts.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        EditText edOtp = dialogSts.findViewById(R.id.edOtp);
+        TextView btnCancel = dialogSts.findViewById(R.id.btnCancel);
+        TextView btnSubmit = dialogSts.findViewById(R.id.btnSubmit);
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(edOtp.getText().toString().equalsIgnoreCase("")){
+                    Toast.makeText(MarchantLogin.this, getString(R.string.enter_otp), Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    dialogSts.dismiss();
+                    verifiedEmailOtp(edOtp.getText().toString(),responseData, jsonObject);
+                }
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogSts.dismiss();
+
+
+            }
+        });
+
+
+        dialogSts.show();
+
+
+    }
+
+    private void verifiedEmailOtp(String otp,String loginData,JSONObject jsonObject) {
+        progresbar.setVisibility(View.VISIBLE);
+        Call<ResponseBody> call = null;
+        try {
+            call = ApiClient.getApiInterface().verifiedEmailOtpApi(jsonObject.getJSONObject("result").getString("id"),"merchant",otp);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    progresbar.setVisibility(View.GONE);
+
+                    Log.e("TAG", "onResponse:  responseresponseresponse " + response);
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseData);
+                        Log.e("jsonObjectresult", String.valueOf(jsonObject));
+
+                        if (jsonObject.getInt("status")==1) {
+
+                            mySession.setlogindata(loginData);
+                            mySession.signinusers(true);
+
+                            Intent i = new Intent(MarchantLogin.this, MerchantBottumAct.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(i);
+                        }
+                        else {
+                            Toast.makeText(MarchantLogin.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                Log.e("TAG", t.toString());
+                progresbar.setVisibility(View.GONE);
+
+            }
+        });
+    }
 
 }

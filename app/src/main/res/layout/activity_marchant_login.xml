@@ -73,7 +73,48 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/extralarge" />
 
-                <main.com.ngrewards.fonttypeclasses.NormalEditText
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_rounded"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="30dp"
+                    >
+
+
+                    <main.com.ngrewards.fonttypeclasses.NormalEditText
+                        android:id="@+id/mobilenum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:background="@null"
+                        android:gravity="center"
+                        android:hint="@string/merchantnum"
+                        android:textAlignment="center"
+                        android:imeOptions="actionNext"
+                        android:padding="8dp"
+                        android:textColor="@color/black" />
+
+
+                    <ImageView
+                        android:id="@+id/ivFinger"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:src="@drawable/ic_fingerprint"
+                        android:visibility="gone"/>
+
+
+                </RelativeLayout>
+
+
+
+
+               <!-- <main.com.ngrewards.fonttypeclasses.NormalEditText
                     android:id="@+id/mobilenum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -84,7 +125,7 @@
                     android:gravity="center"
                     android:hint="@string/merchantnum"
                     android:padding="7dp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black" />-->
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -141,7 +182,7 @@
                     android:textSize="@dimen/medium" />
 
 
-                <main.com.ngrewards.fonttypeclasses.NoramlTextView
+               <!-- <main.com.ngrewards.fonttypeclasses.NoramlTextView
                     android:id="@+id/btnBioMetricLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -153,7 +194,7 @@
                     android:padding="7dp"
                     android:text="@string/bio_metric_login"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/medium" />
+                    android:textSize="@dimen/medium" />-->
 
 
 

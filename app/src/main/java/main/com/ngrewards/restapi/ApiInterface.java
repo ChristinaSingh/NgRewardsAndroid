@@ -389,4 +389,12 @@ public interface ApiInterface {
     Call<ResponseBody> verifiedAlternateEmailApi(@Query("user_id") String userId,@Query("type") String type,@Query("otp") String otp);
 
 
+
+    @GET("merchant_profile.php?")
+    Call<ResponseBody> getMerchantProfileApi(@Query("merchant_id") String merchantId);
+
+
+
+
+
 }
