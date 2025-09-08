@@ -1232,8 +1232,23 @@ public class LoginActivity extends AppCompatActivity {
                         Log.e("jsonObjectresult", String.valueOf(jsonObject));
                         String message = jsonObject.getString("status");
                         if (message.equalsIgnoreCase("1")) {
+                            if(jsonObject.getJSONObject("result").getString("2fa_status").equalsIgnoreCase("Yes")) {
+                                sendOtpOnEmail(responseData,jsonObject);
+                            }else {
+                                mySession.setlogindata(responseData);
+                                mySession.signinusers(true);
 
-                            sendOtpOnEmail(responseData,jsonObject);
+                                PreferenceConnector.writeString(LoginActivity.this, PreferenceConnector.Logout_Status, "false");
+                                PreferenceConnector.writeString(LoginActivity.this, PreferenceConnector.Greeting_Status, "false");
+                                Intent i = new Intent(LoginActivity.this, MainTabActivity.class)
+                                        .putExtra("NgCashRef","NgCashRef");
+                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                i.putExtra("logout_status", newLogoutStatus);
+                                startActivity(i);
+                            }
+
 
                         }
 

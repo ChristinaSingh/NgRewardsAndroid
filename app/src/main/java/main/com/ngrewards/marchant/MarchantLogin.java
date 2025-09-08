@@ -1058,7 +1058,23 @@ public class MarchantLogin extends AppCompatActivity {
                         Log.e("jsonObjectresult", String.valueOf(jsonObject));
                         String message = jsonObject.getString("status");
                         if (message.equalsIgnoreCase("1")) {
-                            sendOtpOnEmail(responseData,jsonObject);
+
+                            if(jsonObject.getJSONObject("result").getString("2fa_status").equalsIgnoreCase("Yes")) {
+                                sendOtpOnEmail(responseData,jsonObject);
+                            }
+
+                            else {
+                                mySession.setlogindata(responseData);
+                                mySession.signinusers(true);
+
+                                Intent i = new Intent(MarchantLogin.this, MerchantBottumAct.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(i);
+                            }
+
+
 
 
 
