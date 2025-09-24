@@ -746,7 +746,6 @@ public class MerSettingActivity extends AppCompatActivity implements FilterSheet
                         String message = jsonObject.getString("status");
 
                         if (message.equalsIgnoreCase("1")) {
-
                             JSONObject jsonObject1 = jsonObject.getJSONObject("result");
 
                             verified_email_status = jsonObject1.getString("verified_email_status");
