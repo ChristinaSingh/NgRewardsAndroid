@@ -287,6 +287,19 @@ public class OrderBean {
     @Expose
     private String receiptUrl="";
 
+
+    @SerializedName("plan_display_name")
+    @Expose
+    private String planDisplayName="";
+
+    public String getPlanDisplayName() {
+        return planDisplayName;
+    }
+
+    public void setPlanDisplayName(String planDisplayName) {
+        this.planDisplayName = planDisplayName;
+    }
+
     public String getReceiptUrl() {
         return receiptUrl;
     }

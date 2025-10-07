@@ -381,7 +381,7 @@ public class InviteActMain extends Fragment {
                             Log.e("responseDataaaaa >> ", " >> " + responseData);
 
                             if (object.getString("status").equals("1")) {
-                                invite_str = "https://international.myngrewards.com/share/"+id ;
+                                invite_str =     object.getString("share_link");     //   "https://international.myngrewards.com/share/"+id ;
                                 Intent sendIntent = new Intent();
                                 sendIntent.setAction(Intent.ACTION_SEND);
                                 sendIntent.putExtra(Intent.EXTRA_TEXT, invite_str);

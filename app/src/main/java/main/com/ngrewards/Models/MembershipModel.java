@@ -423,6 +423,19 @@ public class MembershipModel {
         @Expose
         private String status;
 
+        @SerializedName("plan_display_name")
+        @Expose
+        private String planDisplayName;
+
+
+        public String getPlanDisplayName() {
+            return planDisplayName;
+        }
+
+        public void setPlanDisplayName(String planDisplayName) {
+            this.planDisplayName = planDisplayName;
+        }
+
         public String getStatus() {
             return status;
         }

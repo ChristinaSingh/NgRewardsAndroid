@@ -41,15 +41,15 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.binding.tvTitle.setText(arrayList.get(position).getPlanName());
+        holder.binding.tvTitle.setText(arrayList.get(position).getPlanDisplayName());
         holder.binding.tvPrice.setText("$"+arrayList.get(position).getPrice() + "/" + arrayList.get(position).getDurationType());
         holder.binding.tvTitle1.setText(arrayList.get(position).getDescription());
 
-        holder.binding.tv1.setText(arrayList.get(position).getFeatures().get(0));
-        holder.binding.tv2.setText(arrayList.get(position).getFeatures().get(1));
-        holder.binding.tv3.setText(arrayList.get(position).getFeatures().get(2));
-        holder.binding.tv4.setText(arrayList.get(position).getFeatures().get(3));
-        holder.binding.tv5.setText(arrayList.get(position).getFeatures().get(4));
+      //  holder.binding.tv1.setText(arrayList.get(position).getFeatures().get(0));
+      //  holder.binding.tv2.setText(arrayList.get(position).getFeatures().get(1));
+      //  holder.binding.tv3.setText(arrayList.get(position).getFeatures().get(2));
+      //  holder.binding.tv4.setText(arrayList.get(position).getFeatures().get(3));
+      //  holder.binding.tv5.setText(arrayList.get(position).getFeatures().get(4));
 
 
         if(arrayList.get(position).getRecommended().equals("Yes")) {

@@ -472,7 +472,7 @@ public class Trans2Act extends AppCompatActivity {
             else if (orderBeanArrayList.get(position).getType() != null &&
                     orderBeanArrayList.get(position).getType().equalsIgnoreCase("membership_purchase")) {
 
-                holder.merchant_member_name.setText(orderBeanArrayList.get(position).getPlanName());
+                holder.merchant_member_name.setText(orderBeanArrayList.get(position).getPlanDisplayName());
                 holder.total_order_price.setText(mySession.getValueOf(MySession.CurrencySign) + orderBeanArrayList.get(position).getAmount());
                 holder.order_id.setText("MN"+orderBeanArrayList.get(position).getId());
                 holder.paidamount_bycard.setText(mySession.getValueOf(MySession.CurrencySign) + orderBeanArrayList.get(position).getAmount());

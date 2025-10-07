@@ -542,7 +542,7 @@ public class TrasActivity extends Fragment {
             else if (orderBeanArrayList11.get(position).getType() != null &&
                     orderBeanArrayList11.get(position).getType().equalsIgnoreCase("membership_purchase")) {
 
-                holder.merchant_member_name.setText(orderBeanArrayList11.get(position).getPlanName());
+                holder.merchant_member_name.setText(orderBeanArrayList11.get(position).getPlanDisplayName());
                 holder.total_order_price.setText(mySession.getValueOf(MySession.CurrencySign) + orderBeanArrayList11.get(position).getAmount());
                 holder.order_id.setText("MN"+orderBeanArrayList11.get(position).getId());
                 holder.paidamount_bycard.setText(mySession.getValueOf(MySession.CurrencySign) + orderBeanArrayList11.get(position).getAmount());
