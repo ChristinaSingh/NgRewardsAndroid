@@ -26,8 +26,8 @@ android {
         applicationId "main.com.ngrewards"
         minSdkVersion 24
         targetSdkVersion 35
-        versionCode 94 // 93
-        versionName "11.10.24"// 11.10.23
+        versionCode 95 // 94
+        versionName "11.10.25"// 11.10.24
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         //multiDexEnabled true
