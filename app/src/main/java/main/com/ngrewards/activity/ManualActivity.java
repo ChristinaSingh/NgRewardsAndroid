@@ -355,6 +355,33 @@ public class ManualActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
+
+
+        if (getIntent().getExtras() != null) {
+            MerchantData = (MerchantListBean) getIntent().getExtras().getSerializable("merchant_data");
+
+            try {
+
+                merchant_number = MerchantData.getBusinessNo();
+                merchant_id = MerchantData.getId();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+
+                merchant_name = MerchantData.getBusinessName();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            merchant_num_auto.setText(merchant_number);
+            merchantname.setText(merchant_name);
+        }
+
+
         if (bundle != null && !bundle.isEmpty()) {
 
             merchant_id = bundle.getString("merchant_id");
@@ -387,34 +414,13 @@ public class ManualActivity extends AppCompatActivity {
             }
         }
 
-        if (getIntent().getExtras() != null) {
-            MerchantData = (MerchantListBean) getIntent().getExtras().getSerializable("merchant_data");
 
-            try {
 
-                merchant_number = MerchantData.getBusinessNo();
-                merchant_id = MerchantData.getId();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            try {
-
-                merchant_name = MerchantData.getBusinessName();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            merchant_num_auto.setText(merchant_number);
-            merchantname.setText(merchant_name);
-        }
 
 
         try {
 
-            if (type.equals("paybill")) {
+            if (type.equals("paybill") || type.equalsIgnoreCase("plan_subscribe")) {
 
                 paybill_tv = (TextView) findViewById(R.id.paybill_tv);
                 paybill_tv.setText("Paybill");
@@ -925,7 +931,7 @@ public class ManualActivity extends AppCompatActivity {
 
                     if (apply_ngcassh != null || !apply_ngcassh.equalsIgnoreCase("") || !apply_ngcassh.equalsIgnoreCase("0")) {
 
-                        if (type.equals("paybill")) {
+                        if (type.equals("paybill") || type.equalsIgnoreCase("plan_subscribe")) {
 
                             employee_name = edt_name.getText().toString().trim();
                             card_amount_tv1 = card_amount_tv.getText().toString().trim();
@@ -995,7 +1001,7 @@ public class ManualActivity extends AppCompatActivity {
 
                                 Log.e("user_id >> ", " >> " + user_id);
 
-                                if (type.equals("paybill")) {
+                                if (type.equals("paybill") || type.equalsIgnoreCase("plan_subscribe")) {
 
                                     apply_ngcassh = ngcashavb.getText().toString();
 

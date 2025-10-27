@@ -20,10 +20,12 @@ import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -34,6 +36,7 @@ import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,12 +78,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import main.com.ngrewards.Adapter.MembershipAdapter;
+import main.com.ngrewards.Models.MembershipModel;
 import main.com.ngrewards.R;
 import main.com.ngrewards.activity.ManualActivity;
 import main.com.ngrewards.activity.MerchantDetailAct;
+import main.com.ngrewards.activity.MyListener;
 import main.com.ngrewards.activity.OrderActivity;
+import main.com.ngrewards.activity.PreferenceConnector;
 import main.com.ngrewards.activity.PropertyDetailAct;
 import main.com.ngrewards.activity.SplashActivity;
+import main.com.ngrewards.androidmigx.MainTabActivity;
 import main.com.ngrewards.beanclasses.CategoryBean;
 import main.com.ngrewards.beanclasses.CategoryBeanList;
 import main.com.ngrewards.beanclasses.MarchantBean;
@@ -97,13 +105,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NearbyFrag extends Fragment {
+public class NearbyFrag extends Fragment implements MyListener {
     View v;
     ProgressBar progresbar;
     ArrayList<MerchantListBean> merchantListBeanArrayList = new ArrayList<>();
     GPSTracker gpsTracker;
     ArrayList<CategoryBeanList> categoryBeanListArrayList = new ArrayList<>();
-    public  ArrayList<RentCategoryModel.Datum> categoryArrayList;
+    public ArrayList<RentCategoryModel.Datum> categoryArrayList;
 
     private ListView near_marchant;
     private RecyclerView near_marchant_recxx;
@@ -113,12 +121,12 @@ public class NearbyFrag extends Fragment {
     private SwipeRefreshLayout swipeToRefresh;
     private TextView filter_tv, nomerchanttv;
     private MySession mySession;
-    private String user_id = "", like_filter_str = "", rating_filter_str = "", distance_filter_str = "", country_id = "", fill_category_id = "",fill_sub_category_id="", fill_category_id_loc = "";
+    private String user_id = "", like_filter_str = "", rating_filter_str = "", distance_filter_str = "", country_id = "", fill_category_id = "", fill_sub_category_id = "", fill_category_id_loc = "";
     private Myapisession myapisession;
     private int current_offer_pos;
     private EditText search_et_home;
     private ArrayList<String> distance_filter_list = new ArrayList<>();
-    ;
+    String merchantId1 = "", merchantName1 = "", merchantNumber1 = "", employeeSalesId1 = "", employeeSlaesName1 = "";
     private Bitmap mBitmap;
     private String openingtime;
     private String closingtime;
@@ -126,6 +134,9 @@ public class NearbyFrag extends Fragment {
     private String result = "";
     private FusedLocationProviderClient fusedLocationClient;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 12;
+    RecyclerView rvMembership;
+    ArrayList<MembershipModel.Result> arrayList = new ArrayList<>();
+
 
     public NearbyFrag() {
 
@@ -182,8 +193,8 @@ public class NearbyFrag extends Fragment {
                 e.printStackTrace();
             }
         }
-         checkGps();
-       // getLastLocation();
+        checkGps();
+        // getLastLocation();
         idinit();
         getCategoryType();
         clickevent();
@@ -217,7 +228,7 @@ public class NearbyFrag extends Fragment {
             @Override
             public void onRefresh() {
                 checkGps();
-               // getLastLocation();
+                // getLastLocation();
                 getNearMarchant();
             }
         });
@@ -343,11 +354,11 @@ public class NearbyFrag extends Fragment {
     }
 
     private void checkGps() {
-       if( ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED
                 &&
                 ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED){
+                        == PackageManager.PERMISSION_GRANTED) {
 
 
             gpsTracker = new GPSTracker(requireActivity());
@@ -410,11 +421,11 @@ public class NearbyFrag extends Fragment {
         locationRequest.setFastestInterval(5000); // 5 seconds
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-        if(ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED
                 &&
                 ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED){
+                        == PackageManager.PERMISSION_GRANTED) {
 
             fusedLocationClient.requestLocationUpdates(locationRequest,
                     new LocationCallback() {
@@ -443,7 +454,7 @@ public class NearbyFrag extends Fragment {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                        grantResults[1] == PackageManager.PERMISSION_GRANTED ) {
+                        grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     // Permission was granted, yay! Do the location-related task you need to do.
                     getLastLocation();
                 } else {
@@ -458,8 +469,7 @@ public class NearbyFrag extends Fragment {
     }
 
 
-
-        public void shortenLongLink(String link) {
+    public void shortenLongLink(String link) {
 
         Task<ShortDynamicLink> shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
                 .setLongLink(Uri.parse(link))
@@ -493,7 +503,7 @@ public class NearbyFrag extends Fragment {
     private void filterlay() {
 
         CategoryAdpters categoryAdpters;
-       // SubCategoryAdapters subCategoryAdapters;
+        // SubCategoryAdapters subCategoryAdapters;
         final Dialog dialogSts = new Dialog(getActivity(), R.style.DialogSlideAnim);
         dialogSts.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogSts.setCancelable(false);
@@ -516,8 +526,8 @@ public class NearbyFrag extends Fragment {
         categoryAdpters = new CategoryAdpters(getActivity(), categoryBeanListArrayList);
         category_spinner.setAdapter(categoryAdpters);
 
-      //  subCategoryAdapters = new SubCategoryAdapters(getActivity(), categoryArrayList);
-      //  subCategorySpinner.setAdapter(subCategoryAdapters);
+        //  subCategoryAdapters = new SubCategoryAdapters(getActivity(), categoryArrayList);
+        //  subCategorySpinner.setAdapter(subCategoryAdapters);
 
 
         distance_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -548,8 +558,8 @@ public class NearbyFrag extends Fragment {
 
                     } else {
                         fill_category_id_loc = categoryBeanListArrayList.get(position).getCategoryId();
-                      //  if(fill_category_id_loc.equalsIgnoreCase("999")) subCategorySpinner.setVisibility(View.VISIBLE);
-                      //  else subCategorySpinner.setVisibility(View.GONE);
+                        //  if(fill_category_id_loc.equalsIgnoreCase("999")) subCategorySpinner.setVisibility(View.VISIBLE);
+                        //  else subCategorySpinner.setVisibility(View.GONE);
 
                     }
 
@@ -583,9 +593,6 @@ public class NearbyFrag extends Fragment {
 
             }
         });
-
-
-
 
 
         filter_tv.setOnClickListener(new View.OnClickListener() {
@@ -818,6 +825,7 @@ public class NearbyFrag extends Fragment {
         });
     }
 
+
     class CustomMarchantAdp extends RecyclerView.Adapter<CustomMarchantAdp.MyViewHolder> {
         ArrayList<MerchantListBean> merchantListBeanArrayList;
         ArrayList<MerchantListBean> searchmerchantListBeanArrayList;
@@ -955,7 +963,8 @@ public class NearbyFrag extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    if (fill_category_id.equalsIgnoreCase("999") || merchantListBeanArrayList.get(listPosition).getBusinessCategory().equalsIgnoreCase("999") ) {
+
+                    if (fill_category_id.equalsIgnoreCase("999") || merchantListBeanArrayList.get(listPosition).getBusinessCategory().equalsIgnoreCase("999")) {
                         Intent i = new Intent(getActivity(), PropertyDetailAct.class);
                         i.putExtra("user_id", user_id);
                         i.putExtra("merchant_id", merchantListBeanArrayList.get(listPosition).getId());
@@ -969,18 +978,38 @@ public class NearbyFrag extends Fragment {
                         i.putExtra("employee_slaes_name", merchantListBeanArrayList.get(listPosition).getEmployee_sale_name());
                         startActivity(i);
                     } else {
-                        Intent i = new Intent(getActivity(), MerchantDetailAct.class);
-                        i.putExtra("user_id", user_id);
-                        i.putExtra("merchant_id", merchantListBeanArrayList.get(listPosition).getId());
-                        i.putExtra("opeaning_time", merchantListBeanArrayList.get(listPosition).getOpening_time());
-                        i.putExtra("closing_time", merchantListBeanArrayList.get(listPosition).getClosing_time());
-                        i.putExtra("merchant_name", merchantListBeanArrayList.get(listPosition).getBusinessName());
-                        i.putExtra("merchant_number", merchantListBeanArrayList.get(listPosition).getBusinessNo());
-                        i.putExtra("merchant_contact_name", merchantListBeanArrayList.get(listPosition).getContactName());
-                        i.putExtra("merchant_img", merchantListBeanArrayList.get(listPosition).getMerchantImage());
-                        i.putExtra("employee_sales_id", merchantListBeanArrayList.get(listPosition).getEmployee_sale_id());
-                        i.putExtra("employee_slaes_name", merchantListBeanArrayList.get(listPosition).getEmployee_sale_name());
-                        startActivity(i);
+
+
+                        if (merchantListBeanArrayList.get(listPosition).getBusinessNo().equalsIgnoreCase("vd21935")) {
+                            Log.e("chk===", merchantListBeanArrayList.get(listPosition).getId());
+                            Log.e("chk===", merchantListBeanArrayList.get(listPosition).getBusinessNo());
+                            Log.e("chk===", merchantListBeanArrayList.get(listPosition).getEmployee_sale_id());
+                            Log.e("chk===", merchantListBeanArrayList.get(listPosition).getBusinessName());
+
+
+                            getAllPlan(user_id, merchantListBeanArrayList.get(listPosition).getId(),
+                                    merchantListBeanArrayList.get(listPosition).getBusinessName(),
+                                    merchantListBeanArrayList.get(listPosition).getBusinessNo(),
+                                    merchantListBeanArrayList.get(listPosition).getEmployee_sale_id(),
+                                    merchantListBeanArrayList.get(listPosition).getEmployee_sale_name()
+                            );
+
+
+                        } else {
+                            Intent i = new Intent(getActivity(), MerchantDetailAct.class);
+                            i.putExtra("user_id", user_id);
+                            i.putExtra("merchant_id", merchantListBeanArrayList.get(listPosition).getId());
+                            i.putExtra("opeaning_time", merchantListBeanArrayList.get(listPosition).getOpening_time());
+                            i.putExtra("closing_time", merchantListBeanArrayList.get(listPosition).getClosing_time());
+                            i.putExtra("merchant_name", merchantListBeanArrayList.get(listPosition).getBusinessName());
+                            i.putExtra("merchant_number", merchantListBeanArrayList.get(listPosition).getBusinessNo());
+                            i.putExtra("merchant_contact_name", merchantListBeanArrayList.get(listPosition).getContactName());
+                            i.putExtra("merchant_img", merchantListBeanArrayList.get(listPosition).getMerchantImage());
+                            i.putExtra("employee_sales_id", merchantListBeanArrayList.get(listPosition).getEmployee_sale_id());
+                            i.putExtra("employee_slaes_name", merchantListBeanArrayList.get(listPosition).getEmployee_sale_name());
+                            startActivity(i);
+                        }
+
                     }
 
                 }
@@ -1166,9 +1195,6 @@ public class NearbyFrag extends Fragment {
     }
 
 
-
-
-
     public class DistanceAdapter extends BaseAdapter {
 
         private final ArrayList<String> distancelist;
@@ -1213,15 +1239,13 @@ public class NearbyFrag extends Fragment {
     }
 
 
-
-
     private void getCategory() {
-      //  progresbar.setVisibility(View.VISIBLE);
+        //  progresbar.setVisibility(View.VISIBLE);
         Call<ResponseBody> call = ApiClient.getApiInterface().getPropertyCategoryApi();
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-              //  progresbar.setVisibility(View.GONE);
+                //  progresbar.setVisibility(View.GONE);
 
                 if (response.isSuccessful()) {
                     try {
@@ -1260,7 +1284,141 @@ public class NearbyFrag extends Fragment {
     }
 
 
+    private void getAllPlan(String id, String merchantId, String merchantName, String merchant_Number, String employeeSalesId,
+                            String employeeSlaesName) {
+        // progresbar.setVisibility(View.VISIBLE);
 
+        Call<ResponseBody> call = ApiClient.getApiInterface().getMemberShipPlanApi(id);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                progresbar.setVisibility(View.GONE);
+
+                if (response.isSuccessful()) {
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject object = new JSONObject(responseData);
+                        Log.e("get All membership plan", " >" + responseData);
+                        if (object.getString("status").equals("1")) {
+                            MembershipModel successData = new Gson().fromJson(responseData, MembershipModel.class);
+                            arrayList.addAll(successData.getResult());
+
+                            if (successData.getMembershipData() != null) {
+                                if (shouldDisplayItem(/*"2025-05-22"*/successData.getMembershipData().getEndDate())) {
+                                    System.out.println("Show item");
+                                    MembershipDialog(user_id, merchantId, merchantName, merchant_Number, employeeSalesId, employeeSlaesName);
+                                } else {
+                                    System.out.println("Hide item (end_date is in the future)");
+
+                                }
+                            }
+                        } else
+                            MembershipDialog(user_id, merchantId, merchantName, merchant_Number, employeeSalesId, employeeSlaesName);
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                progresbar.setVisibility(View.GONE);
+
+                Log.e("TAG", t.toString());
+            }
+        });
+    }
+
+
+    public void MembershipDialog(String id, String merchantId, String merchantName, String merchantNumber, String employeeSalesId,
+                                 String employeeSlaesName) {
+        Dialog dialog = new Dialog(requireActivity(), android.R.style.Theme_Translucent_NoTitleBar);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_membership);
+
+        merchantId1 = merchantId;
+        merchantName1 = merchantName;
+        merchantNumber1 = merchantNumber;
+        employeeSalesId1 = employeeSalesId;
+        employeeSlaesName1 = employeeSlaesName;
+
+
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+
+        wlp.gravity = Gravity.CENTER;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_BLUR_BEHIND;
+        window.setAttributes(wlp);
+
+
+        rvMembership = dialog.findViewById(R.id.rvMembership);
+
+        TextView tvSkip = dialog.findViewById(R.id.tvSkip);
+
+        RelativeLayout backlay = dialog.findViewById(R.id.backlay);
+
+
+        MembershipAdapter adapter = new MembershipAdapter(requireActivity(), arrayList, NearbyFrag.this);
+        rvMembership.setAdapter(adapter);
+
+        tvSkip.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        backlay.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        dialog.show();
+    }
+
+    public static boolean shouldDisplayItem(String endDateStr) {
+        try {
+            // Format of your end date string
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+            // Parse end date
+            Date endDate = sdf.parse(endDateStr);
+
+            // Get today's date (with time stripped)
+            Date currentDate = sdf.parse(sdf.format(new Date()));
+
+            // Compare dates
+            return !endDate.after(currentDate); // only display if endDate is today or in the past
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return true; // fallback: show item if parsing fails
+        }
+    }
+
+
+    @Override
+    public void callback(View view, String result,String price) {
+
+        PreferenceConnector.writeString(requireActivity(), PreferenceConnector.Plan_id, result);
+
+
+        Intent i = new Intent(getActivity(), ManualActivity.class);
+        i.putExtra("user_id", user_id);
+        i.putExtra("merchant_id", "" +merchantId1);
+        i.putExtra("merchant_name", "" + merchantName1);
+        i.putExtra("merchant_number", "" + merchantNumber1);
+        i.putExtra("employee_sales_id",employeeSalesId1);
+        i.putExtra("employee_slaes_name", employeeSlaesName1);
+        i.putExtra("total_amount_due",price);
+        i.putExtra("type","plan_subscribe");
+
+        startActivity(i);
+    }
 
 
 }

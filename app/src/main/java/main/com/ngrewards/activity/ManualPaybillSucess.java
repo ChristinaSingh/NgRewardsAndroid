@@ -22,6 +22,8 @@ import java.util.TimeZone;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import main.com.ngrewards.R;
 import main.com.ngrewards.Utils.LocaleHelper;
+import main.com.ngrewards.androidmigx.MainTabActivity;
+import main.com.ngrewards.bottumtab.HomeActivity;
 import main.com.ngrewards.constant.MySession;
 import main.com.ngrewards.restapi.ApiClient;
 import okhttp3.ResponseBody;
@@ -93,7 +95,13 @@ public class ManualPaybillSucess extends AppCompatActivity {
             Log.e("TAG", "onCreate:cart_idcart_idcart_id " + cart_id);
             payEmiMerchant(user_id, member_id, merchant_number, due_amount_str, tip_amt_str, apply_ngcassh, card_id, card_number, card_brand, customer_id);
 
-        } else {
+        }
+
+        else   if (type.equalsIgnoreCase("plan_subscribe")) {
+            planPurchase(card_id,customer_id,PreferenceConnector.readString(ManualPaybillSucess.this, PreferenceConnector.Plan_id, ""));
+        }
+
+        else {
             payBiilMerchant(user_id, member_id, merchant_number, due_amount_str, tip_amt_str, apply_ngcassh, card_id, card_number, card_brand, customer_id);
             //Log.e("user_idd", "em" + employee_id + "em" + member_id + merchant_name + due_amount_str + tip_amt_str + apply_ngcassh + card_id + card_number + card_number + card_brand);
         }
@@ -273,4 +281,73 @@ public class ManualPaybillSucess extends AppCompatActivity {
             }
         });
     }
+
+
+
+
+    private void planPurchase(String cardId,String cusId,String planId) {
+        progresbar.setVisibility(View.VISIBLE);
+        Call<ResponseBody> call = ApiClient.getApiInterface().purchaseMemberShipPlanApi(user_id,cardId,cusId,planId,member_id, mySession.getValueOf(MySession.NgCash), mySession.getValueOf(MySession.CurrencyCode));
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                progresbar.setVisibility(View.GONE);
+
+                if (response.isSuccessful()) {
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject object = new JSONObject(responseData);
+                        Log.e("purchase membership plan", " >" + responseData);
+                        if (object.getString("status").equals("1")) {
+                            //MembershipModel successData = new Gson().fromJson(responseData, MembershipModel.class);
+
+                                // successData.getMembershipData().getEndDate();
+                                //Toast.makeText(SelectPayMethodAct.this, object.getJSONObject("membership_data").getString("end_date"), Toast.LENGTH_SHORT).show();
+
+                                new SweetAlertDialog(ManualPaybillSucess.this, SweetAlertDialog.WARNING_TYPE)
+                                        .setTitleText("Subscribed Successfully !")
+                                        .hideConfirmButton()
+                                        .setCancelButton(getString(R.string.ok), new SweetAlertDialog.OnSweetClickListener() {
+                                            @Override
+                                            public void onClick(SweetAlertDialog sDialog) {
+                                                sDialog.dismissWithAnimation();
+                                                startActivity(new Intent(ManualPaybillSucess.this, MainTabActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                                finish();
+                                            }
+                                        })
+                                        .show();
+
+
+                        }
+                        else {
+                            Toast.makeText(ManualPaybillSucess.this, object.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
+
+
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                progresbar.setVisibility(View.GONE);
+
+                Log.e("TAG", t.toString());
+            }
+        });
+    }
+
+
+
+
+
+
 }

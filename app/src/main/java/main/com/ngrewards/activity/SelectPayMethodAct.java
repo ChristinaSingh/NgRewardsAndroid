@@ -181,6 +181,8 @@ public class SelectPayMethodAct extends AppCompatActivity implements CardClickLi
     @Override
     public void onCardClick(String cardId, String cusId) {
         planPurchase(cardId,cusId);
+
+
     }
 
 
@@ -309,7 +311,7 @@ public class SelectPayMethodAct extends AppCompatActivity implements CardClickLi
 
     private void planPurchase(String cardId,String cusId) {
          progresbar.setVisibility(View.VISIBLE);
-         Call<ResponseBody> call = ApiClient.getApiInterface().purchaseMemberShipPlanApi(user_id,cardId,cusId,planId);
+         Call<ResponseBody> call = ApiClient.getApiInterface().purchaseMemberShipPlanApi(user_id,cardId,cusId,planId,"",mySession.getValueOf(MySession.NgCash), mySession.getValueOf(MySession.CurrencyCode));
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -322,14 +324,12 @@ public class SelectPayMethodAct extends AppCompatActivity implements CardClickLi
                         Log.e("purchase membership plan", " >" + responseData);
                         if (object.getString("status").equals("1")) {
                             //MembershipModel successData = new Gson().fromJson(responseData, MembershipModel.class);
-                            if ( object.getJSONObject("membership_data") != null) {
+                          //  if ( object.getJSONObject("membership_data") != null) {
                                // successData.getMembershipData().getEndDate();
                                 //Toast.makeText(SelectPayMethodAct.this, object.getJSONObject("membership_data").getString("end_date"), Toast.LENGTH_SHORT).show();
                                 Toast.makeText(SelectPayMethodAct.this, object.getString("message"), Toast.LENGTH_SHORT).show();
-
-
                                 finish();
-                            }
+                         //   }
                         }
                        else {
                             Toast.makeText(SelectPayMethodAct.this, object.getString("message"), Toast.LENGTH_SHORT).show();

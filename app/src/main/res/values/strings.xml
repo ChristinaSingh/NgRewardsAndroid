@@ -792,6 +792,8 @@
 
     <string name="enter_verification_code2">Enter the verification code sent to your alternate email. It may take a few minutes to arrive.</string>
     <string name="alternate_email_verified">Alternate Email Verified</string>
+    <string name="see_plan">See plan</string>
+    <string name="your_one_month_plan">Your 1-month free trial has expired Please subscribe to a plan to continue using NGCash.</string>
 
 
 </resources>

@@ -39,6 +39,7 @@ public class MySession {
     public static final String CountryId = "country_id";
     public static final String CurrencyCode = "currency_code";
     public static final String CurrencySign = "currency_sign";
+    public static final String NgCash = "ng_cash";
 
     public static final String AuthUrl = "auth_url";
 

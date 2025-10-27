@@ -46,6 +46,8 @@ public class PreferenceConnector {
     public static String Who_invited = "Who_invited";
 
     public static String Greeting_Status = "Greeting_status";
+    public static String Plan_id = "Plan_id";
+
 
     public static void writeInteger(Context context, String key, int value) {
         getEditor(context).putInt(key, value).commit();

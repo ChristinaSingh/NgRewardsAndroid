@@ -16,20 +16,20 @@ import java.util.ArrayList;
 
 import main.com.ngrewards.Models.MembershipModel;
 import main.com.ngrewards.R;
+import main.com.ngrewards.activity.MyListener;
 import main.com.ngrewards.activity.SelectPayMethodAct;
 import main.com.ngrewards.databinding.ItemMembershipBinding;
-import main.com.ngrewards.placeorderclasses.SelectPaymentMethodAct;
 
 
 public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.MyViewHolder> {
     Context context;
     ArrayList<MembershipModel.Result> arrayList;
-   // ChatOnListener listener;
+    MyListener listener;
 
-    public MembershipAdapter(Context context, ArrayList<MembershipModel.Result>arrayList/*, ChatOnListener listener*/) {
+    public MembershipAdapter(Context context, ArrayList<MembershipModel.Result>arrayList, MyListener listener) {
         this.context = context;
         this.arrayList = arrayList;
-       // this.listener = listener;
+        this.listener = listener;
     }
 
     @NonNull
@@ -52,6 +52,8 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.My
       //  holder.binding.tv5.setText(arrayList.get(position).getFeatures().get(4));
 
 
+
+
         if(arrayList.get(position).getRecommended().equals("Yes")) {
             holder.binding.btnRecommended.setVisibility(View.VISIBLE);
             holder.binding.llMain.setBackground(context.getDrawable(R.drawable.rounded_white_beg_bg_5));
@@ -62,9 +64,24 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.My
 
         }
 
-        holder.itemView.setOnClickListener(view -> {
-            context.startActivity(new Intent(context, SelectPayMethodAct.class)
-                    .putExtra("planId",arrayList.get(position).getPlanId()));
+
+        if(arrayList.get(position).getPrice().equalsIgnoreCase("0.00"))
+        {
+            holder.binding.btnSubscribe.setVisibility(View.GONE);
+            holder.binding.tvPrice.setVisibility(View.GONE);
+        }
+        else {
+            holder.binding.btnSubscribe.setVisibility(View.VISIBLE);
+            holder.binding.tvPrice.setVisibility(View.VISIBLE);
+
+        }
+
+
+        holder.binding.btnSubscribe.setOnClickListener(view -> {
+
+           listener.callback(holder.itemView,arrayList.get(position).getPlanId(),arrayList.get(position).getPrice());
+          //  context.startActivity(new Intent(context, SelectPayMethodAct.class)
+           //         .putExtra("planId",arrayList.get(position).getPlanId()));
         });
 
     }

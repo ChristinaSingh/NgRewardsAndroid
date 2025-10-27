@@ -241,8 +241,6 @@ public interface ApiInterface {
             @Part MultipartBody.Part file);
 
 
-
-
     @FormUrlEncoded
     @POST("place_order.php")
     Call<ResponseBody> orderPlaceWithoutEmi(@FieldMap Map<String, String> paramHashMap);
@@ -251,7 +249,6 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("place_order_emi.php")
     Call<ResponseBody> orderPlaceWithEmi(@FieldMap Map<String, String> paramHashMap);
-
 
 
     @Multipart
@@ -273,29 +270,28 @@ public interface ApiInterface {
     Call<ResponseBody> APIStatusPublish(@Query("id") String id, @Query("status") String status, @Query("pageNumber") String pageNumber);
 
     @GET("update_item_status.php?")
-    Call<ResponseBody> APIStatusHide(@Query("id") String id,@Query("status")String status, @Query("pageNumber") String pageNumber);
+    Call<ResponseBody> APIStatusHide(@Query("id") String id, @Query("status") String status, @Query("pageNumber") String pageNumber);
 
     @GET("delete_item.php?")
     Call<ResponseBody> APIStatusHide1(@Query("id") String id);
-
 
 
     @GET("menu_list.php?")
     Call<ResponseBody> MenuItemApiCAll(@Query("merchant_id") String merchant_id, @Query("pageNumber") String pageNumber);
 
     @GET("add_delivery.php?")
-    Call<ResponseBody> AddUpdateDelveryApi(@Query("merchant_id") String merchant_id, @Query("delivery") String delivery,@Query("delivery_percent") String delivery_percent,@Query("pageNumber") String pageNumber);
+    Call<ResponseBody> AddUpdateDelveryApi(@Query("merchant_id") String merchant_id, @Query("delivery") String delivery, @Query("delivery_percent") String delivery_percent, @Query("pageNumber") String pageNumber);
 
 
     @GET("add_tax.php?")
-    Call<ResponseBody> AddUpdateTaxApi(@Query("merchant_id") String merchant_id, @Query("tax") String tax,@Query("pageNumber") String pageNumber);
+    Call<ResponseBody> AddUpdateTaxApi(@Query("merchant_id") String merchant_id, @Query("tax") String tax, @Query("pageNumber") String pageNumber);
 
     @GET("merchant_profile.php?")
-    Call<ResponseBody> GetProfileAPi(@Query("merchant_id") String merchant_id,@Query("pageNumber") String pageNumber);
+    Call<ResponseBody> GetProfileAPi(@Query("merchant_id") String merchant_id, @Query("pageNumber") String pageNumber);
 
 
     @GET("update_merchant.php?")
-    Call<ResponseBody> ApiUpdateUser(@Query("id") String id,@Query("employee_name")String employee_name,@Query("employee_id")String employee_id,@Query("pageNumber") String pageNumber);
+    Call<ResponseBody> ApiUpdateUser(@Query("id") String id, @Query("employee_name") String employee_name, @Query("employee_id") String employee_id, @Query("pageNumber") String pageNumber);
 
 
     @GET("get-membership-plans.php?")
@@ -306,15 +302,14 @@ public interface ApiInterface {
     Call<ResponseBody> purchaseMemberShipPlanApi(@Query("member_id") String memberId,
                                                  @Query("card_id") String cardId,
                                                  @Query("customer_id") String customerId,
-                                                 @Query("membership_duration_id") String membership_duration_id);
-
+                                                 @Query("membership_duration_id") String membership_duration_id,
+                                                 @Query("merchant_ids") String merchant_ids,
+                                                 @Query("ngcash") String ngcash,
+                                                 @Query("currency") String currency);
 
 
     @GET("member_profile.php?")
     Call<ResponseBody> getPlanHistoryApi(@Query("member_id") String memberId);
-
-
-
 
 
     @FormUrlEncoded
@@ -333,8 +328,6 @@ public interface ApiInterface {
     Call<ResponseBody> getMerchantProperty(@Query("merchant_id") String merchant_id,
                                          @Query("category") String category,
                                          @Query("amenities[]") String amenities);*/
-
-
 
 
     @FormUrlEncoded
@@ -361,7 +354,6 @@ public interface ApiInterface {
     Call<ResponseBody> singlePropertyEnquiry(@Query("property_inquiry_id") String propertyInquiryId);
 
 
-
     @GET("get-single-property.php?")
     Call<ResponseBody> getPropertyDataApi(@Query("property_id") String property_id);
 
@@ -371,30 +363,26 @@ public interface ApiInterface {
 
 
     @GET("get_merchant_properties.php?")
-    Call<ResponseBody> getMerchantPropertyFilter(@Query("merchant_id") String merchant_id,@Query("category") String category,@Query("amenities[]") String amenities);
+    Call<ResponseBody> getMerchantPropertyFilter(@Query("merchant_id") String merchant_id, @Query("category") String category, @Query("amenities[]") String amenities);
 
 
     @GET("verify-mail.php?")
-    Call<ResponseBody> sendOtpOnEmailApi(@Query("user_id") String userId,@Query("type") String type);
+    Call<ResponseBody> sendOtpOnEmailApi(@Query("user_id") String userId, @Query("type") String type);
 
     @GET("verified_email_otp.php?")
-    Call<ResponseBody> verifiedEmailOtpApi(@Query("user_id") String userId,@Query("type") String type,@Query("otp") String otp);
+    Call<ResponseBody> verifiedEmailOtpApi(@Query("user_id") String userId, @Query("type") String type, @Query("otp") String otp);
 
 
     @GET("update_alternate_email.php?")
-    Call<ResponseBody> addAlternateEmailApi(@Query("user_id") String userId,@Query("type") String type,@Query("alternate_email") String alternateEmail);
+    Call<ResponseBody> addAlternateEmailApi(@Query("user_id") String userId, @Query("type") String type, @Query("alternate_email") String alternateEmail);
 
 
     @GET("verified_alternate_email_otp.php?")
-    Call<ResponseBody> verifiedAlternateEmailApi(@Query("user_id") String userId,@Query("type") String type,@Query("otp") String otp);
-
+    Call<ResponseBody> verifiedAlternateEmailApi(@Query("user_id") String userId, @Query("type") String type, @Query("otp") String otp);
 
 
     @GET("merchant_profile.php?")
     Call<ResponseBody> getMerchantProfileApi(@Query("merchant_id") String merchantId);
-
-
-
 
 
 }

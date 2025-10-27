@@ -77,6 +77,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 import main.com.ngrewards.Adapter.MembershipAdapter;
 import main.com.ngrewards.Models.MembershipModel;
@@ -89,9 +90,12 @@ import main.com.ngrewards.activity.CommisionActivity;
 import main.com.ngrewards.activity.EMIManualActivity;
 import main.com.ngrewards.activity.EmployeesalesActivity;
 import main.com.ngrewards.activity.LoginActivity;
+import main.com.ngrewards.activity.ManualPaybillSucess;
 import main.com.ngrewards.activity.MyCartDetail;
+import main.com.ngrewards.activity.MyListener;
 import main.com.ngrewards.activity.NetworkAct;
 import main.com.ngrewards.activity.PreferenceConnector;
+import main.com.ngrewards.activity.SelectPayMethodAct;
 import main.com.ngrewards.activity.TransferToaFriend;
 import main.com.ngrewards.activity.TutorialAct;
 import main.com.ngrewards.activity.WithdrawActivity;
@@ -112,7 +116,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainTabActivity extends AppCompatActivity {
+public class MainTabActivity extends AppCompatActivity implements MyListener {
     private static final float END_SCALE = 0.85f;
     public static  String DEEP_LINK_URL = "";
     public static String user_log_data = "", username_str, ngcash = "", user_id = "", currency_code = "",
@@ -184,7 +188,7 @@ public class MainTabActivity extends AppCompatActivity {
                         } else {
 
                             try {
-                                JSONObject jsonObject = new JSONObject(user_log_data);
+                                 jsonObject = new JSONObject(user_log_data);
                                 String message = jsonObject.getString("status");
                                 if (message.equalsIgnoreCase("1")) {
                                     JSONObject jsonObject1 = jsonObject.getJSONObject("result");
@@ -239,6 +243,11 @@ public class MainTabActivity extends AppCompatActivity {
     RecyclerView rvMembership;
     ArrayList<MembershipModel.Result> arrayList =  new ArrayList<>();
     View v;
+
+    JSONObject jsonObject;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -274,7 +283,7 @@ public class MainTabActivity extends AppCompatActivity {
         } else {
 
             try {
-                JSONObject jsonObject = new JSONObject(user_log_data);
+                 jsonObject = new JSONObject(user_log_data);
                 String message = jsonObject.getString("status");
                 if (message.equalsIgnoreCase("1")) {
                     JSONObject jsonObject1 = jsonObject.getJSONObject("result");
@@ -388,7 +397,7 @@ public class MainTabActivity extends AppCompatActivity {
 
             try {
 
-                JSONObject jsonObject = new JSONObject(user_log_data);
+                 jsonObject = new JSONObject(user_log_data);
                 String message = jsonObject.getString("status");
                 if (message.equalsIgnoreCase("1")) {
 
@@ -574,7 +583,7 @@ public class MainTabActivity extends AppCompatActivity {
 
                 try {
 
-                    JSONObject jsonObject = new JSONObject(user_log_data);
+                     jsonObject = new JSONObject(user_log_data);
                     String message = jsonObject.getString("status");
 
                     if (message.equalsIgnoreCase("1")) {
@@ -745,8 +754,44 @@ public class MainTabActivity extends AppCompatActivity {
         withdrawlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               /* try {
+                    JSONObject membershipData = jsonObject.getJSONObject("membership_data");
+
+                    if(membershipData.has("end_date")){
+                        if (shouldDisplayItem(*//*"2025-05-22"*//*membershipData.getString("end_date"))) {
+                            System.out.println("Show item");
+                            new SweetAlertDialog(MainTabActivity.this, SweetAlertDialog.WARNING_TYPE)
+                                    .setTitleText(getString(R.string.ngrewars))
+                                    .setContentText(getString(R.string.your_one_month_plan))
+                                    .setConfirmButton(getString(R.string.see_plan), new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            sweetAlertDialog.dismissWithAnimation();
+                                               getAllPlan(id);
+                                        }
+                                    })
+                                    .setCancelButton(getString(R.string.cancel), new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sDialog) {
+                                            sDialog.dismissWithAnimation();
+
+                                        }
+                                    })
+                                    .show();
+                        } else {
+                            System.out.println("Hide item (end_date is in the future)");
+                            Intent i = new Intent(MainTabActivity.this, WithdrawActivity.class);
+                            startActivity(i);
+                        }
+                    }
+
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }*/
                 Intent i = new Intent(MainTabActivity.this, WithdrawActivity.class);
                 startActivity(i);
+
             }
         });
 
@@ -755,8 +800,47 @@ public class MainTabActivity extends AppCompatActivity {
         transferlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+              /*  try {
+                    JSONObject membershipData = jsonObject.getJSONObject("membership_data");
+
+                    if(membershipData.has("end_date")){
+                        if (shouldDisplayItem(*//*"2025-05-22"*//*membershipData.getString("end_date"))) {
+                            System.out.println("Show item");
+                            new SweetAlertDialog(MainTabActivity.this, SweetAlertDialog.WARNING_TYPE)
+                                    .setTitleText(getString(R.string.ngrewars))
+                                    .setContentText(getString(R.string.your_one_month_plan))
+                                    .setConfirmButton(getString(R.string.see_plan), new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            sweetAlertDialog.dismissWithAnimation();
+                                            getAllPlan(id);
+                                        }
+                                    })
+                                    .setCancelButton(getString(R.string.cancel), new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sDialog) {
+                                            sDialog.dismissWithAnimation();
+
+                                        }
+                                    })
+                                    .show();
+                        } else {
+                            System.out.println("Hide item (end_date is in the future)");
+                            Intent i = new Intent(MainTabActivity.this, TransferToaFriend.class);
+                            startActivity(i);
+                        }
+                    }
+
+
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }*/
+
                 Intent i = new Intent(MainTabActivity.this, TransferToaFriend.class);
                 startActivity(i);
+
+
             }
         });
 
@@ -919,6 +1003,8 @@ public class MainTabActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
         actionBarDrawerToggle.syncState();
     }
+
+
 
     @SuppressLint("StaticFieldLeak")
     private class MyCounterVal extends AsyncTask<String, String, String> {
@@ -1173,6 +1259,7 @@ public class MainTabActivity extends AppCompatActivity {
 
                         mySession.setlogindata(result);
 
+                        Log.e("GetProfile Response", ">>>>>>>>>>>>" + jsonObject1);
 
 
                         String unseen_count = jsonObject1.getString("unseen_count");
@@ -1185,7 +1272,9 @@ public class MainTabActivity extends AppCompatActivity {
                         mySession.setValueOf(MySession.CurrencyCode, currency_code);
                         mySession.setValueOf(MySession.CurrencySign, currency_sign);
                         mySession.setValueOf(MySession.CountryName, country_name);
-                     String   username = jsonObject1.getString("username");
+                        mySession.setValueOf(MySession.NgCash, jsonObject1.getString("member_ngcash"));
+
+                        String   username = jsonObject1.getString("username");
                           id = jsonObject1.getString("id");
                         String   affiliate_number = jsonObject1.getString("affiliate_number");
 
@@ -1261,7 +1350,7 @@ public class MainTabActivity extends AppCompatActivity {
 
         btnStart.setOnClickListener(v -> {
             PreferenceConnector.writeString(MainTabActivity.this, PreferenceConnector.Greeting_Status, "true");
-            getAllPlan(id);
+           // getAllPlan(id);
             dialog.dismiss();
         });
 
@@ -1292,7 +1381,7 @@ public class MainTabActivity extends AppCompatActivity {
         RelativeLayout backlay = dialog.findViewById(R.id.backlay);
 
 
-        MembershipAdapter   adapter = new MembershipAdapter(MainTabActivity.this,arrayList);
+        MembershipAdapter   adapter = new MembershipAdapter(MainTabActivity.this,arrayList,MainTabActivity.this);
         rvMembership.setAdapter(adapter);
 
         tvSkip.setOnClickListener(v -> {
@@ -1385,6 +1474,15 @@ public class MainTabActivity extends AppCompatActivity {
             e.printStackTrace();
             return true; // fallback: show item if parsing fails
         }
+    }
+
+
+
+
+    @Override
+    public void callback(View view, String result, String price) {
+        startActivity(new Intent(MainTabActivity.this, SelectPayMethodAct.class)
+                     .putExtra("planId",result));
     }
 
 
