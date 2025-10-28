@@ -754,11 +754,11 @@ public class MainTabActivity extends AppCompatActivity implements MyListener {
         withdrawlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* try {
+                try {
                     JSONObject membershipData = jsonObject.getJSONObject("membership_data");
-
+                     //"2025-05-22"
                     if(membershipData.has("end_date")){
-                        if (shouldDisplayItem(*//*"2025-05-22"*//*membershipData.getString("end_date"))) {
+                        if (shouldDisplayItem(membershipData.getString("end_date"))) {
                             System.out.println("Show item");
                             new SweetAlertDialog(MainTabActivity.this, SweetAlertDialog.WARNING_TYPE)
                                     .setTitleText(getString(R.string.ngrewars))
@@ -788,9 +788,9 @@ public class MainTabActivity extends AppCompatActivity implements MyListener {
 
                 }catch (Exception e){
                     e.printStackTrace();
-                }*/
-                Intent i = new Intent(MainTabActivity.this, WithdrawActivity.class);
-                startActivity(i);
+                }
+              //  Intent i = new Intent(MainTabActivity.this, WithdrawActivity.class);
+              //  startActivity(i);
 
             }
         });
@@ -801,11 +801,12 @@ public class MainTabActivity extends AppCompatActivity implements MyListener {
             @Override
             public void onClick(View v) {
 
-              /*  try {
+                try {
                     JSONObject membershipData = jsonObject.getJSONObject("membership_data");
 
                     if(membershipData.has("end_date")){
-                        if (shouldDisplayItem(*//*"2025-05-22"*//*membershipData.getString("end_date"))) {
+                        // "2025-05-22"
+                        if (shouldDisplayItem(membershipData.getString("end_date"))) {
                             System.out.println("Show item");
                             new SweetAlertDialog(MainTabActivity.this, SweetAlertDialog.WARNING_TYPE)
                                     .setTitleText(getString(R.string.ngrewars))
@@ -835,10 +836,9 @@ public class MainTabActivity extends AppCompatActivity implements MyListener {
 
                 }catch (Exception e) {
                     e.printStackTrace();
-                }*/
+                }
 
-                Intent i = new Intent(MainTabActivity.this, TransferToaFriend.class);
-                startActivity(i);
+
 
 
             }

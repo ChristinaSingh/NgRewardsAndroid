@@ -188,8 +188,8 @@ public class MerchantReceiptActivity extends AppCompatActivity {
         });
 
 
-        if(order_cart_id.equalsIgnoreCase("")) btn_order.setVisibility(View.GONE);
-        if(order_special_str.equalsIgnoreCase("")) special_request.setVisibility(View.GONE);
+        if(order_cart_id.equalsIgnoreCase("") || order_cart_id.equalsIgnoreCase("null")) btn_order.setVisibility(View.GONE);
+        if(order_special_str.equalsIgnoreCase("") || order_special_str.equalsIgnoreCase("null")) special_request.setVisibility(View.GONE);
 
         special_request.setText(getString(R.string.special_request) + "" + order_special_str);
 

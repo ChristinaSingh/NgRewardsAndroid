@@ -561,7 +561,8 @@ public class MerchantNotificationActivity extends AppCompatActivity implements F
                     else {
                         //dfghjbvdf = notificationBeanNewArrayList.get(position).getOrder_cart_id();
 
-                        if (result.getPropertyEnquiries() != null) {
+                        if (!result.getPropertyEnquiries().isEmpty()) {
+
                             startActivity(new Intent(context, EnquiryDetailAct.class)
                                     .putExtra("id", result.getPropertyEnquiries().get(0).getInquiryId()));
                         } else {

@@ -1301,6 +1301,7 @@ public class NearbyFrag extends Fragment implements MyListener {
                         Log.e("get All membership plan", " >" + responseData);
                         if (object.getString("status").equals("1")) {
                             MembershipModel successData = new Gson().fromJson(responseData, MembershipModel.class);
+                            arrayList.clear();
                             arrayList.addAll(successData.getResult());
 
                             if (successData.getMembershipData() != null) {
