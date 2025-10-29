@@ -432,6 +432,12 @@ public class ManualActivity extends AppCompatActivity {
 
         }
 
+
+        if (type.equalsIgnoreCase("plan_subscribe")) {
+            merchant_num_auto.setClickable(false);
+            merchant_num_auto.setEnabled(false);
+        }
+
         clickevet();
 
         getBusnessNumber();
@@ -622,7 +628,11 @@ public class ManualActivity extends AppCompatActivity {
         fifteenPer = findViewById(R.id.fifteen_per);
         twentyPer = findViewById(R.id.twenty_per);
 
-        backlay.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+            backlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

@@ -90,6 +90,7 @@ import main.com.ngrewards.activity.CommisionActivity;
 import main.com.ngrewards.activity.EMIManualActivity;
 import main.com.ngrewards.activity.EmployeesalesActivity;
 import main.com.ngrewards.activity.LoginActivity;
+import main.com.ngrewards.activity.ManualActivity;
 import main.com.ngrewards.activity.ManualPaybillSucess;
 import main.com.ngrewards.activity.MyCartDetail;
 import main.com.ngrewards.activity.MyListener;
@@ -1417,6 +1418,7 @@ public class MainTabActivity extends AppCompatActivity implements MyListener {
                         Log.e("get All membership plan", " >" + responseData);
                         if (object.getString("status").equals("1")) {
                             MembershipModel successData = new Gson().fromJson(responseData, MembershipModel.class);
+                            arrayList.clear();
                             arrayList.addAll(successData.getResult());
 
                             if (successData.getMembershipData() != null) {
@@ -1481,8 +1483,24 @@ public class MainTabActivity extends AppCompatActivity implements MyListener {
 
     @Override
     public void callback(View view, String result, String price) {
-        startActivity(new Intent(MainTabActivity.this, SelectPayMethodAct.class)
-                     .putExtra("planId",result));
+
+      //  startActivity(new Intent(MainTabActivity.this, SelectPayMethodAct.class)
+         //            .putExtra("planId",result));
+
+        PreferenceConnector.writeString(MainTabActivity.this, PreferenceConnector.Plan_id, result);
+
+
+        Intent i = new Intent(MainTabActivity.this, ManualActivity.class);
+        i.putExtra("user_id", user_id);
+        i.putExtra("merchant_id", "" +"65");
+        i.putExtra("merchant_name", "" + "Networking Takeoff Institute LLC");
+        i.putExtra("merchant_number", "" + "vd21935");
+        i.putExtra("employee_sales_id","");
+        i.putExtra("employee_slaes_name", "");
+        i.putExtra("total_amount_due",price);
+        i.putExtra("type","plan_subscribe");
+        startActivity(i);
+
     }
 
 
