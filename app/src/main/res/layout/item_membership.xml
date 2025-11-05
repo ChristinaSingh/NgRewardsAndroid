@@ -25,17 +25,38 @@
                 android:fontFamily="@font/helvetica_bold"
                 />
 
+
+        <RelativeLayout
+            android:id="@+id/rlPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-2dp">
+
             <TextView
                 android:id="@+id/tvPrice"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/skip"
                 android:layout_gravity="center_vertical"
                 android:textSize="@dimen/_11sdp"
                 android:textColor="@color/red"
                 android:fontFamily="@font/helvetica_bold"
-                android:layout_marginTop="-2dp"
+
                 />
+
+            <ImageView
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:src="@drawable/down_arrow"
+                android:layout_toEndOf="@id/tvPrice"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginEnd="@dimen/_7sdp"/>
+
+
+        </RelativeLayout>
+
+
 
             <TextView
                 android:id="@+id/tvTitle1"

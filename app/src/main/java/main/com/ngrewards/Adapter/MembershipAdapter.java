@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -13,11 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import main.com.ngrewards.Models.MembershipModel;
 import main.com.ngrewards.R;
 import main.com.ngrewards.activity.MyListener;
+import main.com.ngrewards.activity.PreferenceConnector;
 import main.com.ngrewards.activity.SelectPayMethodAct;
+import main.com.ngrewards.androidmigx.MainTabActivity;
 import main.com.ngrewards.databinding.ItemMembershipBinding;
 
 
@@ -25,11 +31,17 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.My
     Context context;
     ArrayList<MembershipModel.Result> arrayList;
     MyListener listener;
-
+    ArrayList<String> durationArrayList= new ArrayList<>();
+    private String durationType = "Week";
+    double totalPrice=0.0;
     public MembershipAdapter(Context context, ArrayList<MembershipModel.Result>arrayList, MyListener listener) {
         this.context = context;
         this.arrayList = arrayList;
         this.listener = listener;
+        durationArrayList.add("Week");
+        durationArrayList.add("Month");
+        durationArrayList.add("Annual");
+
     }
 
     @NonNull
@@ -42,7 +54,7 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.My
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.binding.tvTitle.setText(arrayList.get(position).getPlanDisplayName());
-        holder.binding.tvPrice.setText("$"+arrayList.get(position).getPrice() + "/" + arrayList.get(position).getDurationType());
+        holder.binding.tvPrice.setText("$"+arrayList.get(position).getPrice() + "/" + durationType);
         holder.binding.tvTitle1.setText(arrayList.get(position).getDescription());
 
       //  holder.binding.tv1.setText(arrayList.get(position).getFeatures().get(0));
@@ -68,20 +80,27 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.My
         if(arrayList.get(position).getPrice().equalsIgnoreCase("0.00"))
         {
             holder.binding.btnSubscribe.setVisibility(View.GONE);
-            holder.binding.tvPrice.setVisibility(View.GONE);
+            holder.binding.rlPrice.setVisibility(View.GONE);
+
         }
         else {
             holder.binding.btnSubscribe.setVisibility(View.VISIBLE);
-            holder.binding.tvPrice.setVisibility(View.VISIBLE);
+            holder.binding.rlPrice.setVisibility(View.VISIBLE);
 
         }
 
 
         holder.binding.btnSubscribe.setOnClickListener(view -> {
-
-           listener.callback(holder.itemView,arrayList.get(position).getPlanId(),arrayList.get(position).getPrice());
+            if(totalPrice==0.0) totalPrice = Double.parseDouble(arrayList.get(position).getPrice());
+            PreferenceConnector.writeString(context, PreferenceConnector.Duration_type, durationType);
+            listener.callback(holder.itemView,arrayList.get(position).getPlanId(),totalPrice+"");
           //  context.startActivity(new Intent(context, SelectPayMethodAct.class)
            //         .putExtra("planId",arrayList.get(position).getPlanId()));
+        });
+
+
+        holder.binding.tvPrice.setOnClickListener(view -> {
+            showDropDownDuration(view,holder.binding.tvPrice,durationArrayList,position);
         });
 
     }
@@ -98,5 +117,53 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.My
             binding = itemView;
 
         }
+
+
+
+
+
+
+
+
+    }
+
+    private void showDropDownDuration(View v, TextView textView, List<String> stringList,int position) {
+        PopupMenu popupMenu = new PopupMenu(context, v);
+        for (int i = 0; i < stringList.size(); i++) {
+            popupMenu.getMenu().add(stringList.get(i));
+        }
+        popupMenu.setOnMenuItemClickListener(menuItem -> {
+           // textView.setText(menuItem.getTitle());
+            for (int i = 0; i < stringList.size(); i++) {
+                if (stringList.get(i).equalsIgnoreCase(menuItem.getTitle().toString())) {
+                   if(stringList.get(i).equalsIgnoreCase("Week")){
+                        totalPrice = Double.parseDouble(arrayList.get(position).getPrice());
+                       durationType ="Week";
+                       textView.setText("$"+totalPrice + "/" + durationType);
+
+                   }
+
+                   else if(stringList.get(i).equalsIgnoreCase("Month")){
+                        totalPrice = Double.parseDouble(arrayList.get(position).getPrice()) * 4;
+                       durationType ="Month";
+                       textView.setText("$"+totalPrice + "/" + durationType);
+
+                    }
+
+
+                   else if(stringList.get(i).equalsIgnoreCase("Annual")){
+                        totalPrice = Double.parseDouble(arrayList.get(position).getPrice()) * 52;
+                       durationType ="Annual";
+                       textView.setText("$"+totalPrice + "/" + durationType);
+
+
+                   }
+
+
+                }
+            }
+            return true;
+        });
+        popupMenu.show();
     }
 }
