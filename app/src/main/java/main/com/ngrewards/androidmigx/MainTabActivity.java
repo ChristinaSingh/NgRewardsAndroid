@@ -1351,7 +1351,7 @@ public class MainTabActivity extends AppCompatActivity implements MyListener {
 
         btnStart.setOnClickListener(v -> {
             PreferenceConnector.writeString(MainTabActivity.this, PreferenceConnector.Greeting_Status, "true");
-           // getAllPlan(id);
+            getAllPlan(id);
             dialog.dismiss();
         });
 
