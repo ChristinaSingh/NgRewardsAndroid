@@ -9,7 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import main.com.ngrewards.Models.MembershipModel;
 import main.com.ngrewards.Models.PlanHistoryModel;
@@ -38,15 +41,18 @@ public class SubscriptionPlanAdapter extends RecyclerView.Adapter<SubscriptionPl
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.binding.tvTitle.setText(arrayList.get(position).getPlanName());
-        holder.binding.tvPrice.setText("$"+arrayList.get(position).getAmount() + "/" + arrayList.get(position).getDurationName());
+        holder.binding.tvPrice.setText("$"+arrayList.get(position).getAmount() + "/" + arrayList.get(position).getDurationType());
         holder.binding.tvEndDate.setText( "End Date - "+arrayList.get(position).getEndDate());
         holder.binding.tvStartDate.setText( "Start Date - "+arrayList.get(position).getStartDate());
 
-        holder.binding.tv1.setText(arrayList.get(position).getFeatures().get(0));
-        holder.binding.tv2.setText(arrayList.get(position).getFeatures().get(1));
-        holder.binding.tv3.setText(arrayList.get(position).getFeatures().get(2));
-        holder.binding.tv4.setText(arrayList.get(position).getFeatures().get(3));
-        holder.binding.tv5.setText(arrayList.get(position).getFeatures().get(4));
+      //  holder.binding.tv1.setText(arrayList.get(position).getFeatures().get(0));
+     //   holder.binding.tv2.setText(arrayList.get(position).getFeatures().get(1));
+    //    holder.binding.tv3.setText(arrayList.get(position).getFeatures().get(2));
+    //    holder.binding.tv4.setText(arrayList.get(position).getFeatures().get(3));
+   //     holder.binding.tv5.setText(arrayList.get(position).getFeatures().get(4));
+
+
+
 
         holder.binding.tvStatus.setText(arrayList.get(position).getStatus());
 
@@ -79,4 +85,28 @@ public class SubscriptionPlanAdapter extends RecyclerView.Adapter<SubscriptionPl
 
         }
     }
+
+
+    public static boolean shouldDisplayItem(String endDateStr) {
+        try {
+            // Format of your end date string
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+            // Parse end date
+            Date endDate = sdf.parse(endDateStr);
+
+            // Get today's date (with time stripped)
+            Date currentDate = sdf.parse(sdf.format(new Date()));
+
+            // Compare dates
+            return !endDate.after(currentDate); // only display if endDate is today or in the past
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return true; // fallback: show item if parsing fails
+        }
+    }
+
+
+
 }

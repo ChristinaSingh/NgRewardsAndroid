@@ -302,6 +302,7 @@ public class SplashActivity extends AppCompatActivity implements
         alertDialog.show();
     }
 
+
     private void displayFirebaseRegId() {
         FirebaseApp.initializeApp(SplashActivity.this);
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {

@@ -77,7 +77,7 @@
             android:textColor="@color/darkgrey"
             android:layout_marginTop="@dimen/_2sdp"
             android:fontFamily="@font/helvetica"
-
+            android:visibility="gone"
             />
 
         <TextView
@@ -90,7 +90,7 @@
             android:textColor="@color/darkgrey"
             android:layout_marginTop="1dp"
             android:fontFamily="@font/helvetica"
-
+            android:visibility="gone"
             />
 
         <TextView
@@ -103,7 +103,7 @@
             android:textColor="@color/darkgrey"
             android:layout_marginTop="1dp"
             android:fontFamily="@font/helvetica"
-
+            android:visibility="gone"
             />
 
         <TextView
@@ -116,6 +116,7 @@
             android:textColor="@color/darkgrey"
             android:layout_marginTop="1dp"
             android:fontFamily="@font/helvetica"
+            android:visibility="gone"
             />
 
         <TextView
@@ -128,6 +129,7 @@
             android:textColor="@color/darkgrey"
             android:layout_marginTop="1dp"
             android:fontFamily="@font/helvetica"
+            android:visibility="gone"
             />
 
 
