@@ -93,7 +93,7 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.My
         holder.binding.btnSubscribe.setOnClickListener(view -> {
             if(totalPrice==0.0) totalPrice = Double.parseDouble(arrayList.get(position).getPrice());
             PreferenceConnector.writeString(context, PreferenceConnector.Duration_type, durationType);
-            listener.callback(holder.itemView,arrayList.get(position).getPlanId(),totalPrice+"");
+            listener.callback(holder.itemView,arrayList.get(position).getDurationId(),totalPrice+"");
           //  context.startActivity(new Intent(context, SelectPayMethodAct.class)
            //         .putExtra("planId",arrayList.get(position).getPlanId()));
         });

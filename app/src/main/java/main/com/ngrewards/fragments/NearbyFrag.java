@@ -987,12 +987,29 @@ public class NearbyFrag extends Fragment implements MyListener {
                             Log.e("chk===", merchantListBeanArrayList.get(listPosition).getBusinessName());
 
 
-                            getAllPlan(user_id, merchantListBeanArrayList.get(listPosition).getId(),
+                          /*  getAllPlan(user_id, merchantListBeanArrayList.get(listPosition).getId(),
                                     merchantListBeanArrayList.get(listPosition).getBusinessName(),
                                     merchantListBeanArrayList.get(listPosition).getBusinessNo(),
                                     merchantListBeanArrayList.get(listPosition).getEmployee_sale_id(),
                                     merchantListBeanArrayList.get(listPosition).getEmployee_sale_name()
-                            );
+                            );*/
+
+
+                            Intent i = new Intent(getActivity(), MerchantDetailAct.class);
+                            i.putExtra("user_id", user_id);
+                            i.putExtra("merchant_id", merchantListBeanArrayList.get(listPosition).getId());
+                            i.putExtra("opeaning_time", merchantListBeanArrayList.get(listPosition).getOpening_time());
+                            i.putExtra("closing_time", merchantListBeanArrayList.get(listPosition).getClosing_time());
+                            i.putExtra("merchant_name", merchantListBeanArrayList.get(listPosition).getBusinessName());
+                            i.putExtra("merchant_number", merchantListBeanArrayList.get(listPosition).getBusinessNo());
+                            i.putExtra("merchant_contact_name", merchantListBeanArrayList.get(listPosition).getContactName());
+                            i.putExtra("merchant_img", merchantListBeanArrayList.get(listPosition).getMerchantImage());
+                            i.putExtra("employee_sales_id", merchantListBeanArrayList.get(listPosition).getEmployee_sale_id());
+                            i.putExtra("employee_slaes_name", merchantListBeanArrayList.get(listPosition).getEmployee_sale_name());
+                            startActivity(i);
+
+
+
 
 
                         } else {

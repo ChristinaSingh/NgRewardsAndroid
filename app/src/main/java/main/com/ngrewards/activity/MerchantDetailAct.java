@@ -19,9 +19,12 @@ import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -33,6 +36,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -55,12 +59,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
+import main.com.ngrewards.Adapter.MembershipAdapter;
+import main.com.ngrewards.Models.MembershipModel;
 import main.com.ngrewards.R;
 import main.com.ngrewards.Utils.LocaleHelper;
 import main.com.ngrewards.Utils.Tools;
@@ -69,6 +76,7 @@ import main.com.ngrewards.beanclasses.MerchantListBean;
 import main.com.ngrewards.constant.BaseUrl;
 import main.com.ngrewards.constant.GPSTracker;
 import main.com.ngrewards.constant.MySession;
+import main.com.ngrewards.fragments.NearbyFrag;
 import main.com.ngrewards.merchant_fragment.MerchantAboutFrag;
 import main.com.ngrewards.merchant_fragment.MerchantItemsFrag;
 import main.com.ngrewards.merchant_fragment.MerchantOffersFrag;
@@ -80,7 +88,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MerchantDetailAct extends AppCompatActivity {
+public class MerchantDetailAct extends AppCompatActivity implements MyListener{
 
     private static final long MINIMUM_DISTANCE_CHANGE_FOR_UPDATES = 1; // in Meters
     private static final long MINIMUM_TIME_BETWEEN_UPDATES = 0; // in Milliseconds
@@ -116,6 +124,10 @@ public class MerchantDetailAct extends AppCompatActivity {
     private String closing_time;
 
     private Boolean navigateTest = false;
+    RecyclerView rvMembership;
+    ArrayList<MembershipModel.Result> arrayList = new ArrayList<>();
+    String merchantId1 = "", merchantName1 = "", merchantNumber1 = "", employeeSalesId1 = "", employeeSlaesName1 = "";
+
 
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
@@ -182,6 +194,8 @@ public class MerchantDetailAct extends AppCompatActivity {
             opeaning_time = bundle.getString("opeaning_time");
             closing_time = bundle.getString("closing_time");
 
+
+
             merchant_name.setText("" + merchant_name_str);
             merchant_name_head.setText("" + merchant_name_str);
             merchant_number.setText("" + merchant_number_str);
@@ -203,6 +217,17 @@ public class MerchantDetailAct extends AppCompatActivity {
         }
 
         clickevent();
+
+        merchantId1 = merchant_id;
+        merchantName1 = merchant_name_str;
+        merchantNumber1 = merchant_number_str;
+        employeeSalesId1 = employee_sales_id;
+        employeeSlaesName1 = employee_slaes_name;
+
+
+        if(merchantNumber1.equalsIgnoreCase("vd21935")) getAllPlan(user_id,merchantId1,merchantName1,merchantNumber1,employeeSalesId1,employeeSlaesName1);
+
+
     }
 
     public String getOpeningTime() {
@@ -504,6 +529,8 @@ public class MerchantDetailAct extends AppCompatActivity {
         }
     }
 
+
+
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -552,4 +579,141 @@ public class MerchantDetailAct extends AppCompatActivity {
         public void onProviderDisabled(String provider) {
         }
     }
+
+
+    private void getAllPlan(String id, String merchantId, String merchantName, String merchant_Number, String employeeSalesId,
+                            String employeeSlaesName) {
+        // progresbar.setVisibility(View.VISIBLE);
+
+        Call<ResponseBody> call = ApiClient.getApiInterface().getMemberShipPlanApi(id);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                progresbar.setVisibility(View.GONE);
+
+                if (response.isSuccessful()) {
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject object = new JSONObject(responseData);
+                        Log.e("get All membership plan", " >" + responseData);
+                        if (object.getString("status").equals("1")) {
+                            MembershipModel successData = new Gson().fromJson(responseData, MembershipModel.class);
+                            arrayList.clear();
+                            arrayList.addAll(successData.getResult());
+
+                            if (successData.getMembershipData() != null) {
+                                if (shouldDisplayItem(/*"2025-05-22"*/successData.getMembershipData().getEndDate())) {
+                                    System.out.println("Show item");
+                                    MembershipDialog(user_id, merchantId, merchantName, merchant_Number, employeeSalesId, employeeSlaesName);
+                                } else {
+                                    System.out.println("Hide item (end_date is in the future)");
+
+                                }
+                            }
+                        } else
+                            MembershipDialog(user_id, merchantId, merchantName, merchant_Number, employeeSalesId, employeeSlaesName);
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                progresbar.setVisibility(View.GONE);
+
+                Log.e("TAG", t.toString());
+            }
+        });
+    }
+
+
+    public void MembershipDialog(String id, String merchantId, String merchantName, String merchantNumber, String employeeSalesId,
+                                 String employeeSlaesName) {
+        Dialog dialog = new Dialog(MerchantDetailAct.this, android.R.style.Theme_Translucent_NoTitleBar);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_membership);
+
+        merchantId1 = merchantId;
+        merchantName1 = merchantName;
+        merchantNumber1 = merchantNumber;
+        employeeSalesId1 = employeeSalesId;
+        employeeSlaesName1 = employeeSlaesName;
+
+
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+
+        wlp.gravity = Gravity.CENTER;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_BLUR_BEHIND;
+        window.setAttributes(wlp);
+
+
+        rvMembership = dialog.findViewById(R.id.rvMembership);
+
+        TextView tvSkip = dialog.findViewById(R.id.tvSkip);
+
+        RelativeLayout backlay = dialog.findViewById(R.id.backlay);
+
+
+        MembershipAdapter adapter = new MembershipAdapter(MerchantDetailAct.this, arrayList, MerchantDetailAct.this);
+        rvMembership.setAdapter(adapter);
+
+        tvSkip.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        backlay.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        dialog.show();
+    }
+
+    public static boolean shouldDisplayItem(String endDateStr) {
+        try {
+            // Format of your end date string
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+            // Parse end date
+            Date endDate = sdf.parse(endDateStr);
+
+            // Get today's date (with time stripped)
+            Date currentDate = sdf.parse(sdf.format(new Date()));
+
+            // Compare dates
+            return !endDate.after(currentDate); // only display if endDate is today or in the past
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return true; // fallback: show item if parsing fails
+        }
+    }
+
+    @Override
+    public void callback(View view, String result, String price) {
+        PreferenceConnector.writeString(MerchantDetailAct.this, PreferenceConnector.Plan_id, result);
+
+
+        Intent i = new Intent(MerchantDetailAct.this, ManualActivity.class);
+        i.putExtra("user_id", user_id);
+        i.putExtra("merchant_id", "" +merchantId1);
+        i.putExtra("merchant_name", "" + merchantName1);
+        i.putExtra("merchant_number", "" + merchantNumber1);
+        i.putExtra("employee_sales_id",employeeSalesId1);
+        i.putExtra("employee_slaes_name", employeeSlaesName1);
+        i.putExtra("total_amount_due",price);
+        i.putExtra("type","plan_subscribe");
+
+        startActivity(i);
+    }
+
 }
