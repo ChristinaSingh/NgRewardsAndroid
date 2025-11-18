@@ -586,7 +586,7 @@ public class MainTabActivity extends AppCompatActivity implements MyListener {
 
                      jsonObject = new JSONObject(user_log_data);
                     String message = jsonObject.getString("status");
-
+                   // getAllPlan(user_id);
                     if (message.equalsIgnoreCase("1")) {
 
                         Log.e("jsonObject12345", "" + jsonObject);
@@ -1252,7 +1252,7 @@ public class MainTabActivity extends AppCompatActivity implements MyListener {
             } else {
 
                 try {
-                    JSONObject jsonObject = new JSONObject(result);
+                     jsonObject = new JSONObject(result);
                     String message = jsonObject.getString("status");
 
                     if (message.equalsIgnoreCase("1")) {
@@ -1351,7 +1351,7 @@ public class MainTabActivity extends AppCompatActivity implements MyListener {
 
         btnStart.setOnClickListener(v -> {
             PreferenceConnector.writeString(MainTabActivity.this, PreferenceConnector.Greeting_Status, "true");
-            getAllPlan(id);
+           // getAllPlan(id);
             dialog.dismiss();
         });
 
