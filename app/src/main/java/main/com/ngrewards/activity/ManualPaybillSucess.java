@@ -288,7 +288,10 @@ public class ManualPaybillSucess extends AppCompatActivity {
     private void planPurchase(String cardId,String cusId,String planId) {
         progresbar.setVisibility(View.VISIBLE);
         Call<ResponseBody> call = ApiClient.getApiInterface().purchaseMemberShipPlanApi(user_id,cardId,cusId,planId,member_id, mySession.getValueOf(MySession.NgCash), mySession.getValueOf(MySession.CurrencyCode),
-                PreferenceConnector.readString(ManualPaybillSucess.this, PreferenceConnector.Duration_type, ""));
+                PreferenceConnector.readString(ManualPaybillSucess.this, PreferenceConnector.Duration_type, "")
+        ,            PreferenceConnector.readString(ManualPaybillSucess.this, PreferenceConnector.Auto_Pay, "")
+
+        );
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

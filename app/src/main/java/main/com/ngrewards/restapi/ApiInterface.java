@@ -306,7 +306,8 @@ public interface ApiInterface {
                                                  @Query("merchant_ids") String merchant_ids,
                                                  @Query("ngcash") String ngcash,
                                                  @Query("currency") String currency,
-                                                 @Query("duration_type") String durationType);
+                                                 @Query("duration_type") String durationType,
+                                                 @Query("auto_pay") String auto_pay);
 
 
     @GET("member_profile.php?")

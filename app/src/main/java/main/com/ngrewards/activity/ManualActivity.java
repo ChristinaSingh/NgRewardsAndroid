@@ -25,6 +25,7 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Filter;
@@ -41,6 +43,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -144,6 +147,10 @@ public class ManualActivity extends AppCompatActivity {
     private ArrayList<CardBean> cardBeanArrayList;
     private ExpandableHeightListView savedcardlist;
     private double ngcash_val = 0, total_amt_calculate = 0, apply_ng_cash = 0;
+    String autoPayStatus = "No";
+
+
+
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -922,7 +929,6 @@ public class ManualActivity extends AppCompatActivity {
         paybill_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 due_amount_str = dueamount_et.getText().toString();
 
                 tip_amt_str = tipamount_et.getText().toString();
@@ -941,7 +947,7 @@ public class ManualActivity extends AppCompatActivity {
 
                     if (apply_ngcassh != null || !apply_ngcassh.equalsIgnoreCase("") || !apply_ngcassh.equalsIgnoreCase("0")) {
 
-                        if (type.equals("paybill") || type.equalsIgnoreCase("plan_subscribe")) {
+                        if (type.equals("paybill") /*|| type.equalsIgnoreCase("plan_subscribe")*/) {
 
                             employee_name = edt_name.getText().toString().trim();
                             card_amount_tv1 = card_amount_tv.getText().toString().trim();
@@ -978,6 +984,13 @@ public class ManualActivity extends AppCompatActivity {
 
 
                             //  payBiilMerchant(user_id, merchant_id, merchant_number, due_amount_str, tip_amt_str, apply_ngcassh, card_id, card_number, card_brand, customer_id);
+                        } else if (type.equalsIgnoreCase("plan_subscribe")) {
+                            employee_name = edt_name.getText().toString().trim();
+                            card_amount_tv1 = card_amount_tv.getText().toString().trim();
+
+                            dialogAutoPay(employee_name,card_amount_tv1);
+
+
                         } else {
 
                             //TODO:=========PayOrderBill==============
@@ -1011,7 +1024,7 @@ public class ManualActivity extends AppCompatActivity {
 
                                 Log.e("user_id >> ", " >> " + user_id);
 
-                                if (type.equals("paybill") || type.equalsIgnoreCase("plan_subscribe")) {
+                                if (type.equals("paybill") /*|| type.equalsIgnoreCase("plan_subscribe")*/) {
 
                                     apply_ngcassh = ngcashavb.getText().toString();
 
@@ -1049,6 +1062,43 @@ public class ManualActivity extends AppCompatActivity {
 
 
                                     // payBiilMerchant(user_id, merchant_id, merchant_number, due_amount_str, tip_amt_str, apply_ngcassh, card_id, card_number, card_brand, customer_id);
+                                } else if (type.equalsIgnoreCase("plan_subscribe")) {
+                                    apply_ngcassh = ngcashavb.getText().toString();
+
+                                    //  Toast.makeText(getApplicationContext(),"dssuccess!!!!",Toast.LENGTH_LONG).show();
+
+                                    card_amount_tv1 = card_amount_tv.getText().toString().trim();
+                                    Log.e("card_amount_tv1", card_amount_tv1);
+                                    Log.e("customer_id", customer_id);
+                                    dialogAutoPay(employee_name,card_amount_tv1);
+
+
+
+
+                                 /*   Intent intent = new Intent(ManualActivity.this, ManualPaybillSucess.class);
+                                    intent.putExtra("type", type);
+                                    intent.putExtra("user_id", user_id);
+                                    intent.putExtra("member_id", merchant_id);
+                                    intent.putExtra("merchant_number", merchant_number);
+                                    intent.putExtra("due_amount_str", "" + TotalAmount);
+                                    intent.putExtra("tip_amt_str", tip_amt_str);
+                                    intent.putExtra("apply_ngcassh", apply_ngcassh);
+                                    intent.putExtra("card_id", card_id);
+                                    intent.putExtra("card_number", card_number);
+                                    intent.putExtra("card_brand", card_brand);
+                                    intent.putExtra("customer_id", customer_id);
+                                    intent.putExtra("order_cart_id", order_cart_id);
+                                    intent.putExtra("merchant_name", merchant_name);
+                                    intent.putExtra("employee_name", employee_name);
+
+                                    if (employee) {
+                                        intent.putExtra("employee_id", employee_id);
+                                    } else {
+                                        intent.putExtra("employee_id", employee_sales_id);
+                                    }
+
+                                    intent.putExtra("quantity", quantity);
+                                    startActivity(intent);*/
                                 } else {
                                     //TODO:=========PayOrderBill==============
                                     PayOrderBill(order_cart_id);
@@ -1061,7 +1111,6 @@ public class ManualActivity extends AppCompatActivity {
 
 
                 }
-
             }
         });
 
@@ -1073,6 +1122,72 @@ public class ManualActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void dialogAutoPay(String employeeName11, String cardAmountTv1) {
+
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_autopay);
+        dialog.setCancelable(false);
+
+        // Transparent background
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        // ✅ SET PROPER WIDTH
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setLayout(
+                    (int) (getResources().getDisplayMetrics().widthPixels * 0.9),
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            dialog.getWindow().setGravity(Gravity.CENTER);
+        }
+
+        Switch switchAutopay = dialog.findViewById(R.id.switchAutopay);
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+        Button btnConfirm = dialog.findViewById(R.id.btnConfirm);
+
+        // ✅ Default value
+        autoPayStatus = "No";
+        switchAutopay.setChecked(false);
+
+        switchAutopay.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            autoPayStatus = isChecked ? "Yes" : "No";
+        });
+
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+
+        btnConfirm.setOnClickListener(v -> {
+
+            PreferenceConnector.writeString(
+                    ManualActivity.this,
+                    PreferenceConnector.Auto_Pay,
+                    autoPayStatus
+            );
+
+            Intent intent = new Intent(ManualActivity.this, ManualPaybillSucess.class);
+            intent.putExtra("type", type);
+            intent.putExtra("user_id", user_id);
+            intent.putExtra("merchant_id", merchant_id);
+            intent.putExtra("merchant_number", merchant_number);
+            intent.putExtra("due_amount_str", due_amount_str);
+            intent.putExtra("tip_amt_str", tip_amt_str);
+            intent.putExtra("apply_ngcassh", apply_ngcassh);
+            intent.putExtra("card_id", card_id);
+            intent.putExtra("card_number", card_number);
+            intent.putExtra("card_brand", card_brand);
+            intent.putExtra("customer_id", customer_id);
+            intent.putExtra("order_cart_id", order_cart_id);
+            intent.putExtra("merchant_name", merchant_name);
+            intent.putExtra("employee_name", employeeName11);
+            intent.putExtra("employee_id", employee_id);
+            intent.putExtra("quantity", quantity);
+
+            startActivity(intent);
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
 
     private void idint() {
         qrcode = findViewById(R.id.qrcode);

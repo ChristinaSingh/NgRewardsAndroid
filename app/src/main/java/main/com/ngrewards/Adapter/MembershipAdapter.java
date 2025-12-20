@@ -32,7 +32,9 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.My
     ArrayList<MembershipModel.Result> arrayList;
     MyListener listener;
     ArrayList<String> durationArrayList= new ArrayList<>();
-    private String durationType = "Week";
+    //private String durationType = "Week";
+    private String durationType = "";
+
     double totalPrice=0.0;
     public MembershipAdapter(Context context, ArrayList<MembershipModel.Result>arrayList, MyListener listener) {
         this.context = context;
@@ -54,14 +56,83 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.My
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.binding.tvTitle.setText(arrayList.get(position).getPlanDisplayName());
+
+        if(arrayList.get(position).getDurationType().equalsIgnoreCase("weekly"))
+            durationType = "Week";
+        else if(arrayList.get(position).getDurationType().equalsIgnoreCase("biweekly"))
+            durationType = "Be weekly";
+        else if(arrayList.get(position).getDurationType().equalsIgnoreCase("monthly"))
+            durationType = "Month";
+
         holder.binding.tvPrice.setText("$"+arrayList.get(position).getPrice() + "/" + durationType);
         holder.binding.tvTitle1.setText(arrayList.get(position).getDescription());
 
-      //  holder.binding.tv1.setText(arrayList.get(position).getFeatures().get(0));
-      //  holder.binding.tv2.setText(arrayList.get(position).getFeatures().get(1));
-      //  holder.binding.tv3.setText(arrayList.get(position).getFeatures().get(2));
-      //  holder.binding.tv4.setText(arrayList.get(position).getFeatures().get(3));
-      //  holder.binding.tv5.setText(arrayList.get(position).getFeatures().get(4));
+
+        List<String> features = arrayList.get(position).getFeatures();
+
+
+
+
+      /*  if(arrayList.get(position).getDurationType().equalsIgnoreCase("biweekly")){
+            holder.binding.tv1.setVisibility(View.VISIBLE);
+            holder.binding.tv2.setVisibility(View.GONE);
+            holder.binding.tv3.setVisibility(View.GONE);
+            holder.binding.tv4.setVisibility(View.GONE);
+            holder.binding.tv5.setVisibility(View.GONE);
+            holder.binding.tv1.setText(arrayList.get(position).getFeatures().get(0));
+
+        }
+        else {
+            holder.binding.tv1.setVisibility(View.VISIBLE);
+            holder.binding.tv2.setVisibility(View.VISIBLE);
+            holder.binding.tv3.setVisibility(View.VISIBLE);
+            holder.binding.tv4.setVisibility(View.VISIBLE);
+            holder.binding.tv5.setVisibility(View.VISIBLE);
+
+
+            holder.binding.tv1.setText(arrayList.get(position).getFeatures().get(0));
+            holder.binding.tv2.setText(arrayList.get(position).getFeatures().get(1));
+            holder.binding.tv3.setText(arrayList.get(position).getFeatures().get(2));
+            holder.binding.tv4.setText(arrayList.get(position).getFeatures().get(3));
+            holder.binding.tv5.setText(arrayList.get(position).getFeatures().get(4));
+        }*/
+
+
+        if (features != null && features.size() > 0) {
+            holder.binding.tv1.setText(features.get(0));
+            holder.binding.tv1.setVisibility(View.VISIBLE);
+        } else {
+            holder.binding.tv1.setVisibility(View.GONE);
+        }
+
+        if (features != null && features.size() > 1) {
+            holder.binding.tv2.setText(features.get(1));
+            holder.binding.tv2.setVisibility(View.VISIBLE);
+        } else {
+            holder.binding.tv2.setVisibility(View.GONE);
+        }
+
+        if (features != null && features.size() > 2) {
+            holder.binding.tv3.setText(features.get(2));
+            holder.binding.tv3.setVisibility(View.VISIBLE);
+        } else {
+            holder.binding.tv3.setVisibility(View.GONE);
+        }
+
+        if (features != null && features.size() > 3) {
+            holder.binding.tv4.setText(features.get(3));
+            holder.binding.tv4.setVisibility(View.VISIBLE);
+        } else {
+            holder.binding.tv4.setVisibility(View.GONE);
+        }
+
+        if (features != null && features.size() > 4) {
+            holder.binding.tv5.setText(features.get(4));
+            holder.binding.tv5.setVisibility(View.VISIBLE);
+        } else {
+            holder.binding.tv5.setVisibility(View.GONE);
+        }
+
 
 
 
@@ -92,6 +163,15 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.My
 
         holder.binding.btnSubscribe.setOnClickListener(view -> {
             if(totalPrice==0.0) totalPrice = Double.parseDouble(arrayList.get(position).getPrice());
+
+            if(arrayList.get(position).getDurationType().equalsIgnoreCase("weekly"))
+                durationType = "Week";
+            else if(arrayList.get(position).getDurationType().equalsIgnoreCase("biweekly"))
+                durationType = "Be weekly";
+            else if(arrayList.get(position).getDurationType().equalsIgnoreCase("monthly"))
+                durationType = "Month";
+
+
             PreferenceConnector.writeString(context, PreferenceConnector.Duration_type, durationType);
             listener.callback(holder.itemView,arrayList.get(position).getDurationId(),totalPrice+"");
           //  context.startActivity(new Intent(context, SelectPayMethodAct.class)
@@ -99,9 +179,9 @@ public class MembershipAdapter extends RecyclerView.Adapter<MembershipAdapter.My
         });
 
 
-        holder.binding.tvPrice.setOnClickListener(view -> {
+      /*  holder.binding.tvPrice.setOnClickListener(view -> {
             showDropDownDuration(view,holder.binding.tvPrice,durationArrayList,position);
-        });
+        });*/
 
     }
 

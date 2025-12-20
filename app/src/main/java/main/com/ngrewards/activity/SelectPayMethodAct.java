@@ -311,7 +311,7 @@ public class SelectPayMethodAct extends AppCompatActivity implements CardClickLi
 
     private void planPurchase(String cardId,String cusId) {
          progresbar.setVisibility(View.VISIBLE);
-         Call<ResponseBody> call = ApiClient.getApiInterface().purchaseMemberShipPlanApi(user_id,cardId,cusId,planId,"",mySession.getValueOf(MySession.NgCash), mySession.getValueOf(MySession.CurrencyCode),"");
+         Call<ResponseBody> call = ApiClient.getApiInterface().purchaseMemberShipPlanApi(user_id,cardId,cusId,planId,"",mySession.getValueOf(MySession.NgCash), mySession.getValueOf(MySession.CurrencyCode),"","No");
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
