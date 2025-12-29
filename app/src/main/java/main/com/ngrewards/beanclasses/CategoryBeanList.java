@@ -3,6 +3,12 @@ package main.com.ngrewards.beanclasses;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import main.com.ngrewards.Models.PropertyListModel;
+
 /**
  * Created by technorizen on 19/7/18.
  */
@@ -27,6 +33,10 @@ public class CategoryBeanList {
     @SerializedName("product_list_count")
     @Expose
     private Integer productListCount;
+
+    @SerializedName("sub_categories")
+    @Expose
+    private List<SubCategories> subCategories;
 
     public String getCategory_name_spanish() {
         return category_name_spanish;
@@ -72,7 +82,58 @@ public class CategoryBeanList {
         return productListCount;
     }
 
+    public List<SubCategories> getSubCategories() {
+        return subCategories;
+    }
+
+    public void setSubCategories(List<SubCategories> subCategories) {
+        this.subCategories = subCategories;
+    }
+
     public void setProductListCount(Integer productListCount) {
         this.productListCount = productListCount;
+
+
+
+
     }
+
+
+
+    public class SubCategories implements Serializable {
+        @SerializedName("subcategory_id")
+        @Expose
+        private Integer subcategoryId;
+        @SerializedName("subcategory_name")
+        @Expose
+        private String subcategoryName;
+        @SerializedName("product_count")
+        @Expose
+        private Integer productCount;
+
+        public Integer getSubcategoryId() {
+            return subcategoryId;
+        }
+
+        public void setSubcategoryId(Integer subcategoryId) {
+            this.subcategoryId = subcategoryId;
+        }
+
+        public String getSubcategoryName() {
+            return subcategoryName;
+        }
+
+        public void setSubcategoryName(String subcategoryName) {
+            this.subcategoryName = subcategoryName;
+        }
+
+        public Integer getProductCount() {
+            return productCount;
+        }
+
+        public void setProductCount(Integer productCount) {
+            this.productCount = productCount;
+        }
+    }
+
 }

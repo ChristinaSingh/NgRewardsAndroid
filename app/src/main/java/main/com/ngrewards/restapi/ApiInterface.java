@@ -37,7 +37,7 @@ public interface ApiInterface {
     Call<ResponseBody> getMerchantBusNum(@Query("country_id") String country_id);
 
     @GET("all_product_lists.php?")
-    Call<ResponseBody> getFeaturedProduct(@Query("user_id") String user_id, @Query("category_id") String category_id, @Query("sort_type") String sort_type, @Query("average_rate") String average_rate);
+    Call<ResponseBody> getFeaturedProduct(@Query("user_id") String user_id, @Query("category_id") String category_id, @Query("sort_type") String sort_type, @Query("average_rate") String average_rate,@Query("subcategory_id") String subcategory_id);
 
     @GET("all_merchant_publish_product_lists.php?")
     Call<ResponseBody> allMerchnatItems(@Query("user_id") String user_id, @Query("merchant_id") String merchant_id);

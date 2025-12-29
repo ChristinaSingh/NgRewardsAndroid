@@ -113,7 +113,7 @@ public class FeaturedFrag extends Fragment {
     private void getFeaturedProducts() {
         progresbar.setVisibility(View.VISIBLE);
         productlistbeanArrayList = new ArrayList<>();
-        Call<ResponseBody> call = ApiClient.getApiInterface().getFeaturedProduct(user_id, "", "", "");
+        Call<ResponseBody> call = ApiClient.getApiInterface().getFeaturedProduct(user_id, "", "", "","");
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

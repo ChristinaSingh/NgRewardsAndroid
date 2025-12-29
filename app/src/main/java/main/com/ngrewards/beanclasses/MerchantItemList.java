@@ -103,6 +103,19 @@ public class MerchantItemList {
     @Expose
     private String skuOptional;
 
+
+    @SerializedName("member_eligible_to_see")
+    @Expose
+    private String member_eligible_to_see;
+
+    public String getMember_eligible_to_see() {
+        return member_eligible_to_see;
+    }
+
+    public void setMember_eligible_to_see(String member_eligible_to_see) {
+        this.member_eligible_to_see = member_eligible_to_see;
+    }
+
     public String getSkuOptional() {
         return skuOptional;
     }
