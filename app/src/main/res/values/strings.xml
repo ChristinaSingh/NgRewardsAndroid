@@ -794,6 +794,7 @@
     <string name="alternate_email_verified">Alternate Email Verified</string>
     <string name="see_plan">See plan</string>
     <string name="your_one_month_plan">Your 1-month free trial has expired Please subscribe to a plan to continue using NGCash.</string>
+    <string name="sub_category">Sub-Category</string>
 
 
 </resources>

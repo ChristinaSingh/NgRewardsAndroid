@@ -69,6 +69,7 @@ import main.com.ngrewards.constant.BaseUrl;
 import main.com.ngrewards.constant.MultipartUtility;
 import main.com.ngrewards.constant.MySession;
 import main.com.ngrewards.constant.Myapisession;
+import main.com.ngrewards.fragments.ItemsFrag;
 import main.com.ngrewards.marchant.merchantbottum.MultiPhotoSelectActivity;
 import main.com.ngrewards.marchant.merchantbottum.MultiPhotoSelectActivity2;
 import main.com.ngrewards.restapi.ApiClient;
@@ -91,15 +92,19 @@ public class StartYourListing extends AppCompatActivity {
     private RelativeLayout backlay;
     private ImageView uploadimg;
     private RecyclerView add_product_list;
-    private Spinner category_spinner;
+    private Spinner category_spinner,sub_category_spinner;
     private ArrayList<CategoryBeanList> categoryBeanListArrayList;
     private CategoryAdpters categoryAdpters;
     private String category_id = "";
     private String split_amount = "";
     private String split_payments = "";
     private EditText shipping_price_et, stock_et, tital_name_et, description_et, price_et, shipping_et, sizes_et, colors_et,edShippingQuantity,edShippingPercentage,sku_et;
-    private String user_id = "", stripe_account_id = "", time_zone = "", shipping_price_str = "", stock_str = "", tital_name_str = "", description_str = "", price_str = "", sizes_str = "", colors_str = "", shipping_str = "",shipping_quantity_str = "",shipping_percentage_str = "",sku_str="";
-    private TextView show_pricing_type, list_item_tv;
+    private String user_id = "", stripe_account_id = "", time_zone = "", shipping_price_str = "", stock_str = "", tital_name_str = "", description_str = "", price_str = "", sizes_str = "", colors_str = "", shipping_str = "",shipping_quantity_str = "",shipping_percentage_str = "",sku_str="",subCategoryId="";
+    private TextView show_pricing_type, list_item_tv,tvSubCategory;
+    ArrayList<CategoryBeanList.SubCategories> subCategoryBeanListArrayList;
+    SubCategoryAdapter subCategoryAdapter;
+    RelativeLayout rlSubCategory;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +155,8 @@ public class StartYourListing extends AppCompatActivity {
         } else {
             try {
                 categoryBeanListArrayList = new ArrayList<>();
+                subCategoryBeanListArrayList = new ArrayList<>();
+
                 CategoryBeanList categoryBeanList = new CategoryBeanList();
                 categoryBeanList.setCategoryId("0");
                 categoryBeanList.setCategoryName(getString(R.string.selectcat));
@@ -283,6 +290,11 @@ public class StartYourListing extends AppCompatActivity {
         description_et = findViewById(R.id.description_et);
         tital_name_et = findViewById(R.id.tital_name_et);
         category_spinner = findViewById(R.id.category_spinner);
+        sub_category_spinner = findViewById(R.id.sub_category_spinner);
+        tvSubCategory = findViewById(R.id.tvSubCategory);
+        rlSubCategory = findViewById(R.id.rlSubCategory);
+
+
         progresbar = findViewById(R.id.progresbar);
         add_product_list = findViewById(R.id.add_product_list);
         show_pricing_type = findViewById(R.id.show_pricing_type);
@@ -297,6 +309,8 @@ public class StartYourListing extends AppCompatActivity {
         add_product_list.setLayoutManager(horizontalLayoutManagaer);
         backlay = findViewById(R.id.backlay);
         uploadimg = findViewById(R.id.uploadimg);
+
+
         category_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -305,6 +319,21 @@ public class StartYourListing extends AppCompatActivity {
                         category_id = "";
                     } else {
                         category_id = categoryBeanListArrayList.get(position).getCategoryId();
+
+                        if (!categoryBeanListArrayList.get(position).getSubCategories().isEmpty()) {
+                            subCategoryBeanListArrayList.clear();
+                            subCategoryBeanListArrayList.addAll(categoryBeanListArrayList.get(position).getSubCategories());
+                            subCategoryAdapter = new SubCategoryAdapter(StartYourListing.this, subCategoryBeanListArrayList);
+                            sub_category_spinner.setAdapter(subCategoryAdapter);
+                            tvSubCategory.setVisibility(View.VISIBLE);
+                            rlSubCategory.setVisibility(View.VISIBLE);
+
+                        } else {
+                            subCategoryId ="";
+                            tvSubCategory.setVisibility(View.GONE);
+                            rlSubCategory.setVisibility(View.GONE);
+                        }
+
                     }
 
                 }
@@ -316,6 +345,30 @@ public class StartYourListing extends AppCompatActivity {
 
             }
         });
+
+
+        sub_category_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (subCategoryBeanListArrayList != null && !subCategoryBeanListArrayList.isEmpty()) {
+                  /*  if (subCategoryBeanListArrayList.get(position).getSubcategoryId().equalsIgnoreCase("0")) {
+                        subCategoryId = "";
+                    } else {*/
+                    subCategoryId = String.valueOf(subCategoryBeanListArrayList.get(position).getSubcategoryId());
+                    //  }
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
 
         price_et.setFilters(new InputFilter[]{
                 new DigitsKeyListener(Boolean.FALSE, Boolean.TRUE) {
@@ -835,6 +888,8 @@ public class StartYourListing extends AppCompatActivity {
         }
     }
 
+
+
     public class CategoryAdpters extends BaseAdapter {
         private final ArrayList<CategoryBeanList> categoryBeanLists;
         Context context;
@@ -878,6 +933,72 @@ public class StartYourListing extends AppCompatActivity {
         }
     }
 
+
+    public class SubCategoryAdapter extends BaseAdapter {
+        private final ArrayList<CategoryBeanList.SubCategories> subCategoryBeanLists;
+        Context context;
+        LayoutInflater inflter;
+
+        public SubCategoryAdapter(Context applicationContext, ArrayList<CategoryBeanList.SubCategories> subCategoryBeanLists) {
+            this.context = applicationContext;
+            this.subCategoryBeanLists = subCategoryBeanLists;
+            inflter = (LayoutInflater.from(applicationContext));
+        }
+
+        @Override
+        public int getCount() {
+            return subCategoryBeanLists == null ? 0 : subCategoryBeanLists.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            view = inflter.inflate(R.layout.spinner_layout, null);
+            TextView names = (TextView) view.findViewById(R.id.name_tv);
+            ImageView country_flag = (ImageView) view.findViewById(R.id.country_flag);
+            //  TextView countryname = (TextView) view.findViewById(R.id.countryname);
+           /* if (categoryBeanLists.get(i).getCategoryId().equals("982")) {
+                if (mySession.getValueOf(KEY_LANGUAGE).equalsIgnoreCase("es")) {
+                    names.setText(categoryBeanLists.get(i).getCategory_name_spanish());
+                } else if (mySession.getValueOf(KEY_LANGUAGE).equalsIgnoreCase("hi")) {
+                    names.setText(categoryBeanLists.get(i).getCategory_name_hindi());
+                } else {
+                    names.setText(categoryBeanLists.get(i).getCategoryName());
+                }
+            } else {
+                names.setVisibility(View.GONE);
+            }*/
+
+          /*  if (mySession.getValueOf(KEY_LANGUAGE).equalsIgnoreCase("es")) {
+                names.setText(categoryBeanLists.get(i).getCategory_name_spanish());
+            } else if (mySession.getValueOf(KEY_LANGUAGE).equalsIgnoreCase("hi")) {
+                names.setText(categoryBeanLists.get(i).getCategory_name_hindi());
+            } else {
+                names.setText(categoryBeanLists.get(i).getCategoryName());
+            }*/
+
+            names.setText(subCategoryBeanLists.get(i).getSubcategoryName());
+
+
+            return view;
+        }
+    }
+
+
+
+
+
+
+
     public class AddProductsAsc extends AsyncTask<String, String, String> {
         String Jsondata;
 
@@ -903,6 +1024,7 @@ public class StartYourListing extends AppCompatActivity {
                 multipart.addFormField("product_price", price_str);
                 multipart.addFormField("shipping_time", shipping_str);
                 multipart.addFormField("category_id", category_id);
+                multipart.addFormField("sub_category", subCategoryId);
                 multipart.addFormField("color", colors_str);
                 multipart.addFormField("size", sizes_str);
                 multipart.addFormField("stock", stock_str);

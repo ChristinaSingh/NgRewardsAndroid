@@ -198,6 +198,57 @@ android:layout_below="@+id/vvv"
 
                 </RelativeLayout>
 
+
+                <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                    android:id="@+id/tvSubCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/sub_category"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/large"
+                    android:visibility="gone"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/rlSubCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/greyborder"
+                    android:padding="5dp"
+                    android:visibility="gone">
+
+                    <Spinner
+                        android:id="@+id/sub_category_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                  <!--  <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/selectcat"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/medium"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/down_arrow"
+                        android:visibility="gone" />-->
+
+                </RelativeLayout>
+
+
+
+
+
                 <main.com.ngrewards.fonttypeclasses.NoramlTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
