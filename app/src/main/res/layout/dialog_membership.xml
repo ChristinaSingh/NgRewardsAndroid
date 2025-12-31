@@ -56,7 +56,15 @@
 
     </RelativeLayout>
 
-
+    <main.com.ngrewards.fonttypeclasses.NoramlTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/applies_to"
+        android:textColor="@color/darkgrey"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:textSize="@dimen/_10sdp"
+        android:layout_margin="@dimen/_10sdp"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
