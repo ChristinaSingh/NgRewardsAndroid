@@ -60,6 +60,18 @@ public class MemberDetail implements Serializable {
     @Expose
     private String order_date;
 
+    @SerializedName("membership_status")
+    @Expose
+    private MembershipStatus membershipStatus;
+
+    public MembershipStatus getMembershipStatus() {
+        return membershipStatus;
+    }
+
+    public void setMembershipStatus(MembershipStatus membershipStatus) {
+        this.membershipStatus = membershipStatus;
+    }
+
     public String getB_name() {
         return b_name;
     }
@@ -209,4 +221,33 @@ public class MemberDetail implements Serializable {
                 ", order_date='" + order_date + '\'' +
                 '}';
     }
+
+
+    public class MembershipStatus implements Serializable {
+
+        @SerializedName("status")
+        @Expose
+        private String status;
+
+        @SerializedName("message")
+        @Expose
+        private String message;
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+    }
+
 }

@@ -367,6 +367,16 @@ public class ItemsFrag extends Fragment {
                         fill_category_id_loc = categoryBeanListArrayList.get(position).getCategoryId();
                         if (!categoryBeanListArrayList.get(position).getSubCategories().isEmpty()) {
                             subCategoryBeanListArrayList.clear();
+
+                            CategoryBeanList.SubCategories dummySub =
+                                    new CategoryBeanList().new SubCategories();
+
+                            dummySub.setSubcategoryId(0);
+                            dummySub.setSubcategoryName(requireActivity().getString(R.string.select_sub_category));
+                            dummySub.setProductCount(0);
+                            subCategoryBeanListArrayList.add(dummySub);
+
+
                             subCategoryBeanListArrayList.addAll(categoryBeanListArrayList.get(position).getSubCategories());
                             subCategoryAdapter = new SubCategoryAdapter(requireActivity(), subCategoryBeanListArrayList);
                             sub_category_spinner.setAdapter(subCategoryAdapter);
@@ -374,6 +384,7 @@ public class ItemsFrag extends Fragment {
                         } else {
                             sub_category_spinner.setVisibility(View.GONE);
                         }
+                        subCategoryId="";
                     }
 
                 }
@@ -389,14 +400,17 @@ public class ItemsFrag extends Fragment {
         sub_category_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (subCategoryBeanListArrayList != null && !subCategoryBeanListArrayList.isEmpty()) {
-                  /*  if (subCategoryBeanListArrayList.get(position).getSubcategoryId().equalsIgnoreCase("0")) {
-                        subCategoryId = "";
-                    } else {*/
-                    subCategoryId = String.valueOf(subCategoryBeanListArrayList.get(position).getSubcategoryId());
-                    //  }
 
+                if (position==0) {
+                    subCategoryId = "";
+                    return ;
                 }
+
+
+                    if (subCategoryBeanListArrayList != null && !subCategoryBeanListArrayList.isEmpty()) {
+                        subCategoryId = String.valueOf(subCategoryBeanListArrayList.get(position).getSubcategoryId());
+                    }
+
             }
 
             @Override

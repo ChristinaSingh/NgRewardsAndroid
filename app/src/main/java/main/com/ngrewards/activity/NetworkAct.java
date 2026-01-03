@@ -609,6 +609,9 @@ public class NetworkAct extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            if(memberDetailArrayList.get(listPosition).getMembershipStatus().getStatus().equalsIgnoreCase("1"))
+               holder.ivMembership.setVisibility(View.VISIBLE);
+            else holder.ivMembership.setVisibility(View.GONE);
 
 
             if (memberDetailArrayList.get(listPosition).getUserType() != null && memberDetailArrayList.get(listPosition).getUserType().equalsIgnoreCase("Merchant")) {
@@ -687,7 +690,7 @@ public class NetworkAct extends AppCompatActivity {
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            ImageView option, chating;
+            ImageView option, chating,ivMembership;
             CircleImageView friendimg;
             TextView member_name;
 
@@ -698,6 +701,8 @@ public class NetworkAct extends AppCompatActivity {
                 this.member_name = itemView.findViewById(R.id.member_name);
                 this.friendimg = itemView.findViewById(R.id.friendimg);
                 this.chating = itemView.findViewById(R.id.chating);
+                this.ivMembership = itemView.findViewById(R.id.ivMembership);
+
             }
         }
     }
