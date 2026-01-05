@@ -93,6 +93,7 @@ import main.com.ngrewards.constant.GPSTracker;
 import main.com.ngrewards.constant.MySession;
 import main.com.ngrewards.constant.Myapisession;
 import main.com.ngrewards.marchant.activity.ForgotPass;
+import main.com.ngrewards.marchant.activity.MerchantSignupAct;
 import main.com.ngrewards.marchant.activity.MerchantSignupSlider;
 import main.com.ngrewards.marchant.merchantbottum.MerchantBottumAct;
 import main.com.ngrewards.restapi.ApiClient;
@@ -245,7 +246,8 @@ public class MarchantLogin extends AppCompatActivity {
         dontaccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MarchantLogin.this, MerchantSignupSlider.class);
+               // Intent i = new Intent(MarchantLogin.this, MerchantSignupSlider.class);
+                Intent i = new Intent(MarchantLogin.this, MerchantSignupAct.class);
                 startActivity(i);
                 finish();
             }

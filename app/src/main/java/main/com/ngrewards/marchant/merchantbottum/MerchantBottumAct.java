@@ -19,7 +19,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -53,10 +55,13 @@ import main.com.ngrewards.R;
 import main.com.ngrewards.Utils.LocaleHelper;
 import main.com.ngrewards.Utils.Tools;
 import main.com.ngrewards.activity.AccountTypeSelectionAct;
+import main.com.ngrewards.activity.MerchantMenuSetting;
 import main.com.ngrewards.activity.app.Config;
 import main.com.ngrewards.beanclasses.GalleryBean;
 import main.com.ngrewards.constant.BaseUrl;
 import main.com.ngrewards.constant.MySession;
+import main.com.ngrewards.marchant.draweractivity.MerSettingActivity;
+import main.com.ngrewards.marchant.draweractivity.MerchantBaseActivity;
 
 public class MerchantBottumAct extends TabActivity {
 
@@ -427,6 +432,9 @@ public class MerchantBottumAct extends TabActivity {
                         mySession.set_business_category(business_category);
 
 
+
+
+
                         mySession.setPassSet("");
 
 
@@ -452,7 +460,9 @@ public class MerchantBottumAct extends TabActivity {
                         Log.e(TAG, "onCreate:  currency_code   ----  " + mySession.getValueOf(MySession.CurrencyCode));
                         Log.e(TAG, "onCreate:  currency_sign   ----  " + mySession.getValueOf(MySession.CurrencySign));
                         Log.e(TAG, "onCreate:  country_name    ----  " + mySession.getValueOf(MySession.CountryName));
-
+                        if(jsonObject1.getString("onboarding_url").equalsIgnoreCase("")){
+                            showStripeDialog();
+                        }
 
                     }
                 } catch (JSONException e) {
@@ -462,6 +472,45 @@ public class MerchantBottumAct extends TabActivity {
             }
         }
     }
+
+
+
+    private void showStripeDialog() {
+
+        Dialog dialog = new Dialog(MerchantBottumAct.this);
+        dialog.setContentView(R.layout.dialog_ng_rewards);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+
+       // dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        }
+
+
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+        Button btnContinue = dialog.findViewById(R.id.btnContinue);
+
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+
+        btnContinue.setOnClickListener(v -> {
+            dialog.dismiss();
+            Intent i = new Intent(MerchantBottumAct.this, MerSettingActivity.class);
+            startActivity(i);
+        });
+
+        dialog.show();
+    }
+
+
+
+
 
     private class MyCounterVal extends AsyncTask<String, String, String> {
         @Override

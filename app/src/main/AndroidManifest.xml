@@ -21,6 +21,18 @@
         android:allowClearUserData= "true"
        >
 
+
+
+        <activity android:name=".marchant.activity.BusinessSignupAct"
+            android:exported="false"
+            />
+
+        <activity
+            android:name=".marchant.activity.MerchantSignupAct"
+            android:exported="false" />
+
+
+
         <activity
             android:name=".activity.WithdrawReceiptAct"
             android:exported="false" />

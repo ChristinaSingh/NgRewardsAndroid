@@ -135,8 +135,14 @@ public class StripeExpressAcountAct extends AppCompatActivity {
 
 
         String stripeurl = "";
-        if (!mySession.getValueOf(MySession.CurrencyCode).equalsIgnoreCase("USD")) {
+        /*if (!mySession.getValueOf(MySession.CurrencyCode).equalsIgnoreCase("USD")) {
             //connect.stripe.com/oauth/v2/authorize?" +
+
+            https://myngrewards.com/wp-content/plugins/webservice/stripe_payment_form.php?
+            client_id=ca_DtpgZQXOAtlpfbfH9LrMkVts9Lt8n2qY&scope=read_write
+                    &always_prompt=false&stripe_landing=register
+                    &device_type=Android&state=151&merchant_id=151
+
             stripeurl = BaseUrl.STRIPE_OAUTH_URL + user_id +
                     "&response_type=code&scope=read_write&country=" +
                     mySession.getValueOf(MySession.CountryId) +
@@ -150,7 +156,11 @@ public class StripeExpressAcountAct extends AppCompatActivity {
         else {
 
             stripeurl = BaseUrl.STRIPE_OAUTH_URL + user_id;
-        }
+        }*/
+
+        stripeurl = BaseUrl.STRIPE_OAUTH_URL + "&state="+ user_id +"&merchant_id=" + user_id;
+
+
        /* stripewebview.getSettings().setJavaScriptEnabled(true);
         stripewebview.getSettings().setPluginState(WebSettings.PluginState.ON);
         stripewebview.setWebViewClient(new Callback());
