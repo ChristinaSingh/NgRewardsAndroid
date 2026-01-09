@@ -110,7 +110,10 @@ public class WithdrawActivity extends AppCompatActivity {
                  if(jsonObject1!=null){
                      if(jsonObject1.getString("member_stripe_account_id")==null || jsonObject1.getString("member_stripe_account_id").equalsIgnoreCase("")
                              && jsonObject1.getString("stripe_account_login_link")==null || jsonObject1.getString("stripe_account_login_link").equalsIgnoreCase("") ){
-                       new  GenerateStripeAccount().execute();
+                      // new  GenerateStripeAccount().execute();
+                         String stripeurl = BaseUrl.STRIPE_OAUTH_URL_MEMBER + "&state="+ user_id +"&merchant_id=" + user_id;
+
+                         UploadDialog(stripeurl);
                      }
 
                      else {
@@ -691,7 +694,10 @@ public class WithdrawActivity extends AppCompatActivity {
                         new GetProfile().execute();
                     }
                     else if(status.equalsIgnoreCase("3")){
-                        UploadDialog(jsonObject.getJSONObject("result").getString("url"));
+                        String stripeurl = BaseUrl.STRIPE_OAUTH_URL_MEMBER + "&state="+ user_id +"&merchant_id=" + user_id;
+                        UploadDialog(stripeurl);
+
+                       // UploadDialog(jsonObject.getJSONObject("result").getString("url"));
                     }
 
                 } catch (JSONException e) {

@@ -17,7 +17,10 @@ public class BaseUrl {
     //public static String STRIPE_OAUTH_URL = "https://connect.stripe.com/express/oauth/authorize?redirect_uri=https://myngrewards.com/wp-content/plugins/webservice/stripe_payment_form.php&client_id=ca_DtpgZQXOAtlpfbfH9LrMkVts9Lt8n2qY&scope=read_write&always_prompt=false&stripe_landing=register&state=";
     public static String STRIPE_OAUTH_URL = "https://myngrewards.com/wp-content/plugins/webservice/stripe_payment_form.php?client_id=ca_DtpgZQXOAtlpfbfH9LrMkVts9Lt8n2qY&scope=read_write&always_prompt=false&stripe_landing=register&device_type=Android";
 
-    public static String STRIPE_OAUTH_URL_MEMBER = "https://connect.stripe.com/express/oauth/authorize?redirect_uri=https://myngrewards.com/wp-content/plugins/webservice/stripe_payment_form_member.php&client_id=ca_DtpgZQXOAtlpfbfH9LrMkVts9Lt8n2qY&scope=read_write&always_prompt=false&stripe_landing=register&state=";
+   // public static String STRIPE_OAUTH_URL_MEMBER = "https://connect.stripe.com/express/oauth/authorize?redirect_uri=https://myngrewards.com/wp-content/plugins/webservice/stripe_payment_form_member.php&client_id=ca_DtpgZQXOAtlpfbfH9LrMkVts9Lt8n2qY&scope=read_write&always_prompt=false&stripe_landing=register&state=";
+
+    public static String STRIPE_OAUTH_URL_MEMBER = "https://myngrewards.com/wp-content/plugins/webservice/stripe_payment_form_member.php?client_id=ca_DtpgZQXOAtlpfbfH9LrMkVts9Lt8n2qY&scope=read_write&always_prompt=false&stripe_landing=register&device_type=Android";
+
 
     public static String getMerchantMenuSettingList() {
         return baseurl.concat("merchant_menu_setting_list.php");

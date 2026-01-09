@@ -131,7 +131,10 @@ public class MemberStripeExpressAcountAct extends AppCompatActivity {
         stripewebview = findViewById(R.id.stripewebview);
         stripewebview.clearCache(true);
 
-        String stripeurl = BaseUrl.STRIPE_OAUTH_URL_MEMBER + user_id;
+
+        String stripeurl = BaseUrl.STRIPE_OAUTH_URL_MEMBER + "&state="+ user_id +"&merchant_id=" + user_id;
+
+       // String stripeurl = BaseUrl.STRIPE_OAUTH_URL_MEMBER + user_id;
         stripewebview.getSettings().setLoadsImagesAutomatically(true);
         stripewebview.getSettings().setJavaScriptEnabled(true);
         stripewebview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
