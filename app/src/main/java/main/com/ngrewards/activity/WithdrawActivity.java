@@ -51,6 +51,11 @@ import main.com.ngrewards.androidmigx.MainTabActivity;
 import main.com.ngrewards.beanclasses.MemberDetail;
 import main.com.ngrewards.constant.BaseUrl;
 import main.com.ngrewards.constant.MySession;
+import main.com.ngrewards.restapi.ApiClient;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WithdrawActivity extends AppCompatActivity {
     private ProgressBar progresbar;
@@ -111,13 +116,15 @@ public class WithdrawActivity extends AppCompatActivity {
                      if(jsonObject1.getString("member_stripe_account_id")==null || jsonObject1.getString("member_stripe_account_id").equalsIgnoreCase("")
                              && jsonObject1.getString("stripe_account_login_link")==null || jsonObject1.getString("stripe_account_login_link").equalsIgnoreCase("") ){
                       // new  GenerateStripeAccount().execute();
-                         String stripeurl = BaseUrl.STRIPE_OAUTH_URL_MEMBER + "&state="+ user_id +"&merchant_id=" + user_id;
+                       //  String stripeurl = BaseUrl.STRIPE_OAUTH_URL_MEMBER + "&state="+ user_id +"&merchant_id=" + user_id;
 
-                         UploadDialog(stripeurl);
+                        // UploadDialog(stripeurl);
+                         checkMemberStripeAccountUrlApi();
                      }
 
                      else {
-                         startActivity(new Intent(WithdrawActivity.this, StripeExpressAcountAct.class));
+                         startActivity(new Intent(WithdrawActivity.this, StripeExpressAcountAct.class)
+                                 .putExtra("authLink",jsonObject1.getString("stripe_account_login_link")));
                      }
                  }             }catch (Exception e){
 
@@ -322,7 +329,7 @@ public class WithdrawActivity extends AppCompatActivity {
                         if(jsonObject1.getString("member_stripe_account_id")==null || jsonObject1.getString("member_stripe_account_id").equalsIgnoreCase("")
                                 && jsonObject1.getString("stripe_account_login_link")==null || jsonObject1.getString("stripe_account_login_link").equalsIgnoreCase("")  ) {
                             tvAccountType.setText(getString(R.string.add_stripe_account));
-                            if (jsonObject1.getString("stripe_account_login_link").equalsIgnoreCase("")) new CheckStripeAccount().execute();
+                            if (jsonObject1.getString("stripe_account_login_link").equalsIgnoreCase(""))     new CheckStripeAccount().execute();
                         }
                         else {
                             tvAccountType.setText(getString(R.string.see_your_stripe_dashboard));
@@ -525,7 +532,8 @@ public class WithdrawActivity extends AppCompatActivity {
                     String status = jsonObject.getString("status");
 
                     if (status.equalsIgnoreCase("5")) {
-                        UploadDialog(jsonObject.getString("result"));
+                       // UploadDialog(jsonObject.getString("result"));
+                        checkMemberStripeAccountUrlApi();
                     }
                     else if (status.equalsIgnoreCase("1")){
                         new GetProfile().execute();
@@ -694,8 +702,9 @@ public class WithdrawActivity extends AppCompatActivity {
                         new GetProfile().execute();
                     }
                     else if(status.equalsIgnoreCase("3")){
-                        String stripeurl = BaseUrl.STRIPE_OAUTH_URL_MEMBER + "&state="+ user_id +"&merchant_id=" + user_id;
-                        UploadDialog(stripeurl);
+                       // String stripeurl = BaseUrl.STRIPE_OAUTH_URL_MEMBER + "&state="+ user_id +"&merchant_id=" + user_id;
+                       // UploadDialog(stripeurl);
+                        checkMemberStripeAccountUrlApi();
 
                        // UploadDialog(jsonObject.getJSONObject("result").getString("url"));
                     }
@@ -718,6 +727,58 @@ public class WithdrawActivity extends AppCompatActivity {
             return true;
         }
     }
+
+
+
+
+    private void checkMemberStripeAccountUrlApi() {
+        Call<ResponseBody> call = ApiClient.getApiInterface().getCheckMemberUrlApi(user_id);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Log.e("TAG", "onResponse:  responseresponseresponse " + response);
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseData);
+                        Log.e("jsonObjectresult", String.valueOf(jsonObject));
+
+                        String status = jsonObject.getString("status");
+
+                        if (status.equalsIgnoreCase("1")) {
+                            JSONObject resultObj = jsonObject.getJSONObject("result");
+
+                            String authUrl = resultObj.getString("authorization_url");
+
+                            UploadDialog(authUrl);
+
+
+
+
+
+
+                        }
+
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                Log.e("TAG", t.toString());
+            }
+        });
+    }
+
+
+
+
+
+
 
 
 

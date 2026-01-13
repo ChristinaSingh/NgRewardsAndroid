@@ -40,14 +40,14 @@ public class StripeExpressAcountAct extends AppCompatActivity {
     private RelativeLayout backlay;
     private WebView stripewebview;
     private MySession mySession;
-    private String user_id = "";
+    private String user_id = "",authLink="";
     private ProgressBar progressabar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stripe_express_acount);
-
+        if(getIntent()!=null) authLink = getIntent().getStringExtra("authLink");
         mySession = new MySession(this);
         String user_log_data = mySession.getKeyAlldata();
         if (user_log_data == null) {
@@ -158,8 +158,8 @@ public class StripeExpressAcountAct extends AppCompatActivity {
             stripeurl = BaseUrl.STRIPE_OAUTH_URL + user_id;
         }*/
 
-        stripeurl = BaseUrl.STRIPE_OAUTH_URL + "&state="+ user_id +"&merchant_id=" + user_id;
-
+        //stripeurl = BaseUrl.STRIPE_OAUTH_URL + "&state="+ user_id +"&merchant_id=" + user_id;
+        stripeurl = authLink;
 
        /* stripewebview.getSettings().setJavaScriptEnabled(true);
         stripewebview.getSettings().setPluginState(WebSettings.PluginState.ON);
@@ -177,16 +177,18 @@ public class StripeExpressAcountAct extends AppCompatActivity {
         stripewebview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         stripewebview.setWebViewClient(new HelloWebViewClient());
         stripewebview.getSettings().setDomStorageEnabled(true);
-      //  stripewebview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+       // stripewebview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         stripewebview.getSettings().setBlockNetworkLoads (false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             stripewebview.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-            stripewebview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+            //stripewebview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+            stripewebview.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
 
         }
         else {
-            stripewebview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ONLY);
+           // stripewebview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ONLY);
+            stripewebview.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
 
         }
 

@@ -136,11 +136,13 @@ public class CommisionActivity extends AppCompatActivity {
         addstripeact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (progressbar.getVisibility() != View.VISIBLE) {
+               /* if (progressbar.getVisibility() != View.VISIBLE) {
                     Intent i = new Intent(CommisionActivity.this, MemberStripeExpressAcountAct.class);
                     startActivity(i);
-                }
+                }*/
                 // Intent i = new Intent(MerSettingActivity.this, AddPaypalEmail.class);
+
+                checkMemberStripeAccountUrlApi();
 
             }
         });
@@ -507,5 +509,56 @@ public class CommisionActivity extends AppCompatActivity {
 
         }
     }
+
+
+    private void checkMemberStripeAccountUrlApi() {
+        Call<ResponseBody> call = ApiClient.getApiInterface().getCheckMemberUrlApi(user_id);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Log.e("TAG", "onResponse:  responseresponseresponse " + response);
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseData);
+                        Log.e("jsonObjectresult", String.valueOf(jsonObject));
+
+                        String status = jsonObject.getString("status");
+
+                        if (status.equalsIgnoreCase("1")) {
+                            JSONObject resultObj = jsonObject.getJSONObject("result");
+
+                            String authUrl = resultObj.getString("authorization_url");
+
+                            if(stripe_account_id==null || stripe_account_id.equalsIgnoreCase("")) {
+                                if (progressbar.getVisibility() != View.VISIBLE) {
+                                    Intent i = new Intent(CommisionActivity.this, MemberStripeExpressAcountAct.class)
+                                            .putExtra("authLink",authUrl);
+                                    startActivity(i);
+                                }
+                            }
+
+
+
+                        }
+
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                t.printStackTrace();
+                Log.e("TAG", t.toString());
+            }
+        });
+    }
+
+
+
+
 
 }

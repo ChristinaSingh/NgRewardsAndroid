@@ -386,5 +386,9 @@ public interface ApiInterface {
     @GET("merchant_profile.php?")
     Call<ResponseBody> getMerchantProfileApi(@Query("merchant_id") String merchantId);
 
+    @GET("get-member-login-url.php?")
+    Call<ResponseBody> getCheckMemberUrlApi(@Query("member_id") String merchantId);
+
+
 
 }
