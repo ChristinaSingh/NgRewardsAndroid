@@ -987,6 +987,8 @@ public class ManualActivity extends AppCompatActivity {
                         } else if (type.equalsIgnoreCase("plan_subscribe")) {
                             employee_name = edt_name.getText().toString().trim();
                             card_amount_tv1 = card_amount_tv.getText().toString().trim();
+                            due_amount_str = total_amt.getText().toString();
+                            apply_ngcassh = ngcashavb.getText().toString();
 
                             dialogAutoPay(employee_name,card_amount_tv1);
 
@@ -1064,6 +1066,7 @@ public class ManualActivity extends AppCompatActivity {
                                     // payBiilMerchant(user_id, merchant_id, merchant_number, due_amount_str, tip_amt_str, apply_ngcassh, card_id, card_number, card_brand, customer_id);
                                 } else if (type.equalsIgnoreCase("plan_subscribe")) {
                                     apply_ngcassh = ngcashavb.getText().toString();
+                                    due_amount_str = total_amt.getText().toString();
 
                                     //  Toast.makeText(getApplicationContext(),"dssuccess!!!!",Toast.LENGTH_LONG).show();
 

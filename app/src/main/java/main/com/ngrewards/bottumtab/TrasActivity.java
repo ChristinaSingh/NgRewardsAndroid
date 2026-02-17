@@ -545,8 +545,36 @@ public class TrasActivity extends Fragment {
                 holder.merchant_member_name.setText(orderBeanArrayList11.get(position).getPlanDisplayName());
                 holder.total_order_price.setText(mySession.getValueOf(MySession.CurrencySign) + orderBeanArrayList11.get(position).getAmount());
                 holder.order_id.setText("MN"+orderBeanArrayList11.get(position).getId());
-                holder.paidamount_bycard.setText(mySession.getValueOf(MySession.CurrencySign) + orderBeanArrayList11.get(position).getAmount());
-                holder.ngcash.setText(mySession.getValueOf(MySession.CurrencySign) + "0.00");
+             //   holder.paidamount_bycard.setText(mySession.getValueOf(MySession.CurrencySign) + orderBeanArrayList11.get(position).getAmount());
+              //  holder.ngcash.setText(mySession.getValueOf(MySession.CurrencySign) + "0.00");
+
+
+
+                if (orderBeanArrayList11.get(position).getStripe_amount() == null || orderBeanArrayList11.get(position).getStripe_amount().equalsIgnoreCase("0") || orderBeanArrayList11.get(position).getStripe_amount().equalsIgnoreCase("")) {
+                    //holder.ngcash.setText(mySession.getValueOf(MySession.CurrencySign) + "0.00");
+                    holder.paidamount_bycard.setText(mySession.getValueOf(MySession.CurrencySign) + "0.00");
+
+                } else {
+                    holder.paidamount_bycard.setText(mySession.getValueOf(MySession.CurrencySign) + orderBeanArrayList11.get(position).getStripe_amount());
+
+                }
+
+
+
+
+
+                if (orderBeanArrayList11.get(position).getNgCash22() == null || orderBeanArrayList11.get(position).getNgCash22().equalsIgnoreCase("0") || orderBeanArrayList11.get(position).getNgCash22().equalsIgnoreCase("")) {
+                    holder.ngcash.setText(mySession.getValueOf(MySession.CurrencySign) + "0.00");
+                } else {
+                    Double amount = Double.parseDouble(orderBeanArrayList11.get(position).getNgCash22());
+
+                    String formattedAmount = String.format("%05.2f", amount);
+
+                    holder.ngcash.setText(mySession.getValueOf(MySession.CurrencySign) + formattedAmount);
+                }
+
+
+
                 holder.order_category.setText(getString(R.string.subscription));
 
                 //holder.order_category.setText("" + orderBeanArrayList.get(position).getType());

@@ -292,6 +292,34 @@ public class OrderBean {
     @Expose
     private String planDisplayName="";
 
+
+    @SerializedName("stripe_amount")
+    @Expose
+    private String stripe_amount="";
+
+
+
+    @SerializedName("ng_cash")
+    @Expose
+    private String ngCash22;
+
+
+    public String getNgCash22() {
+        return ngCash22;
+    }
+
+    public void setNgCash22(String ngCash22) {
+        this.ngCash22 = ngCash22;
+    }
+
+    public String getStripe_amount() {
+        return stripe_amount;
+    }
+
+    public void setStripe_amount(String stripe_amount) {
+        this.stripe_amount = stripe_amount;
+    }
+
     public String getPlanDisplayName() {
         return planDisplayName;
     }
