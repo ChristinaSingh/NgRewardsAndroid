@@ -100,7 +100,7 @@ public class StartYourListing extends AppCompatActivity {
     private String split_payments = "";
     private EditText shipping_price_et, stock_et, tital_name_et, description_et, price_et, shipping_et, sizes_et, colors_et,edShippingQuantity,edShippingPercentage,sku_et;
     private String user_id = "", stripe_account_id = "", time_zone = "", shipping_price_str = "", stock_str = "", tital_name_str = "", description_str = "", price_str = "", sizes_str = "", colors_str = "", shipping_str = "",shipping_quantity_str = "",shipping_percentage_str = "",sku_str="",subCategoryId="";
-    private TextView show_pricing_type, list_item_tv,tvSubCategory;
+    private TextView show_pricing_type, list_item_tv,tvSubCategory,tvTitle,tvCategory,tvDescription,tvSku,tvStockQuantity,tvSize,tvColour,tvShipping,tvShippingPrice,tvShippingQuantity,tvShippingPercentage,tvListItemTap;
     ArrayList<CategoryBeanList.SubCategories> subCategoryBeanListArrayList;
     SubCategoryAdapter subCategoryAdapter;
     RelativeLayout rlSubCategory;
@@ -216,59 +216,105 @@ public class StartYourListing extends AppCompatActivity {
                     shipping_percentage_str = edShippingPercentage.getText().toString();
                     sku_str = sku_et.getText().toString();
 
+                    if(category_id.equalsIgnoreCase("1016")){
 
-                    if (tital_name_str == null || tital_name_str.equalsIgnoreCase("")) {
-                        Toast.makeText(StartYourListing.this, getResources().getString(R.string.entertite), Toast.LENGTH_LONG).show();
-                    } else if (category_id == null || category_id.equalsIgnoreCase("")) {
-                        Toast.makeText(StartYourListing.this, getResources().getString(R.string.selectcat), Toast.LENGTH_LONG).show();
-                    } else if (description_str == null || description_str.equalsIgnoreCase("")) {
-                        Toast.makeText(StartYourListing.this, getResources().getString(R.string.enterdesc), Toast.LENGTH_LONG).show();
+                        if (tital_name_str == null || tital_name_str.equalsIgnoreCase("")) {
+                            Toast.makeText(StartYourListing.this, getResources().getString(R.string.entertite), Toast.LENGTH_LONG).show();
+                        } else if (category_id == null || category_id.equalsIgnoreCase("")) {
+                            Toast.makeText(StartYourListing.this, getResources().getString(R.string.selectcat), Toast.LENGTH_LONG).show();
+                        } else if (description_str == null || description_str.equalsIgnoreCase("")) {
+                            Toast.makeText(StartYourListing.this, getResources().getString(R.string.enterdesc), Toast.LENGTH_LONG).show();
 
-                    } else if (stock_str == null || stock_str.equalsIgnoreCase("")) {
-                        Toast.makeText(StartYourListing.this, getResources().getString(R.string.enteritemstockquantity), Toast.LENGTH_LONG).show();
+                        }
+                        else if (price_str == null || price_str.equalsIgnoreCase("")) {
+                            Toast.makeText(StartYourListing.this, getResources().getString(R.string.enterprice), Toast.LENGTH_LONG).show();
 
-                    } else if (price_str == null || price_str.equalsIgnoreCase("")) {
-                        Toast.makeText(StartYourListing.this, getResources().getString(R.string.enterprice), Toast.LENGTH_LONG).show();
-
-                    } else if (shipping_str == null || shipping_str.equalsIgnoreCase("")) {
-                        Toast.makeText(StartYourListing.this, getResources().getString(R.string.entershiping), Toast.LENGTH_LONG).show();
-
-                    }
-                    else if (shipping_quantity_str == null || shipping_quantity_str.equalsIgnoreCase("")) {
-                        Toast.makeText(StartYourListing.this, getResources().getString(R.string.enter_shiping_quantity), Toast.LENGTH_LONG).show();
-
-                    }
-
-                    else if (shipping_percentage_str == null || shipping_percentage_str.equalsIgnoreCase("")) {
-                        Toast.makeText(StartYourListing.this, getResources().getString(R.string.enter_shiping_percentage), Toast.LENGTH_LONG).show();
-
-                    }
-
-                    else if (Integer.parseInt(shipping_percentage_str)>99) {
-                        Toast.makeText(StartYourListing.this, getResources().getString(R.string.percentage_enter_only_two_digit), Toast.LENGTH_LONG).show();
-
-                    }
-
-
-
-
-                    else if (ImagePathArrayList == null || ImagePathArrayList.isEmpty() || ImagePathArrayList.size() == 0) {
-                        Toast.makeText(StartYourListing.this, getResources().getString(R.string.selectphoto), Toast.LENGTH_LONG).show();
-
-                    } else {
-                        Log.e("ImagePathArrayList size", " > " + ImagePathArrayList.size());
-                        filearray = new File[ImagePathArrayList.size()];
-                        Log.e("filearray size", " > " + filearray.length);
-
-                        for (int i = 0; i < ImagePathArrayList.size(); i++) {
-                            Log.e("Image", " > " + ImagePathArrayList.get(i));
-
-                            File ImageFile = new File(ImagePathArrayList.get(i));
-                            filearray[i] = ImageFile;
                         }
 
-                        new AddProductsAsc().execute();
+                        else {
+                            Log.e("ImagePathArrayList size", " > " + ImagePathArrayList.size());
+                            filearray = new File[ImagePathArrayList.size()];
+                            Log.e("filearray size", " > " + filearray.length);
+
+                            for (int i = 0; i < ImagePathArrayList.size(); i++) {
+                                Log.e("Image", " > " + ImagePathArrayList.get(i));
+
+                                File ImageFile = new File(ImagePathArrayList.get(i));
+                                filearray[i] = ImageFile;
+                            }
+
+                            new AddProductsAsc().execute();
+                        }
+
+
+
+
                     }
+
+                    else {
+
+
+                        if (tital_name_str == null || tital_name_str.equalsIgnoreCase("")) {
+                            Toast.makeText(StartYourListing.this, getResources().getString(R.string.entertite), Toast.LENGTH_LONG).show();
+                        } else if (category_id == null || category_id.equalsIgnoreCase("")) {
+                            Toast.makeText(StartYourListing.this, getResources().getString(R.string.selectcat), Toast.LENGTH_LONG).show();
+                        } else if (description_str == null || description_str.equalsIgnoreCase("")) {
+                            Toast.makeText(StartYourListing.this, getResources().getString(R.string.enterdesc), Toast.LENGTH_LONG).show();
+
+                        } else if (stock_str == null || stock_str.equalsIgnoreCase("")) {
+                            Toast.makeText(StartYourListing.this, getResources().getString(R.string.enteritemstockquantity), Toast.LENGTH_LONG).show();
+
+                        } else if (price_str == null || price_str.equalsIgnoreCase("")) {
+                            Toast.makeText(StartYourListing.this, getResources().getString(R.string.enterprice), Toast.LENGTH_LONG).show();
+
+                        } else if (shipping_str == null || shipping_str.equalsIgnoreCase("")) {
+                            Toast.makeText(StartYourListing.this, getResources().getString(R.string.entershiping), Toast.LENGTH_LONG).show();
+
+                        }
+                        else if (shipping_quantity_str == null || shipping_quantity_str.equalsIgnoreCase("")) {
+                            Toast.makeText(StartYourListing.this, getResources().getString(R.string.enter_shiping_quantity), Toast.LENGTH_LONG).show();
+
+                        }
+
+                        else if (shipping_percentage_str == null || shipping_percentage_str.equalsIgnoreCase("")) {
+                            Toast.makeText(StartYourListing.this, getResources().getString(R.string.enter_shiping_percentage), Toast.LENGTH_LONG).show();
+
+                        }
+
+                        else if (Integer.parseInt(shipping_percentage_str)>99) {
+                            Toast.makeText(StartYourListing.this, getResources().getString(R.string.percentage_enter_only_two_digit), Toast.LENGTH_LONG).show();
+
+                        }
+
+
+
+
+                        else if (ImagePathArrayList == null || ImagePathArrayList.isEmpty() || ImagePathArrayList.size() == 0) {
+                            Toast.makeText(StartYourListing.this, getResources().getString(R.string.selectphoto), Toast.LENGTH_LONG).show();
+
+                        } else {
+                            Log.e("ImagePathArrayList size", " > " + ImagePathArrayList.size());
+                            filearray = new File[ImagePathArrayList.size()];
+                            Log.e("filearray size", " > " + filearray.length);
+
+                            for (int i = 0; i < ImagePathArrayList.size(); i++) {
+                                Log.e("Image", " > " + ImagePathArrayList.get(i));
+
+                                File ImageFile = new File(ImagePathArrayList.get(i));
+                                filearray[i] = ImageFile;
+                            }
+
+                            new AddProductsAsc().execute();
+                        }
+
+
+
+
+                    }
+
+
+
+
                 }
 
 
@@ -303,6 +349,23 @@ public class StartYourListing extends AppCompatActivity {
         sku_et  = findViewById(R.id.sku_et);
 
 
+        tvTitle = findViewById(R.id.tvTitle);
+        tvCategory = findViewById(R.id.tvCategory);
+        tvDescription = findViewById(R.id.tvDescription);
+        tvSku = findViewById(R.id.tvSku);
+        tvStockQuantity = findViewById(R.id.tvStockQuantity);
+        tvSize = findViewById(R.id.tvSize);
+        tvColour = findViewById(R.id.tvColour);
+        tvShipping = findViewById(R.id.tvShipping);
+        tvShippingPrice = findViewById(R.id.tvShippingPrice);
+        tvShippingQuantity = findViewById(R.id.tvShippingQuantity);
+        tvShippingPercentage = findViewById(R.id.tvShippingPercentage);
+        tvListItemTap = findViewById(R.id.tvListItemTap);
+
+
+
+
+
         show_pricing_type.setText(getString(R.string.pricing) + " (" + mySession.getValueOf(MySession.CurrencyCode) + ")");
         LinearLayoutManager horizontalLayoutManagaer
                 = new LinearLayoutManager(StartYourListing.this, LinearLayoutManager.HORIZONTAL, false);
@@ -320,21 +383,106 @@ public class StartYourListing extends AppCompatActivity {
                     } else {
                         category_id = categoryBeanListArrayList.get(position).getCategoryId();
 
-                        if (!categoryBeanListArrayList.get(position).getSubCategories().isEmpty()) {
-                            subCategoryBeanListArrayList.clear();
-                            subCategoryBeanListArrayList.addAll(categoryBeanListArrayList.get(position).getSubCategories());
-                            subCategoryAdapter = new SubCategoryAdapter(StartYourListing.this, subCategoryBeanListArrayList);
-                            sub_category_spinner.setAdapter(subCategoryAdapter);
-                            tvSubCategory.setVisibility(View.VISIBLE);
-                            rlSubCategory.setVisibility(View.VISIBLE);
+                        if(category_id.equalsIgnoreCase("1016")){
+                               tvTitle.setText(getString(R.string.gift_certificate_title));
+                               tvCategory.setText(getString(R.string.category));
+                               tvDescription.setText(getString(R.string.gift_certificate_description));
+                               description_et.setHint(getString(R.string.plsprovidedes_gift));
+                               show_pricing_type.setText(getString(R.string.gift_certificate_price));
 
-                        } else {
-                            subCategoryId ="";
-                            tvSubCategory.setVisibility(View.GONE);
-                            rlSubCategory.setVisibility(View.GONE);
+
+                               tvSubCategory.setVisibility(View.GONE);
+                               rlSubCategory.setVisibility(View.GONE);
+                               tvSku.setVisibility(View.GONE);
+                               sku_et.setVisibility(View.GONE);
+                               tvStockQuantity.setVisibility(View.GONE);
+                               stock_et.setVisibility(View.GONE);
+                               tvSize.setVisibility(View.GONE);
+                               sizes_et.setVisibility(View.GONE);
+                               tvColour.setVisibility(View.GONE);
+                               colors_et.setVisibility(View.GONE);
+                               tvShipping.setVisibility(View.GONE);
+                               shipping_et.setVisibility(View.GONE);
+                               tvShippingPrice.setVisibility(View.GONE);
+                               shipping_price_et.setVisibility(View.GONE);
+                               tvShippingQuantity.setVisibility(View.GONE);
+                               edShippingQuantity.setVisibility(View.GONE);
+                               tvShippingPercentage.setVisibility(View.GONE);
+                               edShippingPercentage.setVisibility(View.GONE);
+                               split_lay.setVisibility(View.GONE);
+                               tvListItemTap.setVisibility(View.GONE);
+
+                               if (!categoryBeanListArrayList.get(position).getSubCategories().isEmpty()) {
+                                   subCategoryBeanListArrayList.clear();
+                                   tvSubCategory.setVisibility(View.VISIBLE);
+                                   rlSubCategory.setVisibility(View.VISIBLE);                                   subCategoryBeanListArrayList.addAll(categoryBeanListArrayList.get(position).getSubCategories());
+                                   subCategoryAdapter = new SubCategoryAdapter(StartYourListing.this, subCategoryBeanListArrayList);
+                                   sub_category_spinner.setAdapter(subCategoryAdapter);
+
+                               }
+
+                               else {
+                                   subCategoryId ="";
+                                   tvSubCategory.setVisibility(View.GONE);
+                                   rlSubCategory.setVisibility(View.GONE);
+                               }
+                           }
+
+                           else {
+                               tvTitle.setText(getString(R.string.title));
+                               tvCategory.setText(getString(R.string.category));
+                               tvDescription.setText(getString(R.string.description));
+                               description_et.setHint(getString(R.string.plsprovidedes));
+                               show_pricing_type.setText(getString(R.string.pricing));
+
+
+
+
+
+                               tvSubCategory.setVisibility(View.VISIBLE);
+                               rlSubCategory.setVisibility(View.VISIBLE);
+                               tvSku.setVisibility(View.VISIBLE);
+                               sku_et.setVisibility(View.VISIBLE);
+                               tvStockQuantity.setVisibility(View.VISIBLE);
+                               stock_et.setVisibility(View.VISIBLE);
+                               tvSize.setVisibility(View.VISIBLE);
+                               sizes_et.setVisibility(View.VISIBLE);
+                               tvColour.setVisibility(View.VISIBLE);
+                               colors_et.setVisibility(View.VISIBLE);
+                               tvShipping.setVisibility(View.VISIBLE);
+                               shipping_et.setVisibility(View.VISIBLE);
+                               tvShippingPrice.setVisibility(View.VISIBLE);
+                               shipping_price_et.setVisibility(View.VISIBLE);
+                               tvShippingQuantity.setVisibility(View.VISIBLE);
+                               edShippingQuantity.setVisibility(View.VISIBLE);
+                               tvShippingPercentage.setVisibility(View.VISIBLE);
+                               edShippingPercentage.setVisibility(View.VISIBLE);
+                               split_lay.setVisibility(View.VISIBLE);
+                               tvListItemTap.setVisibility(View.VISIBLE);
+
+                               if (!categoryBeanListArrayList.get(position).getSubCategories().isEmpty()) {
+                                   subCategoryBeanListArrayList.clear();
+                                   tvSubCategory.setVisibility(View.VISIBLE);
+                                   rlSubCategory.setVisibility(View.VISIBLE);                                   subCategoryBeanListArrayList.addAll(categoryBeanListArrayList.get(position).getSubCategories());
+                                   subCategoryAdapter = new SubCategoryAdapter(StartYourListing.this, subCategoryBeanListArrayList);
+                                   sub_category_spinner.setAdapter(subCategoryAdapter);
+
+                               }
+
+                               else {
+                                   subCategoryId ="";
+                                   tvSubCategory.setVisibility(View.GONE);
+                                   rlSubCategory.setVisibility(View.GONE);
+                               }
+
+
+                           }
+
+
+
                         }
 
-                    }
+
 
                 }
 
@@ -1011,6 +1159,7 @@ public class StartYourListing extends AppCompatActivity {
             }
         }
 
+
         @Override
         protected String doInBackground(String... strings) {
             String charset = "UTF-8";
@@ -1086,7 +1235,9 @@ public class StartYourListing extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     if (jsonObject.getString("status").equalsIgnoreCase("1")) {
-                        Toast.makeText(StartYourListing.this, getResources().getString(R.string.productaddedsucc), Toast.LENGTH_LONG).show();
+                        if(category_id.equalsIgnoreCase("1016"))
+                            Toast.makeText(StartYourListing.this, getResources().getString(R.string.your_gift_certificate_added_successfully), Toast.LENGTH_LONG).show();
+                        else  Toast.makeText(StartYourListing.this, getResources().getString(R.string.productaddedsucc), Toast.LENGTH_LONG).show();
                         finish();
                     }
                 } catch (JSONException e) {

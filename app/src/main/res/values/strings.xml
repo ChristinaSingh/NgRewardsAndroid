@@ -797,6 +797,11 @@
     <string name="sub_category">Sub-Category</string>
     <string name="applies_to">Applies to:\nMessaging services, data management, rewards distribution, platform services, customer service, and back-office maintenance.</string>
     <string name="select_sub_category">Select Sub-Category</string>
+    <string name="gift_certificate_title">Gift Certificate Title</string>
+    <string name="gift_certificate_description">Gift Certificate Description</string>
+    <string name="plsprovidedes_gift">Please provide a description of\nyour gift.</string>
+    <string name="gift_certificate_price">Gift Certificate Price(USD)</string>
+    <string name="your_gift_certificate_added_successfully">Your gift certificate added successfully</string>
 
 
 </resources>
