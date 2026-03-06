@@ -539,13 +539,30 @@ public class FragItemDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 click_sts = false;
-                if (stockcount != null && !stockcount.equalsIgnoreCase("")) {
-                    if (sumcount != 0) {
-                        if (productDetailArrayList != null && !productDetailArrayList.isEmpty()) {
-                            if (productDetailArrayList.get(0).getCart_status() != null && productDetailArrayList.get(0).getCart_status().equalsIgnoreCase("In Cart")) {
-                                Intent i = new Intent(FragItemDetails.this, MyCartDetail.class);
-                                startActivity(i);
+
+                if (PreferenceConnector.readString(FragItemDetails.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
+                    new AddTocartAsc().execute();
+                } else {
+
+                    if (stockcount != null && !stockcount.equalsIgnoreCase("")) {
+                        if (sumcount != 0) {
+                            if (productDetailArrayList != null && !productDetailArrayList.isEmpty()) {
+                                if (productDetailArrayList.get(0).getCart_status() != null && productDetailArrayList.get(0).getCart_status().equalsIgnoreCase("In Cart")) {
+                                    Intent i = new Intent(FragItemDetails.this, MyCartDetail.class);
+                                    startActivity(i);
+                                } else {
+                                    if (size_sts && (size_select_str == null || size_select_str.equalsIgnoreCase(""))) {
+                                        Toast.makeText(FragItemDetails.this, getResources().getString(R.string.pleaseselctsize), Toast.LENGTH_LONG).show();
+                                    } else if (color_sts && (color_select_str == null || color_select_str.equalsIgnoreCase(""))) {
+                                        Toast.makeText(FragItemDetails.this, getResources().getString(R.string.pleaseselctcolor), Toast.LENGTH_LONG).show();
+
+                                    } else {
+                                        new AddTocartAsc().execute();
+                                    }
+
+                                }
                             } else {
+
                                 if (size_sts && (size_select_str == null || size_select_str.equalsIgnoreCase(""))) {
                                     Toast.makeText(FragItemDetails.this, getResources().getString(R.string.pleaseselctsize), Toast.LENGTH_LONG).show();
                                 } else if (color_sts && (color_select_str == null || color_select_str.equalsIgnoreCase(""))) {
@@ -555,28 +572,17 @@ public class FragItemDetails extends AppCompatActivity {
                                     new AddTocartAsc().execute();
                                 }
 
+                                //  new AddTocartAsc().execute();
                             }
-                        } else {
-
-                            if (size_sts && (size_select_str == null || size_select_str.equalsIgnoreCase(""))) {
-                                Toast.makeText(FragItemDetails.this, getResources().getString(R.string.pleaseselctsize), Toast.LENGTH_LONG).show();
-                            } else if (color_sts && (color_select_str == null || color_select_str.equalsIgnoreCase(""))) {
-                                Toast.makeText(FragItemDetails.this, getResources().getString(R.string.pleaseselctcolor), Toast.LENGTH_LONG).show();
-
-                            } else {
-                                new AddTocartAsc().execute();
-                            }
-
                             //  new AddTocartAsc().execute();
+
+                        } else {
+                            Toast.makeText(FragItemDetails.this, getResources().getString(R.string.selproductquant), Toast.LENGTH_LONG).show();
+
                         }
-                        //  new AddTocartAsc().execute();
-
                     } else {
-                        Toast.makeText(FragItemDetails.this, getResources().getString(R.string.selproductquant), Toast.LENGTH_LONG).show();
-
+                        Toast.makeText(FragItemDetails.this, getResources().getString(R.string.outstk), Toast.LENGTH_LONG).show();
                     }
-                } else {
-                    Toast.makeText(FragItemDetails.this, getResources().getString(R.string.outstk), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -584,12 +590,29 @@ public class FragItemDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 click_sts = true;
-                if (stockcount != null && !stockcount.equalsIgnoreCase("")) {
-                    if (sumcount != 0) {
-                        if (productDetailArrayList != null && !productDetailArrayList.isEmpty()) {
-                            if (productDetailArrayList.get(0).getCart_status() != null && productDetailArrayList.get(0).getCart_status().equalsIgnoreCase("In Cart")) {
-                                Intent i = new Intent(FragItemDetails.this, MyCartDetail.class);
-                                startActivity(i);
+
+                if (PreferenceConnector.readString(FragItemDetails.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
+                    new AddTocartAsc().execute();
+                } else {
+
+
+                    if (stockcount != null && !stockcount.equalsIgnoreCase("")) {
+                        if (sumcount != 0) {
+                            if (productDetailArrayList != null && !productDetailArrayList.isEmpty()) {
+                                if (productDetailArrayList.get(0).getCart_status() != null && productDetailArrayList.get(0).getCart_status().equalsIgnoreCase("In Cart")) {
+                                    Intent i = new Intent(FragItemDetails.this, MyCartDetail.class);
+                                    startActivity(i);
+                                } else {
+                                    if (size_sts && (size_select_str == null || size_select_str.equalsIgnoreCase(""))) {
+                                        Toast.makeText(FragItemDetails.this, getResources().getString(R.string.pleaseselctsize), Toast.LENGTH_LONG).show();
+                                    } else if (color_sts && (color_select_str == null || color_select_str.equalsIgnoreCase(""))) {
+                                        Toast.makeText(FragItemDetails.this, getResources().getString(R.string.pleaseselctcolor), Toast.LENGTH_LONG).show();
+
+                                    } else {
+                                        new AddTocartAsc().execute();
+                                    }
+                                    // new AddTocartAsc().execute();
+                                }
                             } else {
                                 if (size_sts && (size_select_str == null || size_select_str.equalsIgnoreCase(""))) {
                                     Toast.makeText(FragItemDetails.this, getResources().getString(R.string.pleaseselctsize), Toast.LENGTH_LONG).show();
@@ -599,31 +622,20 @@ public class FragItemDetails extends AppCompatActivity {
                                 } else {
                                     new AddTocartAsc().execute();
                                 }
-                                // new AddTocartAsc().execute();
+
+                                //new AddTocartAsc().execute();
                             }
+                            //  new AddTocartAsc().execute();
+
                         } else {
-                            if (size_sts && (size_select_str == null || size_select_str.equalsIgnoreCase(""))) {
-                                Toast.makeText(FragItemDetails.this, getResources().getString(R.string.pleaseselctsize), Toast.LENGTH_LONG).show();
-                            } else if (color_sts && (color_select_str == null || color_select_str.equalsIgnoreCase(""))) {
-                                Toast.makeText(FragItemDetails.this, getResources().getString(R.string.pleaseselctcolor), Toast.LENGTH_LONG).show();
+                            Toast.makeText(FragItemDetails.this, getResources().getString(R.string.selproductquant), Toast.LENGTH_LONG).show();
 
-                            } else {
-                                new AddTocartAsc().execute();
-                            }
-
-                            //new AddTocartAsc().execute();
                         }
-                        //  new AddTocartAsc().execute();
-
                     } else {
-                        Toast.makeText(FragItemDetails.this, getResources().getString(R.string.selproductquant), Toast.LENGTH_LONG).show();
+                        Toast.makeText(FragItemDetails.this, getResources().getString(R.string.outstk), Toast.LENGTH_LONG).show();
 
                     }
-                } else {
-                    Toast.makeText(FragItemDetails.this, getResources().getString(R.string.outstk), Toast.LENGTH_LONG).show();
-
                 }
-
             }
         });
         backlay.setOnClickListener(new View.OnClickListener() {

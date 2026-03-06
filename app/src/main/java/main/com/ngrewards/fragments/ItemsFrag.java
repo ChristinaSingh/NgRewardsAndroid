@@ -44,6 +44,8 @@ import main.com.ngrewards.R;
 import main.com.ngrewards.Utils.LocaleHelper;
 import main.com.ngrewards.Utils.Tools;
 import main.com.ngrewards.activity.FragItemDetails;
+import main.com.ngrewards.activity.PreferenceConnector;
+import main.com.ngrewards.androidmigx.MainTabActivity;
 import main.com.ngrewards.beanclasses.CategoryBean;
 import main.com.ngrewards.beanclasses.CategoryBeanList;
 import main.com.ngrewards.beanclasses.MerchantItem;
@@ -439,12 +441,14 @@ public class ItemsFrag extends Fragment {
                 Log.e("Filter Cat Id", " >" + fill_category_id);
                 Log.e("price_type_str", " >" + price_type_str);
                 if (fill_category_id != null && !fill_category_id.equalsIgnoreCase("") && !fill_category_id.equalsIgnoreCase("0")) {
+
+                    PreferenceConnector.writeString(requireActivity(), PreferenceConnector.Category_id, fill_category_id);
                     getSoldItems();
                 } else if (price_type_str != null && !price_type_str.equalsIgnoreCase("") && !price_type_str.equalsIgnoreCase("0")) {
-
+                    PreferenceConnector.writeString(requireActivity(), PreferenceConnector.Category_id, fill_category_id);
                     getSoldItems();
                 } else if (rating_filter_str != null && !rating_filter_str.equalsIgnoreCase("") && !rating_filter_str.equalsIgnoreCase("0")) {
-
+                    PreferenceConnector.writeString(requireActivity(), PreferenceConnector.Category_id, fill_category_id);
                     getSoldItems();
                 }
 
@@ -459,18 +463,20 @@ public class ItemsFrag extends Fragment {
                     fill_category_id = "";
                     price_type_str = "";
                     fill_category_id_loc = "";
+                    PreferenceConnector.writeString(requireActivity(), PreferenceConnector.Category_id, fill_category_id);
                     getSoldItems();
                 } else if (price_type_str != null && !price_type_str.equalsIgnoreCase("") && !price_type_str.equalsIgnoreCase("0")) {
                     fill_category_id = "";
                     price_type_str = "";
                     fill_category_id_loc = "";
+                    PreferenceConnector.writeString(requireActivity(), PreferenceConnector.Category_id, fill_category_id);
                     getSoldItems();
                 } else if (rating_filter_str != null && !rating_filter_str.equalsIgnoreCase("")) {
                     fill_category_id = "";
                     fill_category_id_loc = "";
                     rating_filter_str = "";
                     price_type_str = "";
-
+                    PreferenceConnector.writeString(requireActivity(), PreferenceConnector.Category_id, fill_category_id);
                     getSoldItems();
                 }
 

@@ -155,7 +155,19 @@ public class MyCartDetail extends AppCompatActivity {
                 if (object.getString("status").equals("1")) {
                     CartBean successData = new Gson().fromJson(responseData, CartBean.class);
                     cartListBeanArrayList.addAll(successData.getResult());
-                    total_amount.setText(mySession.getValueOf(MySession.CurrencySign) + successData.getTotalPrice());
+
+                    if (PreferenceConnector.readString(MyCartDetail.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
+                        double itemTotal =0.0;
+                        for (int i=0;i<cartListBeanArrayList.size();i++){
+                            itemTotal = itemTotal + Double.parseDouble(cartListBeanArrayList.get(i).getProductDetail().getPrice());
+                        }
+
+                        total_amount.setText(mySession.getValueOf(MySession.CurrencySign) + String.valueOf(itemTotal));
+                    } else {
+                        total_amount.setText(mySession.getValueOf(MySession.CurrencySign) + successData.getTotalPrice());
+                    }
+
+                  //  total_amount.setText(mySession.getValueOf(MySession.CurrencySign) + successData.getTotalPrice());
                 }
                 if (cartListBeanArrayList == null || cartListBeanArrayList.isEmpty() || cartListBeanArrayList.size() == 0) {
                     nocartitem.setVisibility(View.VISIBLE);
@@ -350,8 +362,12 @@ public class MyCartDetail extends AppCompatActivity {
 
                 // holder.merchant_name.setText("" + mycartlistxx.get(listPosition).getUserDetails().get(0).getBusinessName());
                 holder.quant_tv.setText("" + mycartlistxx.get(listPosition).getQuantity());
-                holder.mainprice.setText(mySession.getValueOf(MySession.CurrencySign) + mycartlistxx.get(listPosition).getProductDetail().getProduct_cart_price());
 
+                 if (PreferenceConnector.readString(MyCartDetail.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
+                     holder.mainprice.setText(mySession.getValueOf(MySession.CurrencySign) + mycartlistxx.get(listPosition).getProductDetail().getPrice());
+                } else {
+                     holder.mainprice.setText(mySession.getValueOf(MySession.CurrencySign) + mycartlistxx.get(listPosition).getProductDetail().getProduct_cart_price());
+                 }
                 String image_url = mycartlistxx.get(listPosition).getProductDetail().getThumbnailImage();
                 if (image_url != null && !image_url.equalsIgnoreCase("") && !image_url.equalsIgnoreCase(BaseUrl.image_baseurl)) {
                     Glide.with(MyCartDetail.this).load(image_url).placeholder(R.drawable.placeholder).into(holder.product_img);
@@ -361,17 +377,21 @@ public class MyCartDetail extends AppCompatActivity {
                 holder.plusq.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (mycartlistxx.get(listPosition).getQuantity() != null && !mycartlistxx.get(listPosition).getQuantity().equalsIgnoreCase("")) {
-                            int total_stock_count = 0;
-                            int total_count = Integer.parseInt(mycartlistxx.get(listPosition).getQuantity());
-                            if (mycartlistxx.get(listPosition).getProductDetail().getStock() != null && !mycartlistxx.get(listPosition).getProductDetail().getStock().equalsIgnoreCase("")) {
-                                total_stock_count = Integer.parseInt(mycartlistxx.get(listPosition).getProductDetail().getStock());
 
-                            }
-                            if (total_count < total_stock_count) {
-                                int new_count = ++total_count;
+                        if (PreferenceConnector.readString(MyCartDetail.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
+                        } else {
+                            if (mycartlistxx.get(listPosition).getQuantity() != null && !mycartlistxx.get(listPosition).getQuantity().equalsIgnoreCase("")) {
+                                int total_stock_count = 0;
+                                int total_count = Integer.parseInt(mycartlistxx.get(listPosition).getQuantity());
+                                if (mycartlistxx.get(listPosition).getProductDetail().getStock() != null && !mycartlistxx.get(listPosition).getProductDetail().getStock().equalsIgnoreCase("")) {
+                                    total_stock_count = Integer.parseInt(mycartlistxx.get(listPosition).getProductDetail().getStock());
 
-                                updateMyCartItemQuantity(mycartlistxx.get(listPosition).getProductId(), "" + new_count);
+                                }
+                                if (total_count < total_stock_count) {
+                                    int new_count = ++total_count;
+
+                                    updateMyCartItemQuantity(mycartlistxx.get(listPosition).getProductId(), "" + new_count);
+                                }
                             }
                         }
                     }
@@ -380,13 +400,19 @@ public class MyCartDetail extends AppCompatActivity {
                 holder.minusq.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (mycartlistxx.get(listPosition).getQuantity() != null && !mycartlistxx.get(listPosition).getQuantity().equalsIgnoreCase("")) {
-                            int total_count = Integer.parseInt(mycartlistxx.get(listPosition).getQuantity());
-                            if (total_count > 1) {
-                                int new_count = --total_count;
-                                updateMyCartItemQuantity(mycartlistxx.get(listPosition).getProductId(), "" + new_count);
-                            }
 
+
+                        if (PreferenceConnector.readString(MyCartDetail.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
+                        } else {
+
+
+                            if (mycartlistxx.get(listPosition).getQuantity() != null && !mycartlistxx.get(listPosition).getQuantity().equalsIgnoreCase("")) {
+                                int total_count = Integer.parseInt(mycartlistxx.get(listPosition).getQuantity());
+                                if (total_count > 1) {
+                                    int new_count = --total_count;
+                                    updateMyCartItemQuantity(mycartlistxx.get(listPosition).getProductId(), "" + new_count);
+                                }
+                            }
                         }
                     }
                 });
@@ -424,6 +450,10 @@ public class MyCartDetail extends AppCompatActivity {
                 this.plusq = itemView.findViewById(R.id.plusq);
                 this.minusq = itemView.findViewById(R.id.minusq);
                 this.removecartitem123 = itemView.findViewById(R.id.removecartitem123);
+
+
+
+
 
             }
         }

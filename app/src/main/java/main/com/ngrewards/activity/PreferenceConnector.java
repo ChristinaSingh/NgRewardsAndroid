@@ -49,6 +49,7 @@ public class PreferenceConnector {
     public static String Plan_id = "Plan_id";
     public static String Duration_type = "duration_type";
     public static String Auto_Pay = "auto_pay";
+    public static String Category_id = "Category_id";
 
 
     public static void writeInteger(Context context, String key, int value) {
