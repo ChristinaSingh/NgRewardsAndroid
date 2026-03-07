@@ -67,65 +67,84 @@
             android:id="@+id/d"
             android:layout_below="@+id/mainlay"
             android:layout_width="match_parent"
-            android:layout_height="0.6dp"></View>
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/d"
-            android:orientation="vertical"
+            android:layout_height="0.6dp"/>
+
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/d">
 
-               <main.com.ngrewards.constant.ExpandableHeightListView
-                   android:layout_margin="5dp"
-                   android:layout_width="match_parent"
-                    android:id="@+id/addresslist"
-                    android:layout_height="wrap_content"></main.com.ngrewards.constant.ExpandableHeightListView>
-            <View
+            <LinearLayout
                 android:layout_marginTop="10dp"
-                android:layout_below="@+id/mainlay"
+
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="0.6dp"></View>
+                android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:layout_marginTop="5dp"
-                android:id="@+id/addaddressdlay"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:padding="5dp"
-                android:visibility="visible">
 
-                <ImageView
-                    android:id="@+id/addlay"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    app:srcCompat="@drawable/add" />
 
-                <main.com.ngrewards.fonttypeclasses.NoramlTextView
+
+
+
+
+
+                <main.com.ngrewards.constant.ExpandableHeightListView
+                    android:layout_margin="5dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="12dp"
-                    android:layout_toLeftOf="@+id/forwardarrow_a"
-                    android:layout_toRightOf="@+id/addlay"
-                    android:text="@string/addnewaddress"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/medium" />
+                    android:id="@+id/addresslist"
+                    android:layout_height="wrap_content"/>
+                <View
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/mainlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"/>
 
-                <ImageView
-                    android:id="@+id/forwardarrow_a"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    app:srcCompat="@drawable/next" />
+                <RelativeLayout
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/addaddressdlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:padding="5dp"
+                    android:visibility="visible">
 
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/addlay"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        app:srcCompat="@drawable/add" />
+
+                    <main.com.ngrewards.fonttypeclasses.NoramlTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="12dp"
+                        android:layout_toLeftOf="@+id/forwardarrow_a"
+                        android:layout_toRightOf="@+id/addlay"
+                        android:text="@string/addnewaddress"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/medium" />
+
+                    <ImageView
+                        android:id="@+id/forwardarrow_a"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        app:srcCompat="@drawable/next" />
+
+                </RelativeLayout>
 
 
-        </LinearLayout>
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
 
 
 

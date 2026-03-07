@@ -197,7 +197,7 @@ public class CheckOutAct extends AppCompatActivity {
                     cartListBeanArrayList.addAll(successData.getResult());
 
 
-                    if (PreferenceConnector.readString(CheckOutAct.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
+                   /* if (PreferenceConnector.readString(CheckOutAct.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
 
                         double itemTotal =0.0;
                         for (int i=0;i<cartListBeanArrayList.size();i++){
@@ -209,10 +209,10 @@ public class CheckOutAct extends AppCompatActivity {
 
                     }
                     else
-                    {
+                    {*/
                         total_amount_str = successData.getTotal_with_shipping_price();
 
-                    }
+                   // }
 
 
 
@@ -245,7 +245,7 @@ public class CheckOutAct extends AppCompatActivity {
 
                     if (!IS) {
 
-                        if (PreferenceConnector.readString(CheckOutAct.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
+                    /*    if (PreferenceConnector.readString(CheckOutAct.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
 
                             double itemTotal =0.0;
                             for (int i=0;i<cartListBeanArrayList.size();i++){
@@ -256,10 +256,10 @@ public class CheckOutAct extends AppCompatActivity {
                             total_amount_str = String.valueOf(itemTotal);
 
                         }
-                        else {
+                        else {*/
                             total_amount_str = successData.getTotal_with_shipping_price();
 
-                        }
+                       // }
                        // total_amount.setText(mySession.getValueOf(MySession.CurrencySign) + successData.getTotal_with_shipping_price());
                         total_amount.setText(mySession.getValueOf(MySession.CurrencySign) + total_amount_str);
 
@@ -323,7 +323,7 @@ public class CheckOutAct extends AppCompatActivity {
                             CartBean successData = new Gson().fromJson(responseData, CartBean.class);
                             cartListBeanArrayList.addAll(successData.getResult());
 
-                            if (PreferenceConnector.readString(CheckOutAct.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
+                           /* if (PreferenceConnector.readString(CheckOutAct.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
 
                                 double itemTotal =0.0;
                                 for (int i=0;i<cartListBeanArrayList.size();i++){
@@ -334,10 +334,10 @@ public class CheckOutAct extends AppCompatActivity {
                                 total_amount_str = String.valueOf(itemTotal);
 
                             }
-                            else {
+                            else {*/
                                 total_amount_str = successData.getTotal_with_shipping_price();
 
-                            }
+                        //    }
 
                             String spliting = cartListBeanArrayList.get(0).getProductDetail().getSplit_amount();
                             if (cartListBeanArrayList.get(0).getPay_by_emi().equalsIgnoreCase("YES")) {
@@ -364,7 +364,7 @@ public class CheckOutAct extends AppCompatActivity {
                             if (!IS) {
                                 shipping_price_tv.setText("Include in EMI");
 
-                                if (PreferenceConnector.readString(CheckOutAct.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
+                                /*if (PreferenceConnector.readString(CheckOutAct.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
 
                                     double itemTotal =0.0;
                                     for (int i=0;i<cartListBeanArrayList.size();i++){
@@ -375,10 +375,10 @@ public class CheckOutAct extends AppCompatActivity {
                                     total_amount_str = String.valueOf(itemTotal);
 
                                 }
-                                else {
+                                else {*/
                                     total_amount_str = successData.getTotal_with_shipping_price();
 
-                                }
+                              //  }
                               //  total_amount.setText(mySession.getValueOf(MySession.CurrencySign) + successData.getTotal_with_shipping_price());
                                 total_amount.setText(mySession.getValueOf(MySession.CurrencySign) + total_amount_str);
 
@@ -658,10 +658,12 @@ public class CheckOutAct extends AppCompatActivity {
         intent.putExtra("user_id", user_id);
         intent.putExtra("product_id", product_id_comma);
 
-        if (PreferenceConnector.readString(CheckOutAct.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
-            intent.putExtra("quantity", "1");
-        }
-        else intent.putExtra("quantity", product_quantity_comm);
+       // if (PreferenceConnector.readString(CheckOutAct.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
+       //     intent.putExtra("quantity", "1");
+      //  }
+      //  else
+
+        intent.putExtra("quantity", product_quantity_comm);
         intent.putExtra("merchant_id", merchant_id_comma_sep);
         intent.putExtra("email", email_str);
         intent.putExtra("first_name", AllAddedAddressAct.fullname_str);
@@ -1051,11 +1053,11 @@ public class CheckOutAct extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    if (PreferenceConnector.readString(CheckOutAct.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
+                   // if (PreferenceConnector.readString(CheckOutAct.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
 
-                    }
+                  //  }
 
-                    else {
+                  //  else {
 
                         if (mycartlist.get(position).getQuantity() != null && !mycartlist.get(position).getQuantity().equalsIgnoreCase("")) {
                             int total_stock_count = 0;
@@ -1071,7 +1073,7 @@ public class CheckOutAct extends AppCompatActivity {
 
                         }
 
-                    }
+                  //  }
 
                 }
             });
@@ -1080,11 +1082,11 @@ public class CheckOutAct extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    if (PreferenceConnector.readString(CheckOutAct.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
+                //    if (PreferenceConnector.readString(CheckOutAct.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
 
-                    }
+               //     }
 
-                    else {
+                 //   else {
                     if (mycartlist.get(position).getQuantity() != null && !mycartlist.get(position).getQuantity().equalsIgnoreCase("")) {
                         int total_count = Integer.parseInt(mycartlist.get(position).getQuantity());
                         if (total_count > 1) {
@@ -1092,7 +1094,7 @@ public class CheckOutAct extends AppCompatActivity {
                             updateMyCartItemQuantity(mycartlist.get(position).getProductId(), "" + new_count);
                         }
                     }
-                    }
+                   // }
                 }
             });
 

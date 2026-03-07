@@ -75,7 +75,7 @@ public class AddShipingAddress extends AppCompatActivity {
     private int count = 0;
     private double longitude = 0.0, latitude = 0.0;
     private RelativeLayout backlay;
-    private EditText fullname, optionaladdress, city, state, zipcode, phone_number;
+    private EditText fullname, optionaladdress, city, state, zipcode, phone_number,edEmail;
     private String user_id = "", email_str = "", order_landmarkadd = "", fullname_str = "", country_str = "", optionaladdress_str = "", city_str = "", state_str = "", zipcode_str = "", phone_number_str = "";
     private AutoCompleteTextView gettypedlocation;
     private TextView add_adress;
@@ -212,6 +212,7 @@ public class AddShipingAddress extends AppCompatActivity {
                 phone_number_str = phone_number.getText().toString();
                 order_landmarkadd = gettypedlocation.getText().toString();
                 zipcode_str = zipcode.getText().toString();
+                email_str = edEmail.getText().toString();
 
                 if (fullname_str == null || fullname_str.equalsIgnoreCase("")) {
                     Toast.makeText(AddShipingAddress.this, getResources().getString(R.string.filldetail), Toast.LENGTH_LONG).show();
@@ -236,7 +237,16 @@ public class AddShipingAddress extends AppCompatActivity {
                 } else if (phone_number_str == null || phone_number_str.equalsIgnoreCase("")) {
                     Toast.makeText(AddShipingAddress.this, getResources().getString(R.string.filldetail), Toast.LENGTH_LONG).show();
 
-                } else {
+                }
+
+                else if (email_str == null || email_str.equalsIgnoreCase("")) {
+                    Toast.makeText(AddShipingAddress.this, getResources().getString(R.string.filldetail), Toast.LENGTH_LONG).show();
+
+                }
+
+
+
+                else {
                     new AddNewAddress().execute();
                 }
 
@@ -259,6 +269,8 @@ public class AddShipingAddress extends AppCompatActivity {
         state = findViewById(R.id.state);
         zipcode = findViewById(R.id.zipcode);
         phone_number = findViewById(R.id.phone_number);
+        edEmail = findViewById(R.id.edEmail);
+
 
         country_spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -403,6 +415,7 @@ public class AddShipingAddress extends AppCompatActivity {
                 params.put("address_1", order_landmarkadd);
                 params.put("address_2", optionaladdress_str);
                 params.put("zipcode", zipcode_str);
+                params.put("email", email_str);
 
                 StringBuilder postData = new StringBuilder();
                 for (Map.Entry<String, Object> param : params.entrySet()) {

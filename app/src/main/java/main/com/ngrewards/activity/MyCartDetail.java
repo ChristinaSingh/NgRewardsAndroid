@@ -378,8 +378,8 @@ public class MyCartDetail extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        if (PreferenceConnector.readString(MyCartDetail.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
-                        } else {
+                     //   if (PreferenceConnector.readString(MyCartDetail.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
+                     //   } else {
                             if (mycartlistxx.get(listPosition).getQuantity() != null && !mycartlistxx.get(listPosition).getQuantity().equalsIgnoreCase("")) {
                                 int total_stock_count = 0;
                                 int total_count = Integer.parseInt(mycartlistxx.get(listPosition).getQuantity());
@@ -393,7 +393,7 @@ public class MyCartDetail extends AppCompatActivity {
                                     updateMyCartItemQuantity(mycartlistxx.get(listPosition).getProductId(), "" + new_count);
                                 }
                             }
-                        }
+                      //  }
                     }
                 });
 
@@ -402,8 +402,8 @@ public class MyCartDetail extends AppCompatActivity {
                     public void onClick(View v) {
 
 
-                        if (PreferenceConnector.readString(MyCartDetail.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
-                        } else {
+                       // if (PreferenceConnector.readString(MyCartDetail.this, PreferenceConnector.Category_id, "").equalsIgnoreCase("1016")) {
+                      //  } else {
 
 
                             if (mycartlistxx.get(listPosition).getQuantity() != null && !mycartlistxx.get(listPosition).getQuantity().equalsIgnoreCase("")) {
@@ -413,7 +413,7 @@ public class MyCartDetail extends AppCompatActivity {
                                     updateMyCartItemQuantity(mycartlistxx.get(listPosition).getProductId(), "" + new_count);
                                 }
                             }
-                        }
+                      //  }
                     }
                 });
 

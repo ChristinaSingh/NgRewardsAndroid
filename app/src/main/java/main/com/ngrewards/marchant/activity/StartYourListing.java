@@ -231,6 +231,13 @@ public class StartYourListing extends AppCompatActivity {
 
                         }
 
+                        else if (stock_str == null || stock_str.equalsIgnoreCase("")) {
+                            Toast.makeText(StartYourListing.this, getResources().getString(R.string.enteritemstockquantity), Toast.LENGTH_LONG).show();
+
+                        }
+
+
+
                         else {
                             Log.e("ImagePathArrayList size", " > " + ImagePathArrayList.size());
                             filearray = new File[ImagePathArrayList.size()];
@@ -395,8 +402,8 @@ public class StartYourListing extends AppCompatActivity {
                                rlSubCategory.setVisibility(View.GONE);
                                tvSku.setVisibility(View.GONE);
                                sku_et.setVisibility(View.GONE);
-                               tvStockQuantity.setVisibility(View.GONE);
-                               stock_et.setVisibility(View.GONE);
+                               tvStockQuantity.setVisibility(View.VISIBLE);
+                               stock_et.setVisibility(View.VISIBLE);
                                tvSize.setVisibility(View.GONE);
                                sizes_et.setVisibility(View.GONE);
                                tvColour.setVisibility(View.GONE);
