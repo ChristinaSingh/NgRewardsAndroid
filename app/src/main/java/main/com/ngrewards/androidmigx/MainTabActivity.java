@@ -86,6 +86,7 @@ import main.com.ngrewards.R;
 import main.com.ngrewards.Utils.LocaleHelper;
 import main.com.ngrewards.Utils.Tools;
 import main.com.ngrewards.activity.AccountTypeSelectionAct;
+import main.com.ngrewards.activity.CheckGiftBalanceAct;
 import main.com.ngrewards.activity.CommisionActivity;
 import main.com.ngrewards.activity.EMIManualActivity;
 import main.com.ngrewards.activity.EmployeesalesActivity;
@@ -227,7 +228,7 @@ public class MainTabActivity extends AppCompatActivity implements MyListener {
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Toolbar toolbar;
     private NavigationView navigationview;
-    private LinearLayout messagelay, rate_lay, profile_lay, employeesaleslay, setting_lay, logout, networklay, tutoriallay, transferlay,withdrawlay;
+    private LinearLayout messagelay, rate_lay, profile_lay, employeesaleslay, setting_lay, logout, networklay, tutoriallay, transferlay,withdrawlay,llGiftCertificate;
     private TextView user_name, name, reqcount, cartcount;
     private ImageView notification, cartimg, qrcode;
     private LinearLayout commissionlay;
@@ -887,6 +888,12 @@ public class MainTabActivity extends AppCompatActivity implements MyListener {
         });
 
 
+        llGiftCertificate.setOnClickListener(v->{
+            startActivity(new Intent(MainTabActivity.this, CheckGiftBalanceAct.class)
+            .putExtra("user_id", user_id));
+        });
+
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -968,6 +975,8 @@ public class MainTabActivity extends AppCompatActivity implements MyListener {
         employeesaleslay = findViewById(R.id.employeesaleslay);
         user_img = findViewById(R.id.user_img);
         setting_lay = findViewById(R.id.setting_lay);
+        llGiftCertificate = findViewById(R.id.llGiftCertificate);
+
 
     }
 

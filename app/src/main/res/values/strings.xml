@@ -802,6 +802,9 @@
     <string name="plsprovidedes_gift">Please provide a description of\nyour gift.</string>
     <string name="gift_certificate_price">Gift Certificate Price(USD)</string>
     <string name="your_gift_certificate_added_successfully">Your gift certificate added successfully</string>
+    <string name="gift_no">Gift No.</string>
+    <string name="balance">Balance</string>
+    <string name="gift_certificate_balance">Gift Certificate Balance</string>
 
 
 </resources>

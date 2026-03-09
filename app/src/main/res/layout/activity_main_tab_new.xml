@@ -542,6 +542,45 @@
                         </LinearLayout>
 
 
+
+                        <LinearLayout
+                            android:id="@+id/llGiftCertificate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:padding="2dp"
+                            android:weightSum="8">
+
+                            <RelativeLayout
+
+                                android:layout_width="30dp"
+                                android:layout_height="30dp">
+
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_centerInParent="true"
+                                    android:layout_gravity="center"
+                                    app:srcCompat="@drawable/commission_ic" />
+
+                            </RelativeLayout>
+
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="7"
+                                android:padding="2dp"
+                                android:text="@string/gift_certificate_balance"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/medium" />
+
+                        </LinearLayout>
+
+
+
                         <LinearLayout
                             android:id="@+id/logout"
                             android:layout_width="match_parent"

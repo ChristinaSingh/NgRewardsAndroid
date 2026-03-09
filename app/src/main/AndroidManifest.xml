@@ -23,6 +23,13 @@
 
 
 
+
+        <activity android:name=".activity.CheckGiftBalanceAct"
+            android:exported="false"
+            />
+
+
+
         <activity android:name=".marchant.activity.BusinessSignupAct"
             android:exported="false"
             />

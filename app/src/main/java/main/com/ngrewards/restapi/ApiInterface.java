@@ -389,6 +389,7 @@ public interface ApiInterface {
     @GET("get-member-login-url.php?")
     Call<ResponseBody> getCheckMemberUrlApi(@Query("member_id") String merchantId);
 
-
+    @GET("get-user-gift-card.php?")
+    Call<ResponseBody> check_user_gift_certificate(@Query("user_id") String user_id);
 
 }
