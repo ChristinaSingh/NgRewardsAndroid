@@ -1,11 +1,12 @@
 package main.com.ngrewards.activity;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,14 +18,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import main.com.ngrewards.Adapter.GiftCertificateAdapter;
-import main.com.ngrewards.Models.PropertyListModel;
 import main.com.ngrewards.R;
 import main.com.ngrewards.beanclasses.GiftCertificateModel;
-import main.com.ngrewards.constant.MySession;
 import main.com.ngrewards.databinding.ActivityCheckGiftBalanaceBinding;
 import main.com.ngrewards.restapi.ApiClient;
 import okhttp3.ResponseBody;
@@ -37,6 +37,8 @@ public class CheckGiftBalanceAct extends AppCompatActivity {
     ArrayList<GiftCertificateModel.Result> arrayList;
     GiftCertificateAdapter adapter;
     String userId="";
+    public static LinearLayout llGift;
+    public static TextView tvNotAvailable;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +51,8 @@ public class CheckGiftBalanceAct extends AppCompatActivity {
         if(getIntent()!=null) userId = getIntent().getStringExtra("user_id");
 
          arrayList = new ArrayList<>();
-
+         llGift = binding.llGift;
+         tvNotAvailable = binding.tvNotAvailable;
          adapter = new GiftCertificateAdapter(CheckGiftBalanceAct.this,arrayList);
          binding.rvGiftCertificate.setAdapter(adapter);
 
@@ -58,6 +61,28 @@ public class CheckGiftBalanceAct extends AppCompatActivity {
 
 
          checkGiftCertificate(userId);
+
+        binding.edSearch.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                adapter.filter(s.toString());
+
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
 
@@ -80,14 +105,24 @@ public class CheckGiftBalanceAct extends AppCompatActivity {
                         Log.e("check gift certificate >", " >" + responseData);
                         if (object.getString("status").equals("1")) {
                             GiftCertificateModel successData = new Gson().fromJson(responseData, GiftCertificateModel.class);
-                            arrayList.clear();
-                            arrayList.addAll(successData.getResult());
-                            adapter.notifyDataSetChanged();
+                           // arrayList.clear();
+                          //  arrayList.addAll(successData.getResult());
+                          //  adapter.notifyDataSetChanged();
+                            llGift.setVisibility(View.VISIBLE);
+                            tvNotAvailable.setVisibility(View.GONE);
+
+
+
+
+                            adapter.updateList((ArrayList<GiftCertificateModel.Result>) successData.getResult());
 
 
                         } else {
                             arrayList.clear();
                             adapter.notifyDataSetChanged();
+                            llGift.setVisibility(View.GONE);
+                            tvNotAvailable.setVisibility(View.VISIBLE);
+
                         }
                     } catch (JSONException e) {
 

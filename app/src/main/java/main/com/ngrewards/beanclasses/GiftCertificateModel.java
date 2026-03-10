@@ -114,6 +114,11 @@ public class GiftCertificateModel {
         @SerializedName("customer")
         @Expose
         private Customer customer;
+
+        @SerializedName("merchant_details")
+        @Expose
+        private MerchantDetails merchantDetails;
+
         @SerializedName("payment_method")
         @Expose
         private Object paymentMethod;
@@ -290,6 +295,14 @@ public class GiftCertificateModel {
             this.totalRedemptions = totalRedemptions;
         }
 
+
+        public MerchantDetails getMerchantDetails() {
+            return merchantDetails;
+        }
+
+        public void setMerchantDetails(MerchantDetails merchantDetails) {
+            this.merchantDetails = merchantDetails;
+        }
 
         public class GiftCodes {
 
@@ -629,6 +642,59 @@ public class GiftCertificateModel {
             }
 
         }
+
+        public class MerchantDetails {
+
+            @SerializedName("merchant_id")
+            @Expose
+            private String merchantId;
+            @SerializedName("business_name")
+            @Expose
+            private String businessName;
+            @SerializedName("mobile")
+            @Expose
+            private String mobile;
+            @SerializedName("address")
+            @Expose
+            private String address;
+
+            public String getMerchantId() {
+                return merchantId;
+            }
+
+            public void setMerchantId(String merchantId) {
+                this.merchantId = merchantId;
+            }
+
+            public String getBusinessName() {
+                return businessName;
+            }
+
+            public void setBusinessName(String businessName) {
+                this.businessName = businessName;
+            }
+
+            public String getMobile() {
+                return mobile;
+            }
+
+            public void setMobile(String mobile) {
+                this.mobile = mobile;
+            }
+
+            public String getAddress() {
+                return address;
+            }
+
+            public void setAddress(String address) {
+                this.address = address;
+            }
+        }
+
+
+
+
+
 
     }
 

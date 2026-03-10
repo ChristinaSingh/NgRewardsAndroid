@@ -805,6 +805,7 @@
     <string name="gift_no">Gift No.</string>
     <string name="balance">Balance</string>
     <string name="gift_certificate_balance">Gift Certificate Balance</string>
+    <string name="gift_certificate_not_available">Gift certificate not available</string>
 
 
 </resources>
