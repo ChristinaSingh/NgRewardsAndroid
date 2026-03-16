@@ -133,6 +133,7 @@ public class MerchantBottumAct extends TabActivity {
 
             try {
                 JSONObject jsonObject = new JSONObject(user_log_data);
+
                 String message = jsonObject.getString("status");
                 if (message.equalsIgnoreCase("1")) {
                     JSONObject jsonObject1 = jsonObject.getJSONObject("result");
