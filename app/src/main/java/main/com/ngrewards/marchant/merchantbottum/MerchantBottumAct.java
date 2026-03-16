@@ -51,6 +51,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 //import main.com.ngrewards.BuildConfig;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import main.com.ngrewards.R;
 import main.com.ngrewards.Utils.LocaleHelper;
 import main.com.ngrewards.Utils.Tools;
@@ -136,6 +137,17 @@ public class MerchantBottumAct extends TabActivity {
                 if (message.equalsIgnoreCase("1")) {
                     JSONObject jsonObject1 = jsonObject.getJSONObject("result");
                     user_id = jsonObject1.getString("id");
+
+                    new SweetAlertDialog(MerchantBottumAct.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText(getString(R.string.your_default_admin_password))
+                            .hideConfirmButton()
+                            .setCancelButton(getString(R.string.ok), new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.dismissWithAnimation();
+                                }
+                            })
+                            .show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -204,6 +216,10 @@ public class MerchantBottumAct extends TabActivity {
 
             }
         }
+
+
+
+
 
         TabHost tabHost = getTabHost();
         TabHost.TabSpec homespec = tabHost.newTabSpec("Home");
@@ -303,6 +319,12 @@ public class MerchantBottumAct extends TabActivity {
                 new MyCounterVal().execute();
             }
         }, 0, 8, TimeUnit.SECONDS);
+
+
+
+
+
+
     }
 
     private void appUpdate() {

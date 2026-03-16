@@ -806,6 +806,7 @@
     <string name="balance">Balance</string>
     <string name="gift_certificate_balance">Gift Certificate Balance</string>
     <string name="gift_certificate_not_available">Gift certificate not available</string>
+    <string name="your_default_admin_password">Your admin pass is 123456 to sell item online</string>
 
 
 </resources>
