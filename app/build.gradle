@@ -6,14 +6,15 @@ android {
     signingConfigs {
         debug {
          //   storeFile file('/home/shubh23/StudioProjects/NgRewards_NEW/ngrewardjks.jks')
-              storeFile file('D:/NgRewards_NEW-ng_rewards_androidx/ngrewardjks.jks')
+            //  storeFile file('D:/NgRewards_NEW-ng_rewards_androidx/ngrewardjks.jks')
             storePassword 'ngrewards123'
             keyAlias 'Ngrewards'
             keyPassword 'ngrewards123'
         }
         release {
            // storeFile file('/home/shubh23/StudioProjects/NgRewards_NEW/ngrewardjks.jks')
-            storeFile file('D:/NgRewards_NEW-ng_rewards_androidx/ngrewardjks.jks')
+           // storeFile file('D:/NgRewards_NEW-ng_rewards_androidx/ngrewardjks.jks')
+            storeFile file('/Users/mac/Desktop/NgRewardsSourceCode17March2026/ngrewardjks.jks')
             storePassword 'ngrewards123'
             keyAlias 'Ngrewards'
             keyPassword 'ngrewards123'
